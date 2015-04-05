@@ -44,6 +44,10 @@ RE.getText = function() {
     return RE.editor.innerText;
 }
 
+RE.removeFormat = function() {
+    document.execCommand('removeFormat', false, null);
+}
+
 RE.setFontSize = function(size) {
     RE.editor.style.fontSize = size;
 }

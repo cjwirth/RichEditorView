@@ -141,6 +141,10 @@ extension RichEditorView {
     public func getText() -> String {
         return runJS("RE.getText()")
     }
+
+    public func removeFormat() {
+        runJS("RE.removeFormat();")
+    }
     
     public func setFontSize(size: Int) {
         runJS("RE.setFontSize('\(size))px');")

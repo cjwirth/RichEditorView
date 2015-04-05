@@ -74,6 +74,7 @@ public struct RichEditorOptionItem: RichEditorOption {
 */
 public enum RichEditorOptions: RichEditorOption {
 
+    case Clear
     case Undo
     case Redo
     case Bold
@@ -95,6 +96,7 @@ public enum RichEditorOptions: RichEditorOption {
     
     public static func all() -> [RichEditorOptions] {
         return [
+            Clear,
             Undo, Redo, Bold, Italic,
             Subscript, Superscript, Strike, Underline,
             TextColor, TextBackgroundColor,
@@ -108,6 +110,7 @@ public enum RichEditorOptions: RichEditorOption {
     public func image() -> UIImage? {
         var name = ""
         switch self {
+        case .Clear: name = "clear"
         case .Undo: name = "undo"
         case .Redo: name = "redo"
         case .Bold: name = "bold"
@@ -134,6 +137,7 @@ public enum RichEditorOptions: RichEditorOption {
     
     public func title() -> String {
         switch self {
+        case .Clear: return NSLocalizedString("Clear", comment: "")
         case .Undo: return NSLocalizedString("Undo", comment: "")
         case .Redo: return NSLocalizedString("Redo", comment: "")
         case .Bold: return NSLocalizedString("Bold", comment: "")
@@ -158,6 +162,7 @@ public enum RichEditorOptions: RichEditorOption {
     public func action(toolbar: RichEditorToolbar?) {
         if let toolbar = toolbar {
             switch self {
+            case .Clear: toolbar.editor?.removeFormat()
             case .Undo: toolbar.editor?.undo()
             case .Redo: toolbar.editor?.redo()
             case .Bold: toolbar.editor?.bold()
