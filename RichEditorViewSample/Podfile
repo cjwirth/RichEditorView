@@ -1,0 +1,2 @@
+pod "RichEditorView", :path => "../"
+use_frameworks!

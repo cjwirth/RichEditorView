@@ -1,0 +1,6 @@
+framework module RichEditorView {
+  umbrella header "Pods-RichEditorView-umbrella.h"
+
+  export *
+  module * { export * }
+}
