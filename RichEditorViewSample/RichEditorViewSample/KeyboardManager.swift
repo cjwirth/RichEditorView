@@ -9,27 +9,48 @@
 import UIKit
 import RichEditorView
 
+/**
+    KeyboardManager is a class that takes care of showing and hiding the RichEditorToolbar when the keyboard is shown.
+    As opposed to having this logic in multiple places, it is encapsulated in here. All that needs to change is the parent view.
+*/
 class KeyboardManager: NSObject {
 
+    /**
+        The parent view that the toolbar should be added to.
+        Should normally be the top-level view of a UIViewController
+    */
     weak var view: UIView?
+
+    /**
+        The toolbar that will be shown and hidden.
+    */
     var toolbar: RichEditorToolbar
 
     init(view: UIView) {
         self.view = view
         toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: 44))
-        toolbar.options = RichEditorOptions.all().map { $0 as RichEditorOption }
+        toolbar.options = RichEditorOptions.all()
     }
 
+    /**
+        Starts monitoring for keyboard notifications in order to show/hide the toolbar
+    */
     func beginMonitoring() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowOrHide:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShowOrHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
 
+    /**
+        Stops monitoring for keyboard notifications
+    */
     func stopMonitoring() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
 
+    /**
+        Called when a keyboard notification is recieved. Takes are of handling the showing or hiding of the toolbar
+    */
     func keyboardWillShowOrHide(notification: NSNotification) {
 
         let info = notification.userInfo ?? [:]
