@@ -53,6 +53,12 @@ public struct RichEditorOptionItem: RichEditorOption {
         The action to be performed when tapped
     */
     public var action: (RichEditorToolbar? -> Void)
+
+    public init(image: UIImage?, title: String, action: (RichEditorToolbar? -> Void)) {
+        itemImage = image
+        itemTitle = title
+        self.action = action
+    }
     
     // MARK: RichEditorOption
     
