@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		39883B491AD0DC270031FD16 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39883B481AD0DC270031FD16 /* KeyboardManager.swift */; };
-		39883B4B1AD11E010031FD16 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39883B4A1AD11E010031FD16 /* TableViewController.swift */; };
 		39BBCFB01AD0CC7A00A450D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BBCFAF1AD0CC7A00A450D2 /* AppDelegate.swift */; };
 		39BBCFB21AD0CC7A00A450D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BBCFB11AD0CC7A00A450D2 /* ViewController.swift */; };
 		39BBCFB51AD0CC7A00A450D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39BBCFB31AD0CC7A00A450D2 /* Main.storyboard */; };
@@ -33,7 +32,6 @@
 /* Begin PBXFileReference section */
 		374E2CA30A706AF05A5F787D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		39883B481AD0DC270031FD16 /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
-		39883B4A1AD11E010031FD16 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		39BBCFAA1AD0CC7A00A450D2 /* RichEditorViewSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RichEditorViewSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39BBCFAE1AD0CC7A00A450D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		39BBCFAF1AD0CC7A00A450D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				39BBCFB81AD0CC7A00A450D2 /* LaunchScreen.xib */,
 				39BBCFAD1AD0CC7A00A450D2 /* Supporting Files */,
 				39883B481AD0DC270031FD16 /* KeyboardManager.swift */,
-				39883B4A1AD11E010031FD16 /* TableViewController.swift */,
 			);
 			path = RichEditorViewSample;
 			sourceTree = "<group>";
@@ -311,7 +308,6 @@
 				39883B491AD0DC270031FD16 /* KeyboardManager.swift in Sources */,
 				39BBCFD21AD0CD4700A450D2 /* README.md in Sources */,
 				39BBCFB21AD0CC7A00A450D2 /* ViewController.swift in Sources */,
-				39883B4B1AD11E010031FD16 /* TableViewController.swift in Sources */,
 				39BBCFB01AD0CC7A00A450D2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
