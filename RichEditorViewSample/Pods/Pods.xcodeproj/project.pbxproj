@@ -69,7 +69,7 @@
 		F97362378F5901041F198B82 /* text_color@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8611E44299E47BC780AAB102 /* text_color@2x.png */; };
 		FB97C75458D318614357AC27 /* Pods-RichEditorView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = ACED4A0A5F74C8EBDC73590E /* Pods-RichEditorView-dummy.m */; };
 		FD09791D8F742F20220F9EC8 /* bold.png in Resources */ = {isa = PBXBuildFile; fileRef = F04666BC20359F075F681224 /* bold.png */; };
-		FEA429D9FD3D94952DBC60C7 /* RichEditorToolbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB20BAD81154B342265DFE /* RichEditorToolbarItem.swift */; };
+		FEA429D9FD3D94952DBC60C7 /* RichEditorOptionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CB20BAD81154B342265DFE /* RichEditorOptionItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,7 +160,7 @@
 		E8D8CE13DF9E43F3788DA54D /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
 		EE0DFBBA891A5298A7C1F7DD /* insert_image@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = "insert_image@2x.png"; sourceTree = "<group>"; };
 		F04666BC20359F075F681224 /* bold.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = bold.png; sourceTree = "<group>"; };
-		F6CB20BAD81154B342265DFE /* RichEditorToolbarItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RichEditorToolbarItem.swift; sourceTree = "<group>"; };
+		F6CB20BAD81154B342265DFE /* RichEditorOptionItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RichEditorOptionItem.swift; sourceTree = "<group>"; };
 		FF2CA1310EC1C53804586BF7 /* outdent.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; path = outdent.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -350,7 +350,7 @@
 				CE2D26BFE323547D8AEA60F6 /* CJWWebView+HackishAccessoryHiding.h */,
 				5622C30B0EC6E0B3C4F0A674 /* CJWWebView+HackishAccessoryHiding.m */,
 				DE3442F51C7619B6EFD2CFB3 /* RichEditorToolbar.swift */,
-				F6CB20BAD81154B342265DFE /* RichEditorToolbarItem.swift */,
+				F6CB20BAD81154B342265DFE /* RichEditorOptionItem.swift */,
 				502C5BF3489EE44466F3CBFE /* RichEditorView.swift */,
 			);
 			path = Classes;
@@ -555,7 +555,7 @@
 				839536EB1FAABA027C338118 /* CJWWebView+HackishAccessoryHiding.m in Sources */,
 				FB97C75458D318614357AC27 /* Pods-RichEditorView-dummy.m in Sources */,
 				26C23FAA70FD175DF0561221 /* RichEditorToolbar.swift in Sources */,
-				FEA429D9FD3D94952DBC60C7 /* RichEditorToolbarItem.swift in Sources */,
+				FEA429D9FD3D94952DBC60C7 /* RichEditorOptionItem.swift in Sources */,
 				5227D0D726BB78C3B97FE614 /* RichEditorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

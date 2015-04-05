@@ -1,5 +1,5 @@
 //
-//  RichEditorToolbarItem.swift
+//  RichEditorOptionItem.swift
 //
 //  Created by Caesar Wirth on 4/2/15.
 //  Copyright (c) 2015 Caesar Wirth. All rights reserved.
@@ -100,7 +100,7 @@ public enum RichEditorOptions: RichEditorOption {
     case Image
     case Link
     
-    public static func all() -> [RichEditorOptions] {
+    public static func all() -> [RichEditorOption] {
         return [
             Clear,
             Undo, Redo, Bold, Italic,
