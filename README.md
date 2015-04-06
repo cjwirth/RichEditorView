@@ -3,7 +3,7 @@ RichEditorView
 [![License: BSD 3](https://img.shields.io/badge/license-BSD3-blue.svg)](./LICENSE.md)
 [![Cocoapods](https://img.shields.io/cocoapods/v/RichEditorView.svg)](http://cocoapods.org/pods/RichEditorView)
 
-RichEditorView is a beautiful, modular, drop-in UIView subclass for Rich Text Editing.
+RichEditorView is a simple, modular, drop-in UIView subclass for Rich Text Editing.
 
 Written in Swift 1.1 (Xcode 6.2). Swift 1.2 support is on the way!
 
