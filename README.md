@@ -2,6 +2,7 @@ RichEditorView
 --------------
 [![License: BSD 3](https://img.shields.io/badge/license-BSD3-blue.svg)](./LICENSE.md)
 [![Cocoapods](https://img.shields.io/cocoapods/v/RichEditorView.svg)](http://cocoapods.org/pods/RichEditorView)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
 
 RichEditorView is a simple, modular, drop-in UIView subclass for Rich Text Editing.
 
@@ -49,7 +50,9 @@ Just clone open up `RichEditorViewSample/RichEditorViewSample.xcworkspace` in Xc
 Installation
 ------------
 
-### Cocoapods (iOS 8 only)
+### iOS 8+
+
+#### Cocoapods
 
 If you have Cocoapods 0.36+ installed, you can use Cocoapods to include `RichEditorView` into your project.
 Add the following to your `Podfile`:
@@ -61,9 +64,17 @@ use_frameworks!
 
 Note: the `use_frameworks!` is required for pods made in Swift.
 
-### Non-Cocoapods or iOS 7
+#### Carthage
 
-Just add everything in the `RichEditorView` directory to your project.
+Add the following to your `Cartfile`:
+
+```
+github 'cjwirth/RichEditorView' >= 0.1.0
+```
+
+### iOS 7
+
+Just add everything in the `RichEditorView/Assets` and `RichEditorView/Classes` directories to your project.
 
 Using RichEditorView
 --------------------
