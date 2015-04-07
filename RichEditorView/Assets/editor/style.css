@@ -25,12 +25,16 @@ body {
     overflow: hidden;
 }
 
-#input_box {
+body, h1, p {
+    margin: 0;
+}
+
+#editor {
         -webkit-user-select: auto !important;
         -webkit-user-modify: read-write !important;
 }
 
-#input_box:focus {
+#editor:focus {
         outline: 0px solid transparent;
 }
 
