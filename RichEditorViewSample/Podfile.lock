@@ -6,9 +6,9 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   RichEditorView:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  RichEditorView: 5b8e96ba815d28e60f26e41f701f73a1ba6205af
+  RichEditorView: 6c3fccef46b9eb3c8da4c6748378e965f5a623af
 
 COCOAPODS: 0.36.3
