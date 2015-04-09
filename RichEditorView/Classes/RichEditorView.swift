@@ -150,7 +150,7 @@ extension RichEditorView {
         runJS("RE.setFontSize('\(size))px');")
     }
     
-    public func setBackgroundColor(color: UIColor) {
+    public func setEditorBackgroundColor(color: UIColor) {
         let hex = colorToHex(color)
         runJS("RE.setBackgroundColor('\(hex)');")
     }
@@ -266,8 +266,8 @@ extension RichEditorView: UIWebViewDelegate {
         let callbackPrefix = "re-callback://"
         let prefixRange = callbackPrefix.startIndex..<callbackPrefix.endIndex
         
-        if request.URL.absoluteString?.hasPrefix(callbackPrefix) == true {
-            if let method = request.URL.absoluteString?.stringByReplacingCharactersInRange(prefixRange, withString: "") {
+        if request.URL?.absoluteString?.hasPrefix(callbackPrefix) == true {
+            if let method = request.URL?.absoluteString?.stringByReplacingCharactersInRange(prefixRange, withString: "") {
                 
                 if method.hasPrefix("input") {
                     let content = runJS("RE.getHtml()")
@@ -320,7 +320,7 @@ extension RichEditorView {
         let b = Int(255.0 * blue)
 
         let str = NSString(format: "#%02x%02x%02x", r, g, b)
-        return str
+        return str as String
     }
 
     /**
