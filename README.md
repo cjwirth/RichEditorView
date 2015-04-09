@@ -6,11 +6,17 @@ RichEditorView
 
 RichEditorView is a simple, modular, drop-in UIView subclass for Rich Text Editing.
 
-Written in Swift 1.1 (Xcode 6.2). Swift 1.2 support is on the way!
+Written in Swift 1.2 (Xcode 6.3)
 
 Supports iOS 8 through Cocoapods, or iOS 7 by including the source in your project.
 
 - _Looking for Android? Check out_ [wasabeef/richeditor-android](https://github.com/wasabeef/richeditor-android)
+
+Seen in Action
+--------------
+![Demo](./art/Demo.gif)
+
+Just clone the project and open `RichEditorViewSample/RichEditorViewSample.xcworkspace` in Xcode.
 
 Features
 --------
@@ -41,12 +47,6 @@ Features
 - [x] Text Color
 - [x] Text Background Color
 
-Seen in Action
---------------
-![Demo](./art/Demo.gif)
-
-Just clone open up `RichEditorViewSample/RichEditorViewSample.xcworkspace` in Xcode.
-
 Installation
 ------------
 
@@ -69,7 +69,7 @@ Note: the `use_frameworks!` is required for pods made in Swift.
 Add the following to your `Cartfile`:
 
 ```
-github 'cjwirth/RichEditorView' >= 0.1.0
+github 'cjwirth/RichEditorView' >= 1.0.0
 ```
 
 ### iOS 7
