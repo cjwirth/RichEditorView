@@ -14,8 +14,6 @@
 		39BBCFB71AD0CC7A00A450D2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 39BBCFB61AD0CC7A00A450D2 /* Images.xcassets */; };
 		39BBCFBA1AD0CC7A00A450D2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BBCFB81AD0CC7A00A450D2 /* LaunchScreen.xib */; };
 		39BBCFC61AD0CC7A00A450D2 /* RichEditorViewSampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BBCFC51AD0CC7A00A450D2 /* RichEditorViewSampleTests.swift */; };
-		39BBCFD21AD0CD4700A450D2 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 39BBCFD01AD0CD4700A450D2 /* README.md */; };
-		39BBCFD31AD0CD4700A450D2 /* RichEditorView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 39BBCFD11AD0CD4700A450D2 /* RichEditorView.podspec */; };
 		8DCEA9D3F26A7188EF0A1F78 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 996D5C7A9F5BD7BF325118C8 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -238,7 +236,6 @@
 			files = (
 				39BBCFB51AD0CC7A00A450D2 /* Main.storyboard in Resources */,
 				39BBCFBA1AD0CC7A00A450D2 /* LaunchScreen.xib in Resources */,
-				39BBCFD31AD0CD4700A450D2 /* RichEditorView.podspec in Resources */,
 				39BBCFB71AD0CC7A00A450D2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,7 +303,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				39883B491AD0DC270031FD16 /* KeyboardManager.swift in Sources */,
-				39BBCFD21AD0CD4700A450D2 /* README.md in Sources */,
 				39BBCFB21AD0CC7A00A450D2 /* ViewController.swift in Sources */,
 				39BBCFB01AD0CC7A00A450D2 /* AppDelegate.swift in Sources */,
 			);
