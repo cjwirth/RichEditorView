@@ -24,6 +24,14 @@ class ViewController: UIViewController {
 
         toolbar.delegate = self
 
+        // We will create a custom action that clears all the input text when it is pressed
+        let item = RichEditorOptionItem(image: nil, title: "Clear") { toolbar in
+            toolbar?.editor?.setHTML("")
+        }
+
+        var options = toolbar.options
+        options.append(item)
+        toolbar.options = options
     }
 
     override func viewWillAppear(animated: Bool) {
