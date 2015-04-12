@@ -52,12 +52,12 @@ public struct RichEditorOptionItem: RichEditorOption {
     /**
         The action to be performed when tapped
     */
-    public var action: (RichEditorToolbar? -> Void)
+    public var itemAction: (RichEditorToolbar? -> Void)
 
     public init(image: UIImage?, title: String, action: (RichEditorToolbar? -> Void)) {
         itemImage = image
         itemTitle = title
-        self.action = action
+        itemAction = action
     }
     
     // MARK: RichEditorOption
@@ -71,7 +71,7 @@ public struct RichEditorOptionItem: RichEditorOption {
     }
     
     public func action(toolbar: RichEditorToolbar?) {
-        action(toolbar)
+        itemAction(toolbar)
     }
 }
 
