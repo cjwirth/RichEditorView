@@ -8,7 +8,7 @@
 
 // RichEditorView
 #define COCOAPODS_POD_AVAILABLE_RichEditorView
-#define COCOAPODS_VERSION_MAJOR_RichEditorView 0
-#define COCOAPODS_VERSION_MINOR_RichEditorView 1
+#define COCOAPODS_VERSION_MAJOR_RichEditorView 1
+#define COCOAPODS_VERSION_MINOR_RichEditorView 0
 #define COCOAPODS_VERSION_PATCH_RichEditorView 0
 
