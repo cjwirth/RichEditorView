@@ -140,8 +140,17 @@ public class RichEditorToolbar: UIView {
 
         }
         toolbar.items = buttons
+
+        let defaultIconWidth: CGFloat = 22
+        let barButtonItemMargin: CGFloat = 11
+        var width: CGFloat = buttons.reduce(0) {sofar, new in
+            if let view = new.valueForKey("view") as? UIView {
+                return sofar + view.frame.size.width + barButtonItemMargin
+            } else {
+                return sofar + (defaultIconWidth + barButtonItemMargin)
+            }
+        }
         
-        var width: CGFloat = buttons.count == 0 ? 0 :  (CGFloat(buttons.count) * 39.0) - 10.0
         if width < self.frame.size.width {
             toolbar.frame.size.width = self.frame.size.width
         } else {
