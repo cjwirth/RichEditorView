@@ -39,16 +39,16 @@ public protocol RichEditorToolbarDelegate: class {
     RichBarButtonItem is a subclass of UIBarButtonItem that takes a callback as opposed to the target-action pattern
 */
 public class RichBarButtonItem: UIBarButtonItem {
-    var actionHandler: (Void -> Void)?
+    public var actionHandler: (Void -> Void)?
     
-    convenience init(image: UIImage? = nil, handler: (Void -> Void)? = nil) {
+    public convenience init(image: UIImage? = nil, handler: (Void -> Void)? = nil) {
         self.init(image: image, style: .Plain, target: nil, action: nil)
         target = self
         action = Selector("buttonWasTapped")
         actionHandler = handler
     }
     
-    convenience init(title: String = "", handler: (Void -> Void)? = nil) {
+    public convenience init(title: String = "", handler: (Void -> Void)? = nil) {
         self.init(title: title, style: .Plain, target: nil, action: nil)
         target = self
         action = Selector("buttonWasTapped")
