@@ -27,6 +27,17 @@ public protocol RichEditorDelegate: class {
         Called when the rich editor starts editing
     */
     func richEditorTookFocus(editor: RichEditorView)
+    
+    /**
+        Called when the rich editor stops editing or loses focus
+    */
+    func richEditorLostFocus(editor: RichEditorView)
+    
+    /**
+        Called when the RichEditorView has become ready to receive input
+        More concretely, is called when the internal UIWebView loads for the first time, and contentHTML is set
+    */
+    func richEditorDidLoad(editor: RichEditorView)
 }
 
 /**
@@ -280,6 +291,9 @@ extension RichEditorView: UIWebViewDelegate {
                 else if method.hasPrefix("focus") {
                     delegate?.richEditorTookFocus(self)
                 }
+                else if method.hasPrefix("blur") {
+                    delegate?.richEditorLostFocus(self)
+                }
             }
 
             return false
@@ -294,6 +308,7 @@ extension RichEditorView: UIWebViewDelegate {
         if !editorLoaded {
             editorLoaded = true
             setHTML(contentHTML)
+            delegate?.richEditorDidLoad(self)
         }
 
         updateHeight()

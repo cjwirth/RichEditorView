@@ -28,6 +28,10 @@ RE.editor.addEventListener("focus", function() {
     RE.callback("focus");
 });
 
+RE.editor.addEventListener("blur", function() {
+    RE.callback("blur");
+});
+
 RE.callback = function(method) {
     window.location.href = "re-callback://" + method;
 }
