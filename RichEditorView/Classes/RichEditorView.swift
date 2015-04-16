@@ -122,15 +122,18 @@ public class RichEditorView: UIView {
 extension RichEditorView {
 
     private func updateHeight() {
-        let heightStr = runJS("document.getElementById('editor').scrollHeight + 10;")
+        let heightStr = runJS("document.getElementById('editor').clientHeight;")
         let height = (heightStr as NSString).integerValue
-        editorHeight = height
+        if editorHeight != height {
+            editorHeight = height
+        }
     }
 
     public func setHTML(html: String) {
         contentHTML = html
         if editorLoaded {
             runJS("RE.setHtml('\(escape(html))');")
+            updateHeight()
         }
     }
     
