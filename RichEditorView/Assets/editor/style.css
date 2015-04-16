@@ -32,6 +32,7 @@ body, h1, p {
 #editor {
         -webkit-user-select: auto !important;
         -webkit-user-modify: read-write !important;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 #editor:focus {
