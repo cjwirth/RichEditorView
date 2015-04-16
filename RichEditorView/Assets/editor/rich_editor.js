@@ -20,11 +20,18 @@ RE.currentSelection;
 
 RE.editor = document.getElementById('editor');
 
+RE.editor.addEventListener("mousedown", function() { RE.backuprange(); });
+RE.editor.addEventListener("mouseup", function() { RE.backuprange(); });
+RE.editor.addEventListener("keydown", function() { RE.backuprange(); });
+RE.editor.addEventListener("keyup", function() { RE.backuprange(); });
+
 RE.editor.addEventListener("input", function() {
+    RE.backuprange();
     RE.callback("input");
 });
 
 RE.editor.addEventListener("focus", function() {
+    RE.backuprange();
     RE.callback("focus");
 });
 
