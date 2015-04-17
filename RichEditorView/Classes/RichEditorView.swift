@@ -283,7 +283,16 @@ extension RichEditorView: UIWebViewDelegate {
         if request.URL?.absoluteString?.hasPrefix(callbackPrefix) == true {
             if let method = request.URL?.absoluteString?.stringByReplacingCharactersInRange(prefixRange, withString: "") {
                 
-                if method.hasPrefix("input") {
+                if method.hasPrefix("ready") {
+                    // If loading for the first time, we have to set the content HTML to be displayed
+                    if !editorLoaded {
+                        editorLoaded = true
+                        setHTML(contentHTML)
+                        delegate?.richEditorDidLoad(self)
+                    }
+                    updateHeight()
+                }
+                else if method.hasPrefix("input") {
                     let content = runJS("RE.getHtml()")
                     contentHTML = content
                     updateHeight()
@@ -302,18 +311,6 @@ extension RichEditorView: UIWebViewDelegate {
         return true
     }
     
-    public func webViewDidFinishLoad(webView: UIWebView) {
-
-        // If loading for the first time, we have to set the content HTML to be displayed
-        if !editorLoaded {
-            editorLoaded = true
-            setHTML(contentHTML)
-            delegate?.richEditorDidLoad(self)
-        }
-
-        updateHeight()
-    }
-
 }
 
 

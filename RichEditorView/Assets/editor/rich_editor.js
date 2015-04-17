@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+window.onload = function() {
+    RE.callback("ready");
+};
+
 var RE = {};
 
 RE.currentSelection;
