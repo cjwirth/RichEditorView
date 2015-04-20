@@ -24,10 +24,8 @@ RE.currentSelection;
 
 RE.editor = document.getElementById('editor');
 
-RE.editor.addEventListener("mousedown", function() { RE.backuprange(); });
-RE.editor.addEventListener("mouseup", function() { RE.backuprange(); });
-RE.editor.addEventListener("keydown", function() { RE.backuprange(); });
-RE.editor.addEventListener("keyup", function() { RE.backuprange(); });
+// Not universally supported, but seems to work in iOS 7 and 8
+document.addEventListener("selectionchange", function() { RE.backuprange(); });
 
 RE.editor.addEventListener("input", function() {
     RE.backuprange();
@@ -185,12 +183,14 @@ RE.prepareInsert = function() {
 
 RE.backuprange = function(){
     var selection = window.getSelection();
-    var range = selection.getRangeAt(0);
-    RE.currentSelection = {
-        "startContainer": range.startContainer,
-        "startOffset": range.startOffset,
-        "endContainer": range.endContainer,
-        "endOffset": range.endOffset};
+    if (selection.rangeCount > 0) {
+        var range = selection.getRangeAt(0);
+        RE.currentSelection = {
+            "startContainer": range.startContainer,
+            "startOffset": range.startOffset,
+            "endContainer": range.endContainer,
+            "endOffset": range.endOffset};
+    }
 }
 
 RE.restorerange = function(){
