@@ -64,11 +64,20 @@ public class RichEditorView: UIView {
         }
     }
     
+    /**
+        Whether or not to allow user input in the view.
+    */
     private var editingEnabledVar = true
     public var editingEnabled: Bool {
         get { return isContentEditable() }
         set { setContentEditable(newValue) }
     }
+    
+    /**
+        The placeholder text that should be shown when there is no user input.
+        To set, use `setPlaceholderText(text: String)`
+    */
+    private(set) var placeholder: String = ""
 
     private var editorLoaded = false
     
@@ -178,7 +187,12 @@ extension RichEditorView {
     public func getText() -> String {
         return runJS("RE.getText()")
     }
-
+    
+    public func setPlaceholderText(text: String) {
+        placeholder = text
+        runJS("RE.setPlaceholderText('\(escape(text))');")
+    }
+    
     public func removeFormat() {
         runJS("RE.removeFormat();")
     }
@@ -312,6 +326,7 @@ extension RichEditorView: UIWebViewDelegate {
                         editorLoaded = true
                         setHTML(contentHTML)
                         setContentEditable(editingEnabledVar)
+                        setPlaceholderText(placeholder)
                         delegate?.richEditorDidLoad(self)
                     }
                     updateHeight()

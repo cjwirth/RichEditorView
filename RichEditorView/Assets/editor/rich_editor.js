@@ -28,6 +28,7 @@ RE.editor = document.getElementById('editor');
 document.addEventListener("selectionchange", function() { RE.backuprange(); });
 
 RE.editor.addEventListener("input", function() {
+    RE.updatePlaceholder();
     RE.backuprange();
     RE.callback("input");
 });
@@ -47,6 +48,7 @@ RE.callback = function(method) {
 
 RE.setHtml = function(contents) {
     RE.editor.innerHTML = contents;
+    RE.updatePlaceholder();
 }
 
 RE.getHtml = function() {
@@ -55,6 +57,18 @@ RE.getHtml = function() {
 
 RE.getText = function() {
     return RE.editor.innerText;
+}
+
+RE.setPlaceholderText = function(text) {
+    RE.editor.setAttribute("placeholder", text);
+}
+
+RE.updatePlaceholder = function() {
+    if (RE.editor.textContent.length > 0) {
+        RE.editor.classList.remove("placeholder");
+    } else {
+        RE.editor.classList.add("placeholder");
+    }
 }
 
 RE.removeFormat = function() {

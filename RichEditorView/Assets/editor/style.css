@@ -30,12 +30,19 @@ body, h1, p {
 }
 
 #editor {
-        -webkit-user-select: auto !important;
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-user-select: auto !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 #editor:focus {
-        outline: 0px solid transparent;
+    outline: 0px solid transparent;
+}
+
+.placeholder[placeholder]:after {
+    content: attr(placeholder);
+    position: absolute;
+    top: 0px;
+    color: #cccccc;
 }
 
 #editor {
