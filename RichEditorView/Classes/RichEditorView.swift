@@ -63,6 +63,12 @@ public class RichEditorView: UIView {
             webView.scrollView.scrollEnabled = scrollEnabled
         }
     }
+    
+    private var editingEnabledVar = true
+    public var editingEnabled: Bool {
+        get { return isContentEditable() }
+        set { setContentEditable(newValue) }
+    }
 
     private var editorLoaded = false
     
@@ -140,6 +146,23 @@ extension RichEditorView {
         }
     }
 
+    private func isContentEditable() -> Bool {
+        if editorLoaded {
+            let value = runJS("RE.editor.isContentEditable") as NSString
+            editingEnabledVar = value.boolValue
+            return editingEnabledVar
+        }
+        return editingEnabledVar
+    }
+    
+    private func setContentEditable(editable: Bool) {
+        editingEnabledVar = editable
+        if editorLoaded {
+            let value = editable ? "true" : "false"
+            runJS("RE.editor.contentEditable = \(value);")
+        }
+    }
+    
     public func setHTML(html: String) {
         contentHTML = html
         if editorLoaded {
@@ -288,6 +311,7 @@ extension RichEditorView: UIWebViewDelegate {
                     if !editorLoaded {
                         editorLoaded = true
                         setHTML(contentHTML)
+                        setContentEditable(editingEnabledVar)
                         delegate?.richEditorDidLoad(self)
                     }
                     updateHeight()
