@@ -38,6 +38,12 @@ public protocol RichEditorDelegate: class {
         More concretely, is called when the internal UIWebView loads for the first time, and contentHTML is set
     */
     func richEditorDidLoad(editor: RichEditorView)
+    
+    /**
+        Called when the internal UIWebView begins loading a URL that it does not know how to respond to
+        For example, if there is an external link, and then the user taps it
+    */
+    func richEditorShouldInteractWithURL(url: NSURL) -> Bool
 }
 
 /**
@@ -314,9 +320,10 @@ extension RichEditorView: UIScrollViewDelegate {
 extension RichEditorView: UIWebViewDelegate {
 
     public func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+
+        // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
         let prefixRange = callbackPrefix.startIndex..<callbackPrefix.endIndex
-        
         if request.URL?.absoluteString?.hasPrefix(callbackPrefix) == true {
             if let method = request.URL?.absoluteString?.stringByReplacingCharactersInRange(prefixRange, withString: "") {
                 
@@ -345,6 +352,16 @@ extension RichEditorView: UIWebViewDelegate {
             }
 
             return false
+        }
+        
+        // User is tapping on a link, so we should react accordingly
+        if navigationType == .LinkClicked {
+            if let
+                url = request.URL,
+                shouldInteract = delegate?.richEditorShouldInteractWithURL(url)
+            {
+                return shouldInteract
+            }
         }
         
         return true
