@@ -59,7 +59,12 @@ extension ViewController: RichEditorDelegate {
     }
 
     func richEditorTookFocus(editor: RichEditorView) { }
-
+    
+    func richEditorLostFocus(editor: RichEditorView) { }
+    
+    func richEditorDidLoad(editor: RichEditorView) { }
+    
+    func richEditorShouldInteractWithURL(url: NSURL) -> Bool { return true }
 }
 
 extension ViewController: RichEditorToolbarDelegate {
