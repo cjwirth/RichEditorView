@@ -71,7 +71,7 @@ Note: the `use_frameworks!` is required for pods made in Swift.
 Add the following to your `Cartfile`:
 
 ```
-github 'cjwirth/RichEditorView' >= 1.0.0
+github 'cjwirth/RichEditorView' >= 1.1.0
 ```
 
 ### iOS 7
