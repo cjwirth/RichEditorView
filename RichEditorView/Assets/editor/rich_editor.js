@@ -145,6 +145,14 @@ RE.setOutdent = function() {
     document.execCommand('outdent', false, null);
 }
 
+RE.setOrderedList = function() {
+    document.execCommand('insertOrderedList', false, null);
+}
+
+RE.setUnorderedList = function() {
+    document.execCommand('insertUnorderedList', false, null);
+}
+
 RE.setJustifyLeft = function() {
     document.execCommand('justifyLeft', false, null);
 }

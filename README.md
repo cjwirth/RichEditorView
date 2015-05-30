@@ -40,6 +40,8 @@ Features
 - [x] Heading 6
 - [x] Undo
 - [x] Redo
+- [x] Ordered List
+- [x] Unordered List
 - [x] Indent
 - [x] Outdent
 - [x] Insert Image

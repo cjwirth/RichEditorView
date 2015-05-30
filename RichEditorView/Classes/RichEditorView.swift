@@ -270,7 +270,15 @@ extension RichEditorView {
     public func outdent() {
         runJS("RE.setOutdent();")
     }
-    
+
+    public func orderedList() {
+        runJS("RE.setOrderedList();")
+    }
+
+    public func unorderedList() {
+        runJS("RE.setUnorderedList();")
+    }
+
     public func alignLeft() {
         runJS("RE.setJustifyLeft();")
     }

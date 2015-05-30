@@ -94,6 +94,8 @@ public enum RichEditorOptions: RichEditorOption {
     case Header(Int)
     case Indent
     case Outdent
+    case OrderedList
+    case UnorderedList
     case AlignLeft
     case AlignCenter
     case AlignRight
@@ -107,7 +109,8 @@ public enum RichEditorOptions: RichEditorOption {
             Subscript, Superscript, Strike, Underline,
             TextColor, TextBackgroundColor,
             Header(1), Header(2), Header(3), Header(4), Header(5), Header(6),
-            Indent, Outdent, AlignLeft, AlignCenter, AlignRight, Image, Link
+            Indent, Outdent, OrderedList, UnorderedList,
+            AlignLeft, AlignCenter, AlignRight, Image, Link
         ]
     }
     
@@ -130,6 +133,8 @@ public enum RichEditorOptions: RichEditorOption {
         case .Header(let h): name = "h\(h)"
         case .Indent: name = "indent"
         case .Outdent: name = "outdent"
+        case .OrderedList: name = "ordered_list"
+        case .UnorderedList: name = "unordered_list"
         case .AlignLeft: name = "justify_left"
         case .AlignCenter: name = "justify_center"
         case .AlignRight: name = "justify_right"
@@ -157,6 +162,8 @@ public enum RichEditorOptions: RichEditorOption {
         case .Header(let h): return NSLocalizedString("H\(h)", comment: "")
         case .Indent: return NSLocalizedString("Indent", comment: "")
         case .Outdent: return NSLocalizedString("Outdent", comment: "")
+        case .OrderedList: return NSLocalizedString("Ordered List", comment: "")
+        case .UnorderedList: return NSLocalizedString("Unordered List", comment: "")
         case .AlignLeft: return NSLocalizedString("Left", comment: "")
         case .AlignCenter: return NSLocalizedString("Center", comment: "")
         case .AlignRight: return NSLocalizedString("Right", comment: "")
@@ -182,6 +189,8 @@ public enum RichEditorOptions: RichEditorOption {
             case .Header(let h): toolbar.editor?.header(h)
             case .Indent: toolbar.editor?.indent()
             case .Outdent: toolbar.editor?.outdent()
+            case .OrderedList: toolbar.editor?.orderedList()
+            case .UnorderedList: toolbar.editor?.unorderedList()
             case .AlignLeft: toolbar.editor?.alignLeft()
             case .AlignCenter: toolbar.editor?.alignCenter()
             case .AlignRight: toolbar.editor?.alignRight()
