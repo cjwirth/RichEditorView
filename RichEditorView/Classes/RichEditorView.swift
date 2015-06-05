@@ -44,6 +44,12 @@ public protocol RichEditorDelegate: class {
         For example, if there is an external link, and then the user taps it
     */
     func richEditorShouldInteractWithURL(url: NSURL) -> Bool
+    
+    /**
+        Called when custom actions are called by callbacks in the JS
+        By default, this method is not used unless called by some custom JS that you add
+    */
+    func richEditor(editor: RichEditorView, handleCustomAction action: String)
 }
 
 /**
@@ -356,6 +362,14 @@ extension RichEditorView: UIWebViewDelegate {
                 }
                 else if method.hasPrefix("blur") {
                     delegate?.richEditorLostFocus(self)
+                }
+                else if method.hasPrefix("action/") {
+                    // If there are any custom actions being called
+                    // We need to tell the delegate about it
+                    let actionPrefix = "action/"
+                    let range = Range(start: actionPrefix.startIndex, end: actionPrefix.endIndex)
+                    let action = method.stringByReplacingCharactersInRange(range, withString: "")
+                    delegate?.richEditor(self, handleCustomAction: action)
                 }
             }
 

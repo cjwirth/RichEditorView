@@ -42,6 +42,10 @@ RE.editor.addEventListener("blur", function() {
     RE.callback("blur");
 });
 
+RE.customAction = function(action) {
+    RE.callback("action/" + action);
+}
+
 RE.callback = function(method) {
     window.location.href = "re-callback://" + method;
 }
