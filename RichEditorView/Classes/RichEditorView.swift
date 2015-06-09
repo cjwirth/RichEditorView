@@ -63,11 +63,6 @@ public class RichEditorView: UIView {
     public weak var delegate: RichEditorDelegate?
 
     /**
-        The internal UIWebView that is used to display the text.
-    */
-    public var webView: UIWebView
-
-    /**
         Whether or not scroll is enabled on the view.
     */
     public var scrollEnabled: Bool = true {
@@ -75,6 +70,11 @@ public class RichEditorView: UIView {
             webView.scrollView.scrollEnabled = scrollEnabled
         }
     }
+    
+    /**
+    The internal UIWebView that is used to display the text.
+    */
+    private var webView: UIWebView
     
     /**
         Whether or not to allow user input in the view.
@@ -395,6 +395,18 @@ extension RichEditorView: UIWebViewDelegate {
 
 // MARK: - Utilities
 extension RichEditorView {
+    
+    /**
+    Runs some JavaScript on the UIWebView and returns the result
+    If there is no result, returns an empty string
+    
+    :param:   js The JavaScript string to be run
+    :returns: The result of the JavaScript that was run
+    */
+    public func runJS(js: String) -> String {
+        let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""
+        return string
+    }
 
     /**
         Converts a UIColor to its representation in hexadecimal
@@ -437,17 +449,5 @@ extension RichEditorView {
             }
         }
         return newString
-    }
-
-    /**
-        Runs some JavaScript on the UIWebView and returns the result
-        If there is no result, returns an empty string
-    
-        :param:   js The JavaScript string to be run
-        :returns: The result of the JavaScript that was run
-    */
-    private func runJS(js: String) -> String {
-        let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""
-        return string
     }
 }
