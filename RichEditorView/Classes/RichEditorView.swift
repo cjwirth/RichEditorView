@@ -141,6 +141,7 @@ public class RichEditorView: UIView {
         webView.scrollView.scrollEnabled = scrollEnabled
         webView.scrollView.bounces = false
         webView.scrollView.delegate = self
+        webView.scrollView.clipsToBounds = false
         
         webView.cjw_hidesInputAccessoryView = true
         
