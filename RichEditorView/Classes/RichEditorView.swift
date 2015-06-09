@@ -43,7 +43,7 @@ public protocol RichEditorDelegate: class {
         Called when the internal UIWebView begins loading a URL that it does not know how to respond to
         For example, if there is an external link, and then the user taps it
     */
-    func richEditorShouldInteractWithURL(url: NSURL) -> Bool
+    func richEditor(editor: RichEditorView, shouldInteractWithURL url: NSURL) -> Bool
     
     /**
         Called when custom actions are called by callbacks in the JS
@@ -134,7 +134,7 @@ public class RichEditorView: UIView {
         webView.delegate = self
         webView.keyboardDisplayRequiresUserAction = false
         webView.scalesPageToFit = false
-        webView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        webView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         webView.dataDetectorTypes = .None
         webView.backgroundColor = UIColor.whiteColor()
         
@@ -147,10 +147,9 @@ public class RichEditorView: UIView {
         self.addSubview(webView)
         
         if let filePath = NSBundle(forClass: RichEditorView.self).pathForResource("rich_editor", ofType: "html") {
-            if let url = NSURL(fileURLWithPath: filePath) {
-                let request = NSURLRequest(URL: url)
-                webView.loadRequest(request)
-            }
+            let url = NSURL(fileURLWithPath: filePath, isDirectory: false)
+            let request = NSURLRequest(URL: url)
+            webView.loadRequest(request)
         }
     }
 }
@@ -338,8 +337,8 @@ extension RichEditorView: UIWebViewDelegate {
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
         let prefixRange = callbackPrefix.startIndex..<callbackPrefix.endIndex
-        if request.URL?.absoluteString?.hasPrefix(callbackPrefix) == true {
-            if let method = request.URL?.absoluteString?.stringByReplacingCharactersInRange(prefixRange, withString: "") {
+        if request.URL?.absoluteString.hasPrefix(callbackPrefix) == true {
+            if let method = request.URL?.absoluteString.stringByReplacingCharactersInRange(prefixRange, withString: "") {
                 
                 if method.hasPrefix("ready") {
                     // If loading for the first time, we have to set the content HTML to be displayed
@@ -380,7 +379,7 @@ extension RichEditorView: UIWebViewDelegate {
         if navigationType == .LinkClicked {
             if let
                 url = request.URL,
-                shouldInteract = delegate?.richEditorShouldInteractWithURL(url)
+                shouldInteract = delegate?.richEditor(self, shouldInteractWithURL:url)
             {
                 return shouldInteract
             }
@@ -399,8 +398,8 @@ extension RichEditorView {
         Converts a UIColor to its representation in hexadecimal
         For example, UIColor.blackColor() becomes "#000000"
         
-        :param:   color The color to convert to hex
-        :returns: The hexadecimal representation of the color
+        - parameter   color: The color to convert to hex
+        - returns: The hexadecimal representation of the color
     */
     private func colorToHex(color: UIColor) -> String {
         var red: CGFloat = 0
@@ -420,8 +419,8 @@ extension RichEditorView {
         Escapes the ' character in a String
         Used when passing a string into JavaScript, so the string is not completed too soon
     
-        :param:   string The string to be escaped
-        :returns: The string with all ' characters escaped
+        - parameter   string: The string to be escaped
+        - returns: The string with all ' characters escaped
     */
     private func escape(string: String) -> String {
         let unicode = string.unicodeScalars
@@ -442,8 +441,8 @@ extension RichEditorView {
         Runs some JavaScript on the UIWebView and returns the result
         If there is no result, returns an empty string
     
-        :param:   js The JavaScript string to be run
-        :returns: The result of the JavaScript that was run
+        - parameter   js: The JavaScript string to be run
+        - returns: The result of the JavaScript that was run
     */
     private func runJS(js: String) -> String {
         let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""

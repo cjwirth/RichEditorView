@@ -27,7 +27,7 @@ public protocol RichEditorOption {
     /**
         The action to be evoked when the action is tapped
     
-        :param: editor The RichEditorToolbar that the RichEditorOption was being displayed in when tapped.
+        - parameter editor: The RichEditorToolbar that the RichEditorOption was being displayed in when tapped.
                        Contains a reference to the `editor` RichEditorView to perform actions on
     */
     func action(editor: RichEditorToolbar?)
