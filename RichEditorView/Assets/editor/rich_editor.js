@@ -76,7 +76,7 @@ RE.removeFormat = function() {
 }
 
 RE.setFontSize = function(size) {
-    RE.editor.style.fontSize = size;
+    document.execCommand("fontSize", false, size);
 }
 
 RE.setBackgroundColor = function(color) {
