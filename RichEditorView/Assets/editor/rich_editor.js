@@ -46,8 +46,22 @@ RE.customAction = function(action) {
     RE.callback("action/" + action);
 }
 
+RE.callbackQueue = [];
+RE.runCallbackQueue = function() {
+    if (RE.callbackQueue.length == 0) {
+        return;
+    }
+    
+    setTimeout(function() {
+        var method = RE.callbackQueue.shift();
+        window.location.href = "re-callback://" + method;
+        RE.runQueue();
+    }, 0);
+}
+
 RE.callback = function(method) {
-    window.location.href = "re-callback://" + method;
+    RE.callbackQueue.push(method);
+    RE.runCallbackQueue();
 }
 
 RE.setHtml = function(contents) {
