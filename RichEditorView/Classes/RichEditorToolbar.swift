@@ -83,9 +83,29 @@ public class RichEditorToolbar: UIView {
             updateToolbar()
         }
     }
-
-    private var toolbarScroll: UIScrollView
+    
+    /**
+        The bar button items that are displayed as options.
+        Useful for presenting popovers from.
+    */
+    public var barButtonItems : [UIBarButtonItem]? {
+        return toolbar.items as? [UIBarButtonItem]
+    }
+    
+    /**
+        Set this to specify a content width.  Not setting this will have the editor try to 
+        calculate the width based on the options chosen.
+    */
+    public var contentWidth : CGFloat? {
+        didSet {
+            updateToolbar()
+        }
+    }
+    
     private var toolbar: UIToolbar
+    
+    private var toolbarScroll: UIScrollView
+    
     private var backgroundToolbar: UIToolbar
     
     public override init(frame: CGRect) {
@@ -141,6 +161,13 @@ public class RichEditorToolbar: UIView {
         }
         toolbar.items = buttons
 
+        if contentWidth != nil {
+            toolbarScroll.contentSize.width = contentWidth!
+            toolbar.frame.size.width = contentWidth!
+            toolbar.frame.size.height = 44
+            return
+        }
+        
         let defaultIconWidth: CGFloat = 22
         let barButtonItemMargin: CGFloat = 11
         var width: CGFloat = buttons.reduce(0) {sofar, new in
