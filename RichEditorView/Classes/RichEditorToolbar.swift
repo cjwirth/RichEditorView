@@ -85,9 +85,12 @@ public class RichEditorToolbar: UIView {
     }
     
     /**
-        The inner toolbar that contains the list of options as UIBarButtonItems.
+        The bar button items that are displayed as options.
+        Useful for presenting popovers from.
     */
-    public var toolbar: UIToolbar
+    public var barButtonItems : [UIBarButtonItem]? {
+        return toolbar.items as? [UIBarButtonItem]
+    }
     
     /**
         Set this to specify a content width.  Not setting this will have the editor try to 
@@ -98,6 +101,8 @@ public class RichEditorToolbar: UIView {
             updateToolbar()
         }
     }
+    
+    private var toolbar: UIToolbar
     
     private var toolbarScroll: UIScrollView
     
