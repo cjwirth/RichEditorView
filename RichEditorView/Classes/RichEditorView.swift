@@ -365,6 +365,9 @@ extension RichEditorView: UIWebViewDelegate {
                     delegate?.richEditorLostFocus(self)
                 }
                 else if method.hasPrefix("action/") {
+                    let content = runJS("RE.getHtml()")
+                    contentHTML = content
+                    
                     // If there are any custom actions being called
                     // We need to tell the delegate about it
                     let actionPrefix = "action/"
