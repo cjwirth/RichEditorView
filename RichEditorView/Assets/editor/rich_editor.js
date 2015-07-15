@@ -53,10 +53,14 @@ RE.runCallbackQueue = function() {
     }
     
     setTimeout(function() {
-        var method = RE.callbackQueue.shift();
-        window.location.href = "re-callback://" + method;
-        RE.runQueue();
+        window.location.href = "re-callback://";    
     }, 0);
+}
+
+RE.getCommandQueue = function() {
+    var commands = JSON.stringify(RE.callbackQueue);
+    RE.callbackQueue = [];
+    return commands;
 }
 
 RE.callback = function(method) {
