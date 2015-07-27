@@ -96,7 +96,7 @@ public class RichEditorToolbar: UIView {
         setup()
     }
     
-    public required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         toolbarScroll = UIScrollView()
         toolbar = UIToolbar()
         backgroundToolbar = UIToolbar()
