@@ -63,11 +63,6 @@ public class RichEditorView: UIView {
     public weak var delegate: RichEditorDelegate?
 
     /**
-        The internal UIWebView that is used to display the text.
-    */
-    public var webView: UIWebView
-
-    /**
         Whether or not scroll is enabled on the view.
     */
     public var scrollEnabled: Bool = true {
@@ -75,6 +70,11 @@ public class RichEditorView: UIView {
             webView.scrollView.scrollEnabled = scrollEnabled
         }
     }
+    
+    /**
+    The internal UIWebView that is used to display the text.
+    */
+    private var webView: UIWebView
     
     /**
         Whether or not to allow user input in the view.
@@ -121,7 +121,7 @@ public class RichEditorView: UIView {
         setup()
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         webView = UIWebView()
         super.init(coder: aDecoder)
         setup()
@@ -141,6 +141,7 @@ public class RichEditorView: UIView {
         webView.scrollView.scrollEnabled = scrollEnabled
         webView.scrollView.bounces = false
         webView.scrollView.delegate = self
+        webView.scrollView.clipsToBounds = false
         
         webView.cjw_hidesInputAccessoryView = true
         
@@ -336,39 +337,25 @@ extension RichEditorView: UIWebViewDelegate {
 
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
-        let prefixRange = callbackPrefix.startIndex..<callbackPrefix.endIndex
         if request.URL?.absoluteString.hasPrefix(callbackPrefix) == true {
-            if let method = request.URL?.absoluteString.stringByReplacingCharactersInRange(prefixRange, withString: "") {
+            
+            // When we get a callback, we need to fetch the command queue to run the commands
+            // It comes in as a JSON array of commands that we need to parse
+            let commands = runJS("RE.getCommandQueue();")
+            if let data = (commands as NSString).dataUsingEncoding(NSUTF8StringEncoding) {
                 
-                if method.hasPrefix("ready") {
-                    // If loading for the first time, we have to set the content HTML to be displayed
-                    if !editorLoaded {
-                        editorLoaded = true
-                        setHTML(contentHTML)
-                        setContentEditable(editingEnabledVar)
-                        setPlaceholderText(placeholder)
-                        delegate?.richEditorDidLoad(self)
+                let jsonCommands: [String]?
+                do {
+                    jsonCommands = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as? [String]
+                } catch {
+                    jsonCommands = nil
+                    NSLog("Failed to parse JSON Commands")
+                }
+                
+                if let jsonCommands = jsonCommands {
+                    for command in jsonCommands {
+                        performCommand(command)
                     }
-                    updateHeight()
-                }
-                else if method.hasPrefix("input") {
-                    let content = runJS("RE.getHtml()")
-                    contentHTML = content
-                    updateHeight()
-                }
-                else if method.hasPrefix("focus") {
-                    delegate?.richEditorTookFocus(self)
-                }
-                else if method.hasPrefix("blur") {
-                    delegate?.richEditorLostFocus(self)
-                }
-                else if method.hasPrefix("action/") {
-                    // If there are any custom actions being called
-                    // We need to tell the delegate about it
-                    let actionPrefix = "action/"
-                    let range = Range(start: actionPrefix.startIndex, end: actionPrefix.endIndex)
-                    let action = method.stringByReplacingCharactersInRange(range, withString: "")
-                    delegate?.richEditor(self, handleCustomAction: action)
                 }
             }
 
@@ -393,6 +380,18 @@ extension RichEditorView: UIWebViewDelegate {
 
 // MARK: - Utilities
 extension RichEditorView {
+    
+    /**
+    Runs some JavaScript on the UIWebView and returns the result
+    If there is no result, returns an empty string
+    
+    :param:   js The JavaScript string to be run
+    :returns: The result of the JavaScript that was run
+    */
+    public func runJS(js: String) -> String {
+        let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""
+        return string
+    }
 
     /**
         Converts a UIColor to its representation in hexadecimal
@@ -436,16 +435,46 @@ extension RichEditorView {
         }
         return newString
     }
-
-    /**
-        Runs some JavaScript on the UIWebView and returns the result
-        If there is no result, returns an empty string
     
-        - parameter   js: The JavaScript string to be run
-        - returns: The result of the JavaScript that was run
+    /**
+        Called when actions are received from JavaScript
+        
+        :param: method String with the name of the method and optional parameters that were passed in
     */
-    private func runJS(js: String) -> String {
-        let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""
-        return string
+    private func performCommand(method: String) {
+        if method.hasPrefix("ready") {
+            // If loading for the first time, we have to set the content HTML to be displayed
+            if !editorLoaded {
+                editorLoaded = true
+                setHTML(contentHTML)
+                setContentEditable(editingEnabledVar)
+                setPlaceholderText(placeholder)
+                delegate?.richEditorDidLoad(self)
+            }
+            updateHeight()
+        }
+        else if method.hasPrefix("input") {
+            let content = runJS("RE.getHtml()")
+            contentHTML = content
+            updateHeight()
+        }
+        else if method.hasPrefix("focus") {
+            delegate?.richEditorTookFocus(self)
+        }
+        else if method.hasPrefix("blur") {
+            delegate?.richEditorLostFocus(self)
+        }
+        else if method.hasPrefix("action/") {
+            let content = runJS("RE.getHtml()")
+            contentHTML = content
+            
+            // If there are any custom actions being called
+            // We need to tell the delegate about it
+            let actionPrefix = "action/"
+            let range = Range(start: actionPrefix.startIndex, end: actionPrefix.endIndex)
+            let action = method.stringByReplacingCharactersInRange(range, withString: "")
+            delegate?.richEditor(self, handleCustomAction: action)
+        }
     }
+    
 }
