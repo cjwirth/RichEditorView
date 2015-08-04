@@ -104,6 +104,11 @@ public class RichEditorView: UIView {
     private(set) var contentHTML: String = "" {
         didSet {
             delegate?.richEditor(self, contentDidChange: contentHTML)
+            let contentHeight = self.webView.scrollView.contentSize.height;
+            let frameHeight = self.frame.size.height;
+            if contentHeight > frameHeight {
+                self.webView.scrollView.setContentOffset(CGPointMake(0, contentHeight - frameHeight), animated: true)
+            }
         }
     }
 
