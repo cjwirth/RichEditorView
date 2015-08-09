@@ -70,7 +70,16 @@ public class RichEditorView: UIView {
             webView.scrollView.scrollEnabled = scrollEnabled
         }
     }
-    
+
+    /**
+        Input accessory view to display over they keyboard.
+        Defaults to nil
+    */
+    public override var inputAccessoryView: UIView? {
+        get { return webView.cjw_inputAccessoryView }
+        set { webView.cjw_inputAccessoryView = newValue }
+    }
+
     /**
     The internal UIWebView that is used to display the text.
     */
@@ -143,7 +152,7 @@ public class RichEditorView: UIView {
         webView.scrollView.delegate = self
         webView.scrollView.clipsToBounds = false
         
-        webView.cjw_hidesInputAccessoryView = true
+        webView.cjw_inputAccessoryView = nil
         
         self.addSubview(webView)
         
