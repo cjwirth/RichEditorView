@@ -65,9 +65,9 @@ extension ViewController: RichEditorDelegate {
     func richEditorDidLoad(editor: RichEditorView) { }
     
     func richEditor(editor: RichEditorView, shouldInteractWithURL url: NSURL) -> Bool { return true }
-    
-    func richEditor(editor: RichEditorView, handleCustomAction action: String) { }
 
+    func richEditor(editor: RichEditorView, handleCustomAction content: String) { }
+    
 }
 
 extension ViewController: RichEditorToolbarDelegate {

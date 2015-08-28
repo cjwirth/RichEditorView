@@ -428,7 +428,7 @@ extension RichEditorView {
             let char = unicode[i]
             if char.value == 39 { // 39 == ' in ASCII
                 let escaped = char.escape(asASCII: true)
-                newString.extend(escaped)
+                newString.appendContentsOf(escaped)
             } else {
                 newString.append(char)
             }
