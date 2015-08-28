@@ -6,7 +6,7 @@ RichEditorView
 
 RichEditorView is a simple, modular, drop-in UIView subclass for Rich Text Editing.
 
-Written in **Swift 2.0** (Xcode 7.0 beta 7A120f)
+Written in **Swift 2.0** (Xcode 7.0 beta 6 (7A192o))
 
 Supports iOS 8 and 9 through Cocoapods, or iOS 7 by including the source in your project.
 
