@@ -1,6 +1,6 @@
 {
   "name": "RichEditorView",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "summary": "A beautiful Rich Text Editor for iOS written in Swift",
   "homepage": "https://github.com/cjwirth/RichEditorView",
   "license": "BSD 3-clause",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/cjwirth/RichEditorView.git",
-    "tag": "1.0.0"
+    "tag": "1.2.0"
   },
   "social_media_url": "https://twitter.com/cjwirth",
   "platforms": {

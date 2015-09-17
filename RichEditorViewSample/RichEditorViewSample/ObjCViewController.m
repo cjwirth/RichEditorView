@@ -44,7 +44,7 @@
     }
 }
 
-- (BOOL)richEditorShouldInteractWithURL:(NSURL * __nonnull)url {
+- (BOOL)richEditor:(RichEditorView * __nonnull)editor shouldInteractWithURL:(NSURL * __nonnull)url {
     return true;
 }
 
