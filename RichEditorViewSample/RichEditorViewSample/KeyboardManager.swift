@@ -56,7 +56,7 @@ class KeyboardManager: NSObject {
         let info = notification.userInfo ?? [:]
         let duration = NSTimeInterval((info[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.floatValue ?? 0.25)
         let curve = UInt((info[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber)?.unsignedLongValue ?? 0)
-        let options = UIViewAnimationOptions(curve)
+        let options = UIViewAnimationOptions(rawValue: curve)
         let keyboardRect = (info[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() ?? CGRectZero
 
 

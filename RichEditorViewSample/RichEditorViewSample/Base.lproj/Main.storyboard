@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GM1-gj-zqz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="GM1-gj-zqz">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="9Mc-Tw-THQ">
             <objects>
-                <navigationController navigationBarHidden="YES" id="GM1-gj-zqz" sceneMemberID="viewController">
+                <navigationController id="GM1-gj-zqz" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="btP-qg-psp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="tx4-pR-eY6"/>
+                        <segue destination="43h-aY-VrM" kind="relationship" relationship="rootViewController" id="Eyu-ka-e5j"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nnN-bU-tC1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-394" y="406"/>
         </scene>
-        <!--RichEditorView iOS-->
+        <!--RichEditorView Swift-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ViewController" customModule="RichEditorViewSample" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" userLabel="RichEditorView Swift" customClass="ViewController" customModule="RichEditorViewSample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -33,14 +33,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FMR-YK-M0h" customClass="RichEditorView" customModule="RichEditorView">
-                                <rect key="frame" x="0.0" y="20" width="375" height="259"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="259"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="259" id="bsu-3N-XOc"/>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="HTML Preview" translatesAutoresizingMaskIntoConstraints="NO" id="nPH-ii-3sD">
-                                <rect key="frame" x="0.0" y="281" width="375" height="386"/>
+                                <rect key="frame" x="0.0" y="325" width="375" height="342"/>
                                 <color key="backgroundColor" red="0.90196079015731812" green="0.90196079015731812" blue="0.90196079015731812" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="14"/>
@@ -59,7 +59,7 @@
                             <constraint firstItem="nPH-ii-3sD" firstAttribute="top" secondItem="FMR-YK-M0h" secondAttribute="bottom" constant="2" id="jUq-Uq-KHX"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="RichEditorView iOS" id="pyE-1e-UBv"/>
+                    <navigationItem key="navigationItem" title="RichEditorView - Swift" id="pyE-1e-UBv"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="editorView" destination="FMR-YK-M0h" id="wch-rq-p16"/>
@@ -68,7 +68,117 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="348.5" y="338.5"/>
+            <point key="canvasLocation" x="803.5" y="190.5"/>
+        </scene>
+        <!--RichEditorView ObjC-->
+        <scene sceneID="2eE-8J-Vgg">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="WoP-qd-WEq" userLabel="RichEditorView ObjC" customClass="ObjCViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="EJS-xX-Z4N"/>
+                        <viewControllerLayoutGuide type="bottom" id="p2n-03-hDJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="EVB-67-r9K">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BVN-33-ljg" customClass="RichEditorView" customModule="RichEditorView">
+                                <rect key="frame" x="0.0" y="64" width="375" height="259"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="259" id="Ykl-yH-DDw"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="HTML Preview" translatesAutoresizingMaskIntoConstraints="NO" id="fau-Ce-Elw">
+                                <rect key="frame" x="0.0" y="325" width="375" height="342"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="CourierNewPSMT" family="Courier New" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="BVN-33-ljg" secondAttribute="trailing" id="4SA-Ud-xC2"/>
+                            <constraint firstItem="fau-Ce-Elw" firstAttribute="leading" secondItem="EVB-67-r9K" secondAttribute="leading" id="5Fu-Zn-gkw"/>
+                            <constraint firstItem="fau-Ce-Elw" firstAttribute="top" secondItem="BVN-33-ljg" secondAttribute="bottom" constant="2" id="9rb-ot-xAq"/>
+                            <constraint firstItem="fau-Ce-Elw" firstAttribute="top" secondItem="BVN-33-ljg" secondAttribute="bottom" constant="2" id="Cmw-fc-uhY"/>
+                            <constraint firstItem="p2n-03-hDJ" firstAttribute="top" secondItem="fau-Ce-Elw" secondAttribute="bottom" id="WGr-dv-m09"/>
+                            <constraint firstItem="BVN-33-ljg" firstAttribute="leading" secondItem="EVB-67-r9K" secondAttribute="leading" id="fGg-jZ-pTv"/>
+                            <constraint firstItem="BVN-33-ljg" firstAttribute="top" secondItem="EJS-xX-Z4N" secondAttribute="bottom" id="vY0-zq-Ior"/>
+                            <constraint firstAttribute="trailing" secondItem="fau-Ce-Elw" secondAttribute="trailing" id="xh9-dd-Gd3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="RichEditorView - ObjC" id="yw4-qm-fam"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="editorView" destination="BVN-33-ljg" id="vUh-Qp-GF2"/>
+                        <outlet property="htmlTextView" destination="fau-Ce-Elw" id="neK-ma-AV0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RJd-Me-Cq6" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="803.5" y="946.5"/>
+        </scene>
+        <!--Use RichEditorView From...-->
+        <scene sceneID="dnn-RE-MQ4">
+            <objects>
+                <tableViewController id="43h-aY-VrM" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="pSQ-Ea-XEm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <sections>
+                            <tableViewSection id="Jvo-1H-hRS">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="k6r-FS-DZm">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k6r-FS-DZm" id="q6X-ql-mmC">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Swift" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8KE-aM-ZGE">
+                                                    <rect key="frame" x="8" y="11" width="226" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="vRl-ev-oTq"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="YFH-tb-xzU">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YFH-tb-xzU" id="3lK-vC-LeM">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Objective-C" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eqo-5S-fvn">
+                                                    <rect key="frame" x="8" y="11" width="226" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="WoP-qd-WEq" kind="show" id="dyR-eg-a90"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="43h-aY-VrM" id="Gvt-UE-YFS"/>
+                            <outlet property="delegate" destination="43h-aY-VrM" id="fwy-6i-GKt"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Use RichEditorView From..." id="Nit-a6-dkw"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i2o-Jx-yvH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="225.5" y="405.5"/>
         </scene>
     </scenes>
 </document>

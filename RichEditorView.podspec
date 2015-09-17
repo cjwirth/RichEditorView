@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "RichEditorView"
-  s.version          = "1.2.0"
-  s.summary          = "A beautiful Rich Text Editor for iOS written in Swift"
+  s.version          = "2.0.0"
+  s.summary          = "Rich Text Editor for iOS written in Swift"
   s.homepage         = "https://github.com/cjwirth/RichEditorView"
   s.license          = 'BSD 3-clause'
   s.author           = { "Caesar Wirth" => "cjwirth@gmail.com" }

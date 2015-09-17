@@ -11,7 +11,7 @@ import UIKit
     RichEditorToolbarDelegate is a protocol for the RichEditorToolbar.
     Used to receive actions that need extra work to perform (eg. display some UI)
 */
-public protocol RichEditorToolbarDelegate: class {
+@objc public protocol RichEditorToolbarDelegate: class {
 
     /**
         Called when the Text Color toolbar item is pressed.
@@ -96,7 +96,7 @@ public class RichEditorToolbar: UIView {
         setup()
     }
     
-    public required init(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         toolbarScroll = UIScrollView()
         toolbar = UIToolbar()
         backgroundToolbar = UIToolbar()
@@ -108,22 +108,23 @@ public class RichEditorToolbar: UIView {
         self.autoresizingMask = .FlexibleWidth
 
         backgroundToolbar.frame = self.bounds
-        backgroundToolbar.autoresizingMask = .FlexibleHeight | .FlexibleWidth
+        backgroundToolbar.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
 
         toolbar.autoresizingMask = .FlexibleWidth
         toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
         toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
 
         toolbarScroll.frame = self.bounds
-        toolbarScroll.autoresizingMask = .FlexibleHeight | .FlexibleWidth
+        toolbarScroll.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         toolbarScroll.showsHorizontalScrollIndicator = false
         toolbarScroll.showsVerticalScrollIndicator = false
         toolbarScroll.backgroundColor = UIColor.clearColor()
 
         toolbarScroll.addSubview(toolbar)
 
-        self.addSubview(backgroundToolbar)
-        self.addSubview(toolbarScroll)
+        addSubview(backgroundToolbar)
+        addSubview(toolbarScroll)
+        updateToolbar()
     }
     
     private func updateToolbar() {
@@ -143,7 +144,7 @@ public class RichEditorToolbar: UIView {
 
         let defaultIconWidth: CGFloat = 22
         let barButtonItemMargin: CGFloat = 11
-        var width: CGFloat = buttons.reduce(0) {sofar, new in
+        let width: CGFloat = buttons.reduce(0) {sofar, new in
             if let view = new.valueForKey("view") as? UIView {
                 return sofar + view.frame.size.width + barButtonItemMargin
             } else {

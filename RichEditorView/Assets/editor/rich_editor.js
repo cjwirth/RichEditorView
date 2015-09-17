@@ -42,8 +42,30 @@ RE.editor.addEventListener("blur", function() {
     RE.callback("blur");
 });
 
+RE.customAction = function(action) {
+    RE.callback("action/" + action);
+}
+
+RE.callbackQueue = [];
+RE.runCallbackQueue = function() {
+    if (RE.callbackQueue.length == 0) {
+        return;
+    }
+    
+    setTimeout(function() {
+        window.location.href = "re-callback://";    
+    }, 0);
+}
+
+RE.getCommandQueue = function() {
+    var commands = JSON.stringify(RE.callbackQueue);
+    RE.callbackQueue = [];
+    return commands;
+}
+
 RE.callback = function(method) {
-    window.location.href = "re-callback://" + method;
+    RE.callbackQueue.push(method);
+    RE.runCallbackQueue();
 }
 
 RE.setHtml = function(contents) {

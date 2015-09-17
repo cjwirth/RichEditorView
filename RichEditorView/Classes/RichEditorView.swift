@@ -10,7 +10,7 @@ import UIKit
 /**
     RichEditorDelegate defines callbacks for the delegate of the RichEditorView
 */
-public protocol RichEditorDelegate: class {
+@objc public protocol RichEditorDelegate: class {
 
     /**
         Called when the inner height of the text being displayed changes
@@ -43,7 +43,13 @@ public protocol RichEditorDelegate: class {
         Called when the internal UIWebView begins loading a URL that it does not know how to respond to
         For example, if there is an external link, and then the user taps it
     */
-    func richEditorShouldInteractWithURL(url: NSURL) -> Bool
+    func richEditor(editor: RichEditorView, shouldInteractWithURL url: NSURL) -> Bool
+    
+    /**
+        Called when custom actions are called by callbacks in the JS
+        By default, this method is not used unless called by some custom JS that you add
+    */
+    func richEditor(editor: RichEditorView, handleCustomAction action: String)
 }
 
 /**
@@ -57,11 +63,6 @@ public class RichEditorView: UIView {
     public weak var delegate: RichEditorDelegate?
 
     /**
-        The internal UIWebView that is used to display the text.
-    */
-    public var webView: UIWebView
-
-    /**
         Whether or not scroll is enabled on the view.
     */
     public var scrollEnabled: Bool = true {
@@ -69,6 +70,20 @@ public class RichEditorView: UIView {
             webView.scrollView.scrollEnabled = scrollEnabled
         }
     }
+
+    /**
+        Input accessory view to display over they keyboard.
+        Defaults to nil
+    */
+    public override var inputAccessoryView: UIView? {
+        get { return webView.cjw_inputAccessoryView }
+        set { webView.cjw_inputAccessoryView = newValue }
+    }
+
+    /**
+    The internal UIWebView that is used to display the text.
+    */
+    private var webView: UIWebView
     
     /**
         Whether or not to allow user input in the view.
@@ -115,7 +130,7 @@ public class RichEditorView: UIView {
         setup()
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         webView = UIWebView()
         super.init(coder: aDecoder)
         setup()
@@ -128,23 +143,23 @@ public class RichEditorView: UIView {
         webView.delegate = self
         webView.keyboardDisplayRequiresUserAction = false
         webView.scalesPageToFit = false
-        webView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        webView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         webView.dataDetectorTypes = .None
         webView.backgroundColor = UIColor.whiteColor()
         
         webView.scrollView.scrollEnabled = scrollEnabled
         webView.scrollView.bounces = false
         webView.scrollView.delegate = self
+        webView.scrollView.clipsToBounds = false
         
-        webView.cjw_hidesInputAccessoryView = true
+        webView.cjw_inputAccessoryView = nil
         
         self.addSubview(webView)
         
         if let filePath = NSBundle(forClass: RichEditorView.self).pathForResource("rich_editor", ofType: "html") {
-            if let url = NSURL(fileURLWithPath: filePath) {
-                let request = NSURLRequest(URL: url)
-                webView.loadRequest(request)
-            }
+            let url = NSURL(fileURLWithPath: filePath, isDirectory: false)
+            let request = NSURLRequest(URL: url)
+            webView.loadRequest(request)
         }
     }
 }
@@ -331,31 +346,25 @@ extension RichEditorView: UIWebViewDelegate {
 
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
-        let prefixRange = callbackPrefix.startIndex..<callbackPrefix.endIndex
-        if request.URL?.absoluteString?.hasPrefix(callbackPrefix) == true {
-            if let method = request.URL?.absoluteString?.stringByReplacingCharactersInRange(prefixRange, withString: "") {
+        if request.URL?.absoluteString.hasPrefix(callbackPrefix) == true {
+            
+            // When we get a callback, we need to fetch the command queue to run the commands
+            // It comes in as a JSON array of commands that we need to parse
+            let commands = runJS("RE.getCommandQueue();")
+            if let data = (commands as NSString).dataUsingEncoding(NSUTF8StringEncoding) {
                 
-                if method.hasPrefix("ready") {
-                    // If loading for the first time, we have to set the content HTML to be displayed
-                    if !editorLoaded {
-                        editorLoaded = true
-                        setHTML(contentHTML)
-                        setContentEditable(editingEnabledVar)
-                        setPlaceholderText(placeholder)
-                        delegate?.richEditorDidLoad(self)
+                let jsonCommands: [String]?
+                do {
+                    jsonCommands = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as? [String]
+                } catch {
+                    jsonCommands = nil
+                    NSLog("Failed to parse JSON Commands")
+                }
+                
+                if let jsonCommands = jsonCommands {
+                    for command in jsonCommands {
+                        performCommand(command)
                     }
-                    updateHeight()
-                }
-                else if method.hasPrefix("input") {
-                    let content = runJS("RE.getHtml()")
-                    contentHTML = content
-                    updateHeight()
-                }
-                else if method.hasPrefix("focus") {
-                    delegate?.richEditorTookFocus(self)
-                }
-                else if method.hasPrefix("blur") {
-                    delegate?.richEditorLostFocus(self)
                 }
             }
 
@@ -366,7 +375,7 @@ extension RichEditorView: UIWebViewDelegate {
         if navigationType == .LinkClicked {
             if let
                 url = request.URL,
-                shouldInteract = delegate?.richEditorShouldInteractWithURL(url)
+                shouldInteract = delegate?.richEditor(self, shouldInteractWithURL:url)
             {
                 return shouldInteract
             }
@@ -380,13 +389,25 @@ extension RichEditorView: UIWebViewDelegate {
 
 // MARK: - Utilities
 extension RichEditorView {
+    
+    /**
+    Runs some JavaScript on the UIWebView and returns the result
+    If there is no result, returns an empty string
+    
+    :param:   js The JavaScript string to be run
+    :returns: The result of the JavaScript that was run
+    */
+    public func runJS(js: String) -> String {
+        let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""
+        return string
+    }
 
     /**
         Converts a UIColor to its representation in hexadecimal
         For example, UIColor.blackColor() becomes "#000000"
         
-        :param:   color The color to convert to hex
-        :returns: The hexadecimal representation of the color
+        - parameter   color: The color to convert to hex
+        - returns: The hexadecimal representation of the color
     */
     private func colorToHex(color: UIColor) -> String {
         var red: CGFloat = 0
@@ -406,8 +427,8 @@ extension RichEditorView {
         Escapes the ' character in a String
         Used when passing a string into JavaScript, so the string is not completed too soon
     
-        :param:   string The string to be escaped
-        :returns: The string with all ' characters escaped
+        - parameter   string: The string to be escaped
+        - returns: The string with all ' characters escaped
     */
     private func escape(string: String) -> String {
         let unicode = string.unicodeScalars
@@ -416,23 +437,53 @@ extension RichEditorView {
             let char = unicode[i]
             if char.value == 39 { // 39 == ' in ASCII
                 let escaped = char.escape(asASCII: true)
-                newString.extend(escaped)
+                newString.appendContentsOf(escaped)
             } else {
                 newString.append(char)
             }
         }
         return newString
     }
-
-    /**
-        Runs some JavaScript on the UIWebView and returns the result
-        If there is no result, returns an empty string
     
-        :param:   js The JavaScript string to be run
-        :returns: The result of the JavaScript that was run
+    /**
+        Called when actions are received from JavaScript
+        
+        :param: method String with the name of the method and optional parameters that were passed in
     */
-    private func runJS(js: String) -> String {
-        let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""
-        return string
+    private func performCommand(method: String) {
+        if method.hasPrefix("ready") {
+            // If loading for the first time, we have to set the content HTML to be displayed
+            if !editorLoaded {
+                editorLoaded = true
+                setHTML(contentHTML)
+                setContentEditable(editingEnabledVar)
+                setPlaceholderText(placeholder)
+                delegate?.richEditorDidLoad(self)
+            }
+            updateHeight()
+        }
+        else if method.hasPrefix("input") {
+            let content = runJS("RE.getHtml()")
+            contentHTML = content
+            updateHeight()
+        }
+        else if method.hasPrefix("focus") {
+            delegate?.richEditorTookFocus(self)
+        }
+        else if method.hasPrefix("blur") {
+            delegate?.richEditorLostFocus(self)
+        }
+        else if method.hasPrefix("action/") {
+            let content = runJS("RE.getHtml()")
+            contentHTML = content
+            
+            // If there are any custom actions being called
+            // We need to tell the delegate about it
+            let actionPrefix = "action/"
+            let range = Range(start: actionPrefix.startIndex, end: actionPrefix.endIndex)
+            let action = method.stringByReplacingCharactersInRange(range, withString: "")
+            delegate?.richEditor(self, handleCustomAction: action)
+        }
     }
+    
 }

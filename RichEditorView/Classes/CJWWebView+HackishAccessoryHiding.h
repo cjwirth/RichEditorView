@@ -7,11 +7,14 @@
 
 #import <UIKit/UIKit.h>
 
-// Credit to this extension goes to bjhomes
-// https://gist.github.com/bjhomer/2048571
+// Inspiration for this extension comes from:
+//   - bjhomes: https://gist.github.com/bjhomer/2048571
+//   - diegoreymendez: http://stackoverflow.com/a/25415378/1403046
 // Bundled inside to add a vendored prefix so as to hopefully not cause naming conflicts
 @interface UIWebView (CJWHackishAccessoryHiding)
 
-// When set to YES, the UIWebView will no longer show an inputAccessoryView when they keyboard is shown.
-@property (nonatomic, assign) BOOL cjw_hidesInputAccessoryView;
+// Overrides the standard inputAccessoryView
+// Set to a custom view to override. Setting to nil will remove it.
+@property (nonatomic, strong, nullable) UIView *cjw_inputAccessoryView;
+
 @end

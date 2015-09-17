@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3912A4561B966C34005E41FA /* ObjCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3912A4551B966C34005E41FA /* ObjCViewController.m */; };
 		39883B491AD0DC270031FD16 /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39883B481AD0DC270031FD16 /* KeyboardManager.swift */; };
 		39BBCFB01AD0CC7A00A450D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BBCFAF1AD0CC7A00A450D2 /* AppDelegate.swift */; };
 		39BBCFB21AD0CC7A00A450D2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BBCFB11AD0CC7A00A450D2 /* ViewController.swift */; };
@@ -29,6 +30,9 @@
 
 /* Begin PBXFileReference section */
 		374E2CA30A706AF05A5F787D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		3912A4531B966C34005E41FA /* RichEditorViewSample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RichEditorViewSample-Bridging-Header.h"; sourceTree = "<group>"; };
+		3912A4541B966C34005E41FA /* ObjCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjCViewController.h; sourceTree = "<group>"; };
+		3912A4551B966C34005E41FA /* ObjCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCViewController.m; sourceTree = "<group>"; };
 		39883B481AD0DC270031FD16 /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		39BBCFAA1AD0CC7A00A450D2 /* RichEditorViewSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RichEditorViewSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		39BBCFAE1AD0CC7A00A450D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,6 +117,9 @@
 				39BBCFB81AD0CC7A00A450D2 /* LaunchScreen.xib */,
 				39BBCFAD1AD0CC7A00A450D2 /* Supporting Files */,
 				39883B481AD0DC270031FD16 /* KeyboardManager.swift */,
+				3912A4541B966C34005E41FA /* ObjCViewController.h */,
+				3912A4551B966C34005E41FA /* ObjCViewController.m */,
+				3912A4531B966C34005E41FA /* RichEditorViewSample-Bridging-Header.h */,
 			);
 			path = RichEditorViewSample;
 			sourceTree = "<group>";
@@ -198,7 +205,8 @@
 		39BBCFA21AD0CC7A00A450D2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Caesar Wirth";
 				TargetAttributes = {
 					39BBCFA91AD0CC7A00A450D2 = {
@@ -303,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39883B491AD0DC270031FD16 /* KeyboardManager.swift in Sources */,
+				3912A4561B966C34005E41FA /* ObjCViewController.m in Sources */,
 				39BBCFB21AD0CC7A00A450D2 /* ViewController.swift in Sources */,
 				39BBCFB01AD0CC7A00A450D2 /* AppDelegate.swift in Sources */,
 			);
@@ -366,6 +375,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -430,10 +440,13 @@
 			baseConfigurationReference = CE9286ABAE36805B246B9522 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = RichEditorViewSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cjwirth.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RichEditorViewSample/RichEditorViewSample-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -442,10 +455,12 @@
 			baseConfigurationReference = 374E2CA30A706AF05A5F787D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = RichEditorViewSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cjwirth.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RichEditorViewSample/RichEditorViewSample-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -453,16 +468,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = RichEditorViewSampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cjwirth.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RichEditorViewSample.app/RichEditorViewSample";
 			};
@@ -472,12 +483,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = RichEditorViewSampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.cjwirth.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RichEditorViewSample.app/RichEditorViewSample";
 			};
