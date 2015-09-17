@@ -10,19 +10,24 @@ import UIKit
 import RichEditorView
 
 class ViewController: UIViewController {
+
     @IBOutlet var editorView: RichEditorView!
     @IBOutlet var htmlTextView: UITextView!
-    var toolbar: RichEditorToolbar { return self.keyboardManager.toolbar }
 
-    lazy var keyboardManager: KeyboardManager = { KeyboardManager(view: self.view) }()
+    lazy var toolbar: RichEditorToolbar = {
+        let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
+        toolbar.options = RichEditorOptions.all()
+        return toolbar
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        keyboardManager.toolbar.editor = self.editorView
-
+        
         editorView.delegate = self
+        editorView.inputAccessoryView = toolbar
 
         toolbar.delegate = self
+        toolbar.editor = editorView
 
         // We will create a custom action that clears all the input text when it is pressed
         let item = RichEditorOptionItem(image: nil, title: "Clear") { toolbar in
@@ -32,16 +37,6 @@ class ViewController: UIViewController {
         var options = toolbar.options
         options.append(item)
         toolbar.options = options
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        keyboardManager.beginMonitoring()
-    }
-
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        keyboardManager.stopMonitoring()
     }
 
 }
