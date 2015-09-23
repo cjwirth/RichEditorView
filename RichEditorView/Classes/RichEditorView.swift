@@ -83,7 +83,7 @@ public class RichEditorView: UIView {
     /**
     The internal UIWebView that is used to display the text.
     */
-    private var webView: UIWebView
+    public private(set) var webView: UIWebView
     
     /**
         Whether or not to allow user input in the view.
