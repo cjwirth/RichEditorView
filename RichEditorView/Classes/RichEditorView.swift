@@ -98,7 +98,7 @@ public class RichEditorView: UIView {
         The placeholder text that should be shown when there is no user input.
         To set, use `setPlaceholderText(text: String)`
     */
-    private(set) var placeholder: String = ""
+    public private(set) var placeholder: String = ""
 
     private var editorLoaded = false
     
@@ -106,7 +106,7 @@ public class RichEditorView: UIView {
         The internal height of the text being displayed.
         Is continually being updated as the text is edited.
     */
-    private(set) var editorHeight: Int = 0 {
+    public private(set) var editorHeight: Int = 0 {
         didSet {
             delegate?.richEditor(self, heightDidChange: editorHeight)
         }
@@ -116,7 +116,7 @@ public class RichEditorView: UIView {
         The content HTML of the text being displayed.
         Is continually updated as the text is being edited.
     */
-    private(set) var contentHTML: String = "" {
+    public private(set) var contentHTML: String = "" {
         didSet {
             delegate?.richEditor(self, contentDidChange: contentHTML)
         }
