@@ -161,6 +161,10 @@ public class RichEditorView: UIView {
             let request = NSURLRequest(URL: url)
             webView.loadRequest(request)
         }
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "viewWasTapped")
+        tapGestureRecognizer.delegate = self
+        addGestureRecognizer(tapGestureRecognizer)
     }
 }
 
@@ -387,6 +391,20 @@ extension RichEditorView: UIWebViewDelegate {
 }
 
 
+// MARK: UIGestureRecognizerDelegate
+extension RichEditorView: UIGestureRecognizerDelegate {
+
+    /**
+        Delegate method for our UITapGestureDelegate.
+        Since the internal web view also has gesture recognizers, we have to make sure that we actually receive our taps.
+    */
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+
+}
+
+
 // MARK: - Utilities
 extension RichEditorView {
     
@@ -483,6 +501,16 @@ extension RichEditorView {
             let range = Range(start: actionPrefix.startIndex, end: actionPrefix.endIndex)
             let action = method.stringByReplacingCharactersInRange(range, withString: "")
             delegate?.richEditor(self, handleCustomAction: action)
+        }
+    }
+
+    /**
+        Called by the UITapGestureRecognizer when the user taps the view.
+        If we are not already the first responder, focus the editor.
+    */
+    internal func viewWasTapped() {
+        if !webView.containsFirstResponder {
+            focus()
         }
     }
     
