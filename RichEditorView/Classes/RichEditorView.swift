@@ -16,40 +16,40 @@ import UIKit
         Called when the inner height of the text being displayed changes
         Can be used to update the UI
     */
-    func richEditor(editor: RichEditorView, heightDidChange height: Int)
+    optional func richEditor(editor: RichEditorView, heightDidChange height: Int)
 
     /**
         Called whenever the content inside the view changes
     */
-    func richEditor(editor: RichEditorView, contentDidChange content: String)
+    optional func richEditor(editor: RichEditorView, contentDidChange content: String)
 
     /**
         Called when the rich editor starts editing
     */
-    func richEditorTookFocus(editor: RichEditorView)
+    optional func richEditorTookFocus(editor: RichEditorView)
     
     /**
         Called when the rich editor stops editing or loses focus
     */
-    func richEditorLostFocus(editor: RichEditorView)
+    optional func richEditorLostFocus(editor: RichEditorView)
     
     /**
         Called when the RichEditorView has become ready to receive input
         More concretely, is called when the internal UIWebView loads for the first time, and contentHTML is set
     */
-    func richEditorDidLoad(editor: RichEditorView)
+    optional func richEditorDidLoad(editor: RichEditorView)
     
     /**
         Called when the internal UIWebView begins loading a URL that it does not know how to respond to
         For example, if there is an external link, and then the user taps it
     */
-    func richEditor(editor: RichEditorView, shouldInteractWithURL url: NSURL) -> Bool
+    optional func richEditor(editor: RichEditorView, shouldInteractWithURL url: NSURL) -> Bool
     
     /**
         Called when custom actions are called by callbacks in the JS
         By default, this method is not used unless called by some custom JS that you add
     */
-    func richEditor(editor: RichEditorView, handleCustomAction action: String)
+    optional func richEditor(editor: RichEditorView, handleCustomAction action: String)
 }
 
 /**
@@ -108,7 +108,7 @@ public class RichEditorView: UIView {
     */
     public private(set) var editorHeight: Int = 0 {
         didSet {
-            delegate?.richEditor(self, heightDidChange: editorHeight)
+            delegate?.richEditor?(self, heightDidChange: editorHeight)
         }
     }
 
@@ -118,7 +118,7 @@ public class RichEditorView: UIView {
     */
     public private(set) var contentHTML: String = "" {
         didSet {
-            delegate?.richEditor(self, contentDidChange: contentHTML)
+            delegate?.richEditor?(self, contentDidChange: contentHTML)
         }
     }
 
@@ -379,7 +379,7 @@ extension RichEditorView: UIWebViewDelegate {
         if navigationType == .LinkClicked {
             if let
                 url = request.URL,
-                shouldInteract = delegate?.richEditor(self, shouldInteractWithURL:url)
+                shouldInteract = delegate?.richEditor?(self, shouldInteractWithURL:url)
             {
                 return shouldInteract
             }
@@ -476,7 +476,7 @@ extension RichEditorView {
                 setHTML(contentHTML)
                 setContentEditable(editingEnabledVar)
                 setPlaceholderText(placeholder)
-                delegate?.richEditorDidLoad(self)
+                delegate?.richEditorDidLoad?(self)
             }
             updateHeight()
         }
@@ -486,10 +486,10 @@ extension RichEditorView {
             updateHeight()
         }
         else if method.hasPrefix("focus") {
-            delegate?.richEditorTookFocus(self)
+            delegate?.richEditorTookFocus?(self)
         }
         else if method.hasPrefix("blur") {
-            delegate?.richEditorLostFocus(self)
+            delegate?.richEditorLostFocus?(self)
         }
         else if method.hasPrefix("action/") {
             let content = runJS("RE.getHtml()")
@@ -500,7 +500,7 @@ extension RichEditorView {
             let actionPrefix = "action/"
             let range = Range(start: actionPrefix.startIndex, end: actionPrefix.endIndex)
             let action = method.stringByReplacingCharactersInRange(range, withString: "")
-            delegate?.richEditor(self, handleCustomAction: action)
+            delegate?.richEditor?(self, handleCustomAction: action)
         }
     }
 
