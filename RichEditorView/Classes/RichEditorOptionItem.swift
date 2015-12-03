@@ -195,7 +195,7 @@ public enum RichEditorOptions: RichEditorOption {
             case .AlignCenter: toolbar.editor?.alignCenter()
             case .AlignRight: toolbar.editor?.alignRight()
             case .Image: toolbar.delegate?.richEditorToolbarInsertImage?(toolbar)
-            case .Link: toolbar.delegate?.richEditorToolbarChangeInsertLink?(toolbar)
+            case .Link: toolbar.delegate?.richEditorToolbarInsertLink?(toolbar)
             }
         }
     }

@@ -31,7 +31,7 @@ import UIKit
     /**
         Called when the Insert Link toolbar item is pressed.
     */
-    optional func richEditorToolbarChangeInsertLink(toolbar: RichEditorToolbar)
+    optional func richEditorToolbarInsertLink(toolbar: RichEditorToolbar)
 }
 
 
