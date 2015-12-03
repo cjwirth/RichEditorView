@@ -11,27 +11,27 @@ import UIKit
     RichEditorToolbarDelegate is a protocol for the RichEditorToolbar.
     Used to receive actions that need extra work to perform (eg. display some UI)
 */
-@objc public protocol RichEditorToolbarDelegate: class {
+@objc public protocol RichEditorToolbarDelegate: NSObjectProtocol {
 
     /**
         Called when the Text Color toolbar item is pressed.
     */
-    func richEditorToolbarChangeTextColor(toolbar: RichEditorToolbar)
+    optional func richEditorToolbarChangeTextColor(toolbar: RichEditorToolbar)
 
     /**
         Called when the Background Color toolbar item is pressed.
     */
-    func richEditorToolbarChangeBackgroundColor(toolbar: RichEditorToolbar)
+    optional func richEditorToolbarChangeBackgroundColor(toolbar: RichEditorToolbar)
 
     /**
         Called when the Insert Image toolbar item is pressed.
     */
-    func richEditorToolbarInsertImage(toolbar: RichEditorToolbar)
+    optional func richEditorToolbarInsertImage(toolbar: RichEditorToolbar)
 
     /**
-        Called when the Isert Link toolbar item is pressed.
+        Called when the Insert Link toolbar item is pressed.
     */
-    func richEditorToolbarChangeInsertLink(toolbar: RichEditorToolbar)
+    optional func richEditorToolbarChangeInsertLink(toolbar: RichEditorToolbar)
 }
 
 

@@ -10,7 +10,7 @@ import UIKit
 /**
     RichEditorDelegate defines callbacks for the delegate of the RichEditorView
 */
-@objc public protocol RichEditorDelegate: class {
+@objc public protocol RichEditorDelegate: NSObjectProtocol {
 
     /**
         Called when the inner height of the text being displayed changes

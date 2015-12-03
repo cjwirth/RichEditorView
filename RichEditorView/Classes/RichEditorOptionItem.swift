@@ -184,8 +184,8 @@ public enum RichEditorOptions: RichEditorOption {
             case .Superscript: toolbar.editor?.superscript()
             case .Strike: toolbar.editor?.strikethrough()
             case .Underline: toolbar.editor?.underline()
-            case .TextColor: toolbar.delegate?.richEditorToolbarChangeTextColor(toolbar)
-            case .TextBackgroundColor: toolbar.delegate?.richEditorToolbarChangeBackgroundColor(toolbar)
+            case .TextColor: toolbar.delegate?.richEditorToolbarChangeTextColor?(toolbar)
+            case .TextBackgroundColor: toolbar.delegate?.richEditorToolbarChangeBackgroundColor?(toolbar)
             case .Header(let h): toolbar.editor?.header(h)
             case .Indent: toolbar.editor?.indent()
             case .Outdent: toolbar.editor?.outdent()
@@ -194,8 +194,8 @@ public enum RichEditorOptions: RichEditorOption {
             case .AlignLeft: toolbar.editor?.alignLeft()
             case .AlignCenter: toolbar.editor?.alignCenter()
             case .AlignRight: toolbar.editor?.alignRight()
-            case .Image: toolbar.delegate?.richEditorToolbarInsertImage(toolbar)
-            case .Link: toolbar.delegate?.richEditorToolbarChangeInsertLink(toolbar)
+            case .Image: toolbar.delegate?.richEditorToolbarInsertImage?(toolbar)
+            case .Link: toolbar.delegate?.richEditorToolbarChangeInsertLink?(toolbar)
             }
         }
     }
