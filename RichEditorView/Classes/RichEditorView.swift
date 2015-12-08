@@ -453,8 +453,7 @@ extension RichEditorView {
         var newString = ""
         for var i = unicode.startIndex; i < unicode.endIndex; i++ {
             let char = unicode[i]
-            if char.value < 9 || (char.value > 9 && char.value < 32) // < 32 == special characters in ASCII, 9 == horizontal tab in ASCII
-                || char.value == 39 { // 39 == ' in ASCII
+            if char.value == 13 || char.value == 39 { // 13 == carriage return in ASCII, 39 == ' in ASCII
                 let escaped = char.escape(asASCII: true)
                 newString.appendContentsOf(escaped)
             } else {
