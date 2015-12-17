@@ -331,7 +331,10 @@ extension RichEditorView {
     public func blur() {
         runJS("RE.blurFocus()")
     }
-    
+
+    public func selectionExists() -> Bool {
+        return runJS("RE.selectionExists();") == "true" ? true : false
+    }
 }
 
 
