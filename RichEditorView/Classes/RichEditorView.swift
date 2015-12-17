@@ -333,7 +333,7 @@ extension RichEditorView {
     }
 
     public func selectionExists() -> Bool {
-        return runJS("RE.selectionExists();") == "true" ? true : false
+        return runJS("RE.rangeSelectionExists();") == "true" ? true : false
     }
 }
 
