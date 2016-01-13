@@ -269,3 +269,17 @@ RE.focus = function() {
 RE.blurFocus = function() {
     RE.editor.blur();
 }
+
+/**
+ * If the current selection's parent is an anchor tag, get the href.
+ * @returns {string}
+ */
+RE.getSelectedHref = function() {
+    var href, sel;
+    href = '';
+    sel = window.getSelection();
+    if (sel != null && sel.focusNode && sel.focusNode.parentElement) {
+        href = sel.focusNode.parentElement.getAttribute('href');
+    }
+    return href;
+}

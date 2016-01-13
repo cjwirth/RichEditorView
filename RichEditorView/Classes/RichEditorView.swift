@@ -332,8 +332,25 @@ extension RichEditorView {
         runJS("RE.blurFocus()")
     }
 
+    /**
+    * Looks specifically for a selection of type "Range"
+    **/
     public func rangeSelectionExists() -> Bool {
         return runJS("RE.rangeSelectionExists();") == "true" ? true : false
+    }
+
+    /**
+    * If the current selection's parent is an anchor tag, get the href.
+    * @returns nil if href is empty, otherwise a non-empty String
+    */
+    public func getSelectedHref() -> String? {
+        if !rangeSelectionExists() { return nil }
+        let href = runJS("RE.getSelectedHref();")
+        if href == "" {
+            return nil
+        } else {
+            return href
+        }
     }
 }
 
