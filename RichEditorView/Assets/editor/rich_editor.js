@@ -287,15 +287,38 @@ RE.blurFocus = function() {
 }
 
 /**
+Recursively search element ancestors to find a element nodeName e.g. A
+**/
+var _findNodeByNameInContainer  = function(element, nodeName, rootElementId) {
+  if (element.nodeName == nodeName) {
+    return element
+  } else {
+    if (element.id === rootElementId) {
+      // console.log('Root content node reached!')
+      return null
+    }
+    // console.log('Recursing...')
+    _findNodeByNameInContainer(element.parentElement, nodeName, rootElementId)
+  }
+}
+
+var anyAnchorTagsInChildrenOf = function(node) {
+  for ( var child in node.childNodes) {
+    
+  }
+}
+/**
  * If the current selection's parent is an anchor tag, get the href.
  * @returns {string}
  */
 RE.getSelectedHref = function() {
     var href, sel;
     href = '';
-    sel = window.getSelection();
-    if (sel != null && sel.focusNode && sel.focusNode.parentElement) {
-        href = sel.focusNode.parentElement.getAttribute('href');
-    }
-    return href;
+    sel = getSelection()
+    href = _findNodeByNameInContainer(sel.anchorNode.parentElement, 'A', 'editor')
+    return href ? href : null
+    // if (sel != null && sel.focusNode && sel.focusNode.parentElement) {
+    //     href = sel.focusNode.parentElement.getAttribute('href');
+    // }
+    // return href;
 }
