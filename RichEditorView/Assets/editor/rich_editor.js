@@ -61,9 +61,9 @@ RE.runCallbackQueue = function() {
     if (RE.callbackQueue.length == 0) {
         return;
     }
-    
+
     setTimeout(function() {
-        window.location.href = "re-callback://";    
+        window.location.href = "re-callback://";
     }, 0);
 }
 
@@ -245,6 +245,22 @@ RE.backuprange = function(){
             "endContainer": range.endContainer,
             "endOffset": range.endOffset};
     }
+}
+
+RE.addRangeToSelection = function(selection, range) {
+  if (selection) {
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+}
+
+// Programatically select a DOM element
+RE.selectElementContents = function(el) {
+  var range = document.createRange();
+  range.selectNodeContents(el);
+  var sel = window.getSelection();
+  // this.createSelectionFromRange sel, range
+  RE.addRangeToSelection(sel, range);
 }
 
 RE.restorerange = function(){
