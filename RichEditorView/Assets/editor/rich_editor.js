@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+"use strict";
 
 window.onload = function() {
     RE.callback("ready");
@@ -302,10 +303,24 @@ var _findNodeByNameInContainer  = function(element, nodeName, rootElementId) {
   }
 }
 
-var anyAnchorTagsInChildrenOf = function(node) {
-  for ( var child in node.childNodes) {
-    
+var isAnchorNode = function(node) {
+  return ("A" == node.nodeName)
+}
+
+RE.getAnchorTagsInNode = function(node) {
+  var links = [];
+
+  while (node.nextSibling != null && node.nextSibling != undefined) {
+    node = node.nextSibling;
+    if (isAnchorNode(node)) {
+      links.push(node.getAttribute('href'))
+    }
   }
+  return links;
+}
+
+RE.countAnchorTagsInNode = function(node) {
+  return RE.getAnchorTagsInNode(node).length;
 }
 /**
  * If the current selection's parent is an anchor tag, get the href.
@@ -315,7 +330,17 @@ RE.getSelectedHref = function() {
     var href, sel;
     href = '';
     sel = getSelection()
-    href = _findNodeByNameInContainer(sel.anchorNode.parentElement, 'A', 'editor')
+    let tags = RE.getAnchorTagsInNode(sel.anchorNode)
+
+    //if more than one link is there, return null
+    if (tags.length > 1) {
+      return null;
+    } else if (tags.length == 1) {
+      href = tags[0]
+    } else {
+      href = _findNodeByNameInContainer(sel.anchorNode.parentElement, 'A', 'editor')
+    }
+
     return href ? href : null
     // if (sel != null && sel.focusNode && sel.focusNode.parentElement) {
     //     href = sel.focusNode.parentElement.getAttribute('href');

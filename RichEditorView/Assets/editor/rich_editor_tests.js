@@ -1,6 +1,12 @@
+"use strict";
+
 var RichEditorTests = function() {
-    var self = this;
+    var self = {};
     var tests = [];
+		var link = "http://foo.bar/"
+		var anchor = "<a id='link_id' href='"+link+"'>Foo</a>"
+		var htmlWithLink = "<span><p id='prose'>What are these so withered and wild in their attire? " + anchor + " </p>that look not like the inhabitants of the Earth and yet are on't?</span>"
+		var htmlWith2Links = "<span><p id='two_links'>Blah? " + anchor + " " + anchor + " Blah</p></span>"
 
     var tearDown = function() {
       RE.setHtml('')
@@ -11,10 +17,10 @@ var RichEditorTests = function() {
     **/
     self.runTests = function() {
       for (var testName in tests) {
-        console.log('Running: ' + testName)
+        // console.log('Running : ' + testName)
         tests[testName]();
-				console.log(testName + ' passed')
-        // tearDown()
+				console.log('Passed  : ' + testName)
+        tearDown()
       }
     }
 
@@ -25,23 +31,37 @@ var RichEditorTests = function() {
     };
 
     tests['testGetSelectedHrefReturnsLinkOnFullSelection'] = function() {
-      var link = "http://foo.bar/"
-      var htmlWithLink = "<a id='link_id' href='"+link+"'>Foo</a>"
+      let htmlWithLink = "<a id='link_id' href='"+link+"'>Foo</a>"
       RE.setHtml(htmlWithLink)
       //select the anchor tag directly and fully
       RE.selectElementContents(document.querySelector('#link_id'))
       Assert.equals(RE.getSelectedHref(), link)
     };
 
-    tests['testGetSelectedHrefOnPartialSelection'] = function() {
-      var link = "http://foo.bar"
-      var anchor = "<a id='link_id' href='"+link+"'>Foo</a>"
-      var htmlWithLink = "<span><p id='prose'>What are these so withered and wild in their attire? " + anchor + " </p>that look not like the inhabitants of the Earth and yet are on't?</span>"
+    tests['testGetSelectedHrefWithSelectionContainingOneLink'] = function() {
       RE.setHtml(htmlWithLink)
       //select the anchor tag directly and fully
       RE.selectElementContents(document.querySelector('#prose'))
       Assert.equals(RE.getSelectedHref(), link)
     };
+
+		tests['testCountAnchorTagsInSelection'] = function() {
+			RE.setHtml(htmlWithLink)
+			//select the anchor tag directly and fully
+			RE.selectElementContents(document.querySelector('#prose'))
+			let count = RE.countAnchorTagsInNode(getSelection().anchorNode)
+			Assert.equals(count,1)
+		}
+
+		tests['testgetSelectedHrefWith2LinksReturnsNull'] = function() {
+			RE.setHtml(htmlWith2Links)
+
+			//select the anchor tag directly and fully
+			RE.selectElementContents(document.querySelector('#two_links'))
+			let count = RE.countAnchorTagsInNode(getSelection().anchorNode)
+			Assert.equals(count,2)
+			// Assert.equals(RE.getSelectedHref(), null)
+		}
 
     return self;
 }()
