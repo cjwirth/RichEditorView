@@ -3,10 +3,10 @@
 var RichEditorTests = function() {
     var self = {};
     var tests = [];
-		var link = "http://foo.bar/"
-		var anchor = "<a id='link_id' href='"+link+"'>Foo</a>"
-		var htmlWithLink = "<span><p id='prose'>What are these so withered and wild in their attire? " + anchor + " </p>that look not like the inhabitants of the Earth and yet are on't?</span>"
-		var htmlWith2Links = "<span><p id='two_links'>Blah? " + anchor + " " + anchor + " Blah</p></span>"
+    var link = "http://foo.bar/"
+    var anchor = "<a id='link_id' href='"+link+"'>Foo</a>"
+    var htmlWithLink = "<span><p id='prose'>What are these so withered and wild in their attire? " + anchor + " </p>that look not like the inhabitants of the Earth and yet are on't?</span>"
+    var htmlWith2Links = "<span><p id='two_links'>Blah? " + anchor + " " + anchor + " Blah</p></span>"
 
     var tearDown = function() {
       RE.setHtml('')
@@ -19,7 +19,7 @@ var RichEditorTests = function() {
       for (var testName in tests) {
         // console.log('Running : ' + testName)
         tests[testName]();
-				console.log('Passed  : ' + testName)
+        console.log('Passed  : ' + testName)
         tearDown()
       }
     }
@@ -45,23 +45,23 @@ var RichEditorTests = function() {
       Assert.equals(RE.getSelectedHref(), link)
     };
 
-		tests['testCountAnchorTagsInSelection'] = function() {
-			RE.setHtml(htmlWithLink)
-			//select the anchor tag directly and fully
-			RE.selectElementContents(document.querySelector('#prose'))
-			let count = RE.countAnchorTagsInNode(getSelection().anchorNode)
-			Assert.equals(count,1)
-		}
+    tests['testCountAnchorTagsInSelection'] = function() {
+      RE.setHtml(htmlWithLink)
+      //select the anchor tag directly and fully
+      RE.selectElementContents(document.querySelector('#prose'))
+      let count = RE.countAnchorTagsInNode(getSelection().anchorNode)
+      Assert.equals(count,1)
+    }
 
-		tests['testgetSelectedHrefWith2LinksReturnsNull'] = function() {
-			RE.setHtml(htmlWith2Links)
+    tests['testgetSelectedHrefWith2LinksReturnsNull'] = function() {
+      RE.setHtml(htmlWith2Links)
 
-			//select the anchor tag directly and fully
-			RE.selectElementContents(document.querySelector('#two_links'))
-			let count = RE.countAnchorTagsInNode(getSelection().anchorNode)
-			Assert.equals(count,2)
-			// Assert.equals(RE.getSelectedHref(), null)
-		}
+      //select the anchor tag directly and fully
+      RE.selectElementContents(document.querySelector('#two_links'))
+      let count = RE.countAnchorTagsInNode(getSelection().anchorNode)
+      Assert.equals(count,2)
+      // Assert.equals(RE.getSelectedHref(), null)
+    }
 
     return self;
 }()
