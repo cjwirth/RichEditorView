@@ -38,6 +38,15 @@ RE.rangeSelectionExists = function() {
     return false;
 };
 
+RE.rangeOrCaretSelectionExists = function() {
+    //!! coerces a null to bool
+    var sel = document.getSelection();
+    if (sel && (sel.type == "Range" || sel.type == "Caret")) {
+        return true;
+    }
+    return false;
+};
+
 RE.editor.addEventListener("input", function() {
     RE.updatePlaceholder();
     RE.backuprange();
@@ -330,8 +339,11 @@ RE.getSelectedHref = function() {
     var href, sel;
     href = '';
     sel = getSelection()
-    let tags = RE.getAnchorTagsInNode(sel.anchorNode)
+    if (!RE.rangeOrCaretSelectionExists()) {
+      return null;
+    }
 
+    let tags = RE.getAnchorTagsInNode(sel.anchorNode)
     //if more than one link is there, return null
     if (tags.length > 1) {
       return null;
@@ -342,8 +354,4 @@ RE.getSelectedHref = function() {
     }
 
     return href ? href : null
-    // if (sel != null && sel.focusNode && sel.focusNode.parentElement) {
-    //     href = sel.focusNode.parentElement.getAttribute('href');
-    // }
-    // return href;
 }

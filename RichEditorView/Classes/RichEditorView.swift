@@ -340,6 +340,13 @@ extension RichEditorView {
     }
 
     /**
+     * Looks specifically for a selection of type "Range" or "Caret"
+     **/
+    public func rangeorCaretSelectionExists() -> Bool {
+        return runJS("RE.rangeOrCaretSelectionExists();") == "true" ? true : false
+    }
+
+    /**
     * If the current selection's parent is an anchor tag, get the href.
     * @returns nil if href is empty, otherwise a non-empty String
     */
