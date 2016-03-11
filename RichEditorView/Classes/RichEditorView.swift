@@ -342,7 +342,7 @@ extension RichEditorView {
     /**
      * Looks specifically for a selection of type "Range" or "Caret"
      **/
-    public func rangeorCaretSelectionExists() -> Bool {
+    public func rangeOrCaretSelectionExists() -> Bool {
         return runJS("RE.rangeOrCaretSelectionExists();") == "true" ? true : false
     }
 
