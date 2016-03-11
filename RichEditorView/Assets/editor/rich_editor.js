@@ -350,7 +350,8 @@ RE.getSelectedHref = function() {
     } else if (tags.length == 1) {
         href = tags[0];
     } else {
-        href = _findNodeByNameInContainer(sel.anchorNode.parentElement, 'A', 'editor');
+        var node = _findNodeByNameInContainer(sel.anchorNode.parentElement, 'A', 'editor');
+        href = node.href;
     }
 
     return href ? href : null;
