@@ -92,7 +92,7 @@ extension ViewController: RichEditorToolbarDelegate {
     }
 
     func richEditorToolbarInsertImage(toolbar: RichEditorToolbar) {
-        toolbar.editor?.insertImage("http://gravatar.com/avatar/696cf5da599733261059de06c4d1fe22", alt: "Gravatar")
+        toolbar.editor?.insertImage("https://gravatar.com/avatar/696cf5da599733261059de06c4d1fe22", alt: "Gravatar")
     }
 
     func richEditorToolbarInsertLink(toolbar: RichEditorToolbar) {
