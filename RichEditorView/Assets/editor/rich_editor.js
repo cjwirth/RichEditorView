@@ -372,3 +372,27 @@ RE.getSelectedHref = function() {
 
     return href ? href : null;
 };
+
+/* retrieve caret vertical position */
+
+RE.getCaretPosition = function() {
+    var x=0, y=0;
+    var sel=window.getSelection();
+    if (sel.rangeCount) {
+        var range = sel.getRangeAt(0);
+        var needsWorkAround = (range.startContainer.nodeName.toLowerCase() == 'div' && range.startOffset == 0);
+        if (needsWorkAround) {
+            x=range.startContainer.offsetLeft;
+            y=range.startContainer.offsetTop + range.startContainer.offsetHeight;
+        } else {
+            if (range.getClientRects) {
+                var rects=range.getClientRects();
+                if (rects.length > 0) {
+                    x = rects[0].left;
+                    y = rects[0].bottom;
+                }
+            }
+        }
+    }
+    return y;
+};

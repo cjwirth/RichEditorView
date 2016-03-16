@@ -346,6 +346,12 @@ extension RichEditorView {
         return runJS("RE.rangeOrCaretSelectionExists();") == "true" ? true : false
     }
 
+    /** Returns caret vertical position */
+    
+    public func getCaretPosition() -> String {
+        return runJS("RE.getCaretPosition();")
+    }
+    
     /**
     * If the current selection's parent is an anchor tag, get the href.
     * @returns nil if href is empty, otherwise a non-empty String
@@ -439,6 +445,34 @@ extension RichEditorView: UIGestureRecognizerDelegate {
 // MARK: - Utilities
 extension RichEditorView {
     
+    /** Sets content offset for scrollView based on caret location **/
+    
+    private func fixScrollView(editor: RichEditorView) {
+        
+        var scrollView = editor.webView.scrollView
+        
+        var contentHeight: CGFloat?
+        let htmlHeight = editor.runJS("document.getElementById('editor').clientHeight;")
+        if let n = NSNumberFormatter().numberFromString(htmlHeight) {
+            let floatValue = CGFloat(n)
+            contentHeight = floatValue
+        } else {
+            contentHeight = scrollView.frame.height
+        }
+        scrollView.contentSize = CGSizeMake(scrollView.frame.width, contentHeight!)
+        
+        let caretPosition: String = editor.getCaretPosition()
+        
+        if let caretPositionNumeric = NSNumberFormatter().numberFromString(caretPosition) {
+            let caretFloat = CGFloat(caretPositionNumeric)
+            if caretFloat >= (scrollView.bounds.size.height) {
+                let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom)
+                scrollView.setContentOffset(bottomOffset, animated: true)
+            }
+        }
+        
+    }
+    
     /**
     Runs some JavaScript on the UIWebView and returns the result
     If there is no result, returns an empty string
@@ -513,6 +547,7 @@ extension RichEditorView {
             updateHeight()
         }
         else if method.hasPrefix("input") {
+            fixScrollView(self)
             let content = runJS("RE.getHtml()")
             contentHTML = content
             updateHeight()
