@@ -383,7 +383,7 @@ RE.getCaretPosition = function() {
         var needsWorkAround = (range.startContainer.nodeName.toLowerCase() == 'div' && range.startOffset == 0);
         if (needsWorkAround) {
             x=range.startContainer.offsetLeft;
-            y=range.startContainer.offsetTop;
+            y=range.startContainer.offsetTop + range.startContainer.clientHeight;
         } else {
             if (range.getClientRects) {
                 var rects=range.getClientRects();
