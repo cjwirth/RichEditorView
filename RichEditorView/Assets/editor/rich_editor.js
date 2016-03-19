@@ -66,6 +66,10 @@ RE.customAction = function(action) {
     RE.callback("action/" + action);
 };
 
+RE.updateHeight = function() {
+    RE.callback("updateHeight");
+}
+
 RE.callbackQueue = [];
 RE.runCallbackQueue = function() {
     if (RE.callbackQueue.length === 0) {
@@ -89,7 +93,15 @@ RE.callback = function(method) {
 };
 
 RE.setHtml = function(contents) {
-    RE.editor.innerHTML = contents;
+    var tempWrapper = document.createElement('div');
+    tempWrapper.innerHTML = contents;
+    var images = tempWrapper.querySelectorAll("img");
+
+    for (var i = 0; i < images.length; i++) {
+        images[i].onload = RE.updateHeight;
+    }
+
+    RE.editor.innerHTML = tempWrapper.innerHTML;
     RE.updatePlaceholder();
 };
 
@@ -208,8 +220,12 @@ RE.setJustifyRight = function() {
 };
 
 RE.insertImage = function(url, alt) {
-    var html = '<img src="' + url + '" alt="' + alt + '" />';
-    RE.insertHTML(html);
+    var img = document.createElement('img');
+    img.setAttribute("src", url);
+    img.setAttribute("alt", alt);
+    img.onload = RE.updateHeight;
+
+    RE.insertHTML(img.outerHTML);
     RE.callback("input");
 };
 

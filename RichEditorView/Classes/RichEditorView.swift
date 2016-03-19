@@ -517,6 +517,9 @@ extension RichEditorView {
             contentHTML = content
             updateHeight()
         }
+        else if method.hasPrefix("updateHeight") {
+            updateHeight()
+        }
         else if method.hasPrefix("focus") {
             delegate?.richEditorTookFocus?(self)
         }
