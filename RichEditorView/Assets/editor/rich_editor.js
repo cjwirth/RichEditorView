@@ -50,6 +50,7 @@ RE.rangeOrCaretSelectionExists = function() {
 RE.editor.addEventListener("input", function() {
     RE.updatePlaceholder();
     RE.backuprange();
+    RE.wrapTextNodes();
     RE.callback("input");
 });
 
@@ -373,26 +374,64 @@ RE.getSelectedHref = function() {
     return href ? href : null;
 };
 
+/* Make sure all text nodes are wrapped in divs! */
+
+RE.wrapTextNodes = function() {
+    var contents = RE.editor.childNodes;
+    for (var i = 0; i < contents.length; i++) {
+        if (contents[i].nodeType === 3) {
+            var newNode = document.createElement('div');
+            RE.createWrapper(contents[i], newNode);
+            RE.focus();
+        }
+    }
+}
+
+
+RE.createWrapper = function(elms, node) {
+    var child = node.cloneNode(true);
+    var el    = elms;
+    
+    var parent  = el.parentNode;
+    var sibling = el.nextSibling;
+
+    child.appendChild(el);
+    
+    if (sibling) {
+        parent.insertBefore(child, sibling);
+    } else {
+        parent.appendChild(child);
+    }
+    
+};
+
 /* retrieve caret vertical position */
 
 RE.getCaretPosition = function() {
     var x=0, y=0;
+    var newLine = false;
+    var result = [];
     var sel=window.getSelection();
     if (sel.rangeCount) {
         var range = sel.getRangeAt(0);
         var needsWorkAround = (range.startContainer.nodeName.toLowerCase() == 'div' && range.startOffset == 0);
         if (needsWorkAround) {
+            console.log(range);
             x=range.startContainer.offsetLeft;
-            y=range.startContainer.offsetTop + range.startContainer.clientHeight;
+            y=range.startContainer.offsetTop; // add range.startContainer.clientHeight if want bottom of caret;
+            newLine = true; // position is on new line with no content
         } else {
             if (range.getClientRects) {
                 var rects=range.getClientRects();
                 if (rects.length > 0) {
                     x = rects[0].left;
-                    y = rects[0].bottom;
+                    y = rects[0].top;
+                    newLine = false;
                 }
             }
         }
     }
-    return y;
+    var json = JSON.stringify({height: y, newLine: newLine});
+    console.log(json);
+    return json;
 };
