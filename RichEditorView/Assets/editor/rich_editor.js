@@ -414,7 +414,9 @@ RE.getCaretPosition = function() {
     var sel=window.getSelection();
     if (sel.rangeCount) {
         var range = sel.getRangeAt(0);
-        var needsWorkAround = (range.startContainer.nodeName.toLowerCase() == 'div' && range.startOffset == 0);
+        var needsWorkAround = (range.startOffset == 0)
+        /* Removing fixes bug when node name other than 'div' */
+        // && range.startContainer.nodeName.toLowerCase() == 'div');
         if (needsWorkAround) {
             console.log(range);
             x=range.startContainer.offsetLeft;
