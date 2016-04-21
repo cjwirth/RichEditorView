@@ -478,27 +478,26 @@ extension RichEditorView {
         if let caretPositionNumeric = data!["height"] as? NSNumber {
             
             let caretFloat = CGFloat(caretPositionNumeric) - scrollView.contentOffset.y
-
-            var relativeCaretPosition: CGFloat?
             
-            if caretPositionNumeric.floatValue < 0 {
-                relativeCaretPosition = scrollView.contentOffset.y - abs(CGFloat(caretPositionNumeric.floatValue))
+            var CGFloatCaretPositionNumeric = CGFloat(caretPositionNumeric.floatValue)
+            if newLine {
+                if (caretFloat + 24.0) > (scrollView.bounds.size.height) {
+                    let bottomOffset = CGPointMake(0, (CGFloat(caretPositionNumeric.floatValue) - (scrollView.bounds.size.height + scrollView.contentOffset.y)) + scrollView.contentOffset.y + 28.0)
+                    scrollView.setContentOffset(bottomOffset, animated: true)
+                } else if (CGFloatCaretPositionNumeric < scrollView.contentOffset.y) && scrollView.contentOffset.y > 0 {
+                    let bottomOffset = CGPointMake(scrollView.contentOffset.x, CGFloatCaretPositionNumeric)
+                    scrollView.setContentOffset(bottomOffset, animated: true)
+                }
             } else {
-                relativeCaretPosition = CGFloat(caretPositionNumeric.floatValue)
-            }
-            
-            if (caretFloat + 28.0) >= (scrollView.bounds.size.height) { // 28px for height of caret (line-height: 28px;)
-                let bottomOffset = CGPointMake(0, ((caretFloat + 28.0) + scrollView.contentOffset.y) - scrollView.bounds.size.height + scrollView.contentInset.bottom)
-                scrollView.setContentOffset(bottomOffset, animated: true)
-            } else if (caretPositionNumeric.floatValue < 0) {
-                var amount = CGFloat(caretPositionNumeric.floatValue) < 0 ? CGFloat(caretPositionNumeric.floatValue * -1.0) : CGFloat(caretPositionNumeric.floatValue)
-                var vertOffset = relativeCaretPosition < 0 ? 0 : relativeCaretPosition
-                let bottomOffset = CGPointMake(scrollView.contentOffset.x, CGFloat(vertOffset!))
-                scrollView.setContentOffset(bottomOffset, animated: true)
-            } else  if (relativeCaretPosition < scrollView.contentOffset.y) && newLine && scrollView.contentOffset.y > 0 {
-                var vertOffset = relativeCaretPosition
-                let bottomOffset = CGPointMake(scrollView.contentOffset.x, CGFloat(vertOffset!))
-                scrollView.setContentOffset(bottomOffset, animated: true)
+                if CGFloatCaretPositionNumeric + 24.0 > scrollView.bounds.size.height {
+                    let bottomOffset = CGPointMake(0, ((CGFloatCaretPositionNumeric - scrollView.bounds.size.height) + scrollView.contentOffset.y + 28.0))
+                    scrollView.setContentOffset(bottomOffset, animated: true)
+                } else if (CGFloatCaretPositionNumeric < 0) {
+                    var amount = scrollView.contentOffset.y + CGFloatCaretPositionNumeric
+                    amount = amount < 0 ? 0 : amount
+                    let bottomOffset = CGPointMake(scrollView.contentOffset.x, amount)
+                    scrollView.setContentOffset(bottomOffset, animated: true)
+                }
             }
         }
         
