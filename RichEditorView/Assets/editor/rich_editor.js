@@ -379,7 +379,7 @@ RE.getSelectedHref = function() {
 RE.wrapTextNodes = function() {
     var contents = RE.editor.childNodes;
     for (var i = 0; i < contents.length; i++) {
-        if (contents[i].nodeType === 3) {
+        if (contents[i].nodeType === Node.TEXT_NODE) {
             var newNode = document.createElement('div');
             RE.createWrapper(contents[i], newNode);
             RE.focus();
@@ -418,7 +418,6 @@ RE.getCaretPosition = function() {
         /* Removing fixes bug when node name other than 'div' */
         // && range.startContainer.nodeName.toLowerCase() == 'div');
         if (needsWorkAround) {
-            console.log(range);
             x=range.startContainer.offsetLeft;
             y=range.startContainer.offsetTop; // add range.startContainer.clientHeight if want bottom of caret;
             newLine = true; // position is on new line with no content
@@ -434,6 +433,5 @@ RE.getCaretPosition = function() {
         }
     }
     var json = JSON.stringify({height: y, newLine: newLine});
-    console.log(json);
     return json;
 };

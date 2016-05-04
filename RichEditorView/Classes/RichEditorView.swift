@@ -447,12 +447,12 @@ extension RichEditorView {
     
     /** Sets content offset for scrollView based on caret location **/
     
-    private func fixScrollView(editor: RichEditorView) {
+    private func adjustContentOffsetFromCaretPosition() {
         
-        var scrollView = editor.webView.scrollView
+        let scrollView = self.webView.scrollView
         
         var contentHeight: CGFloat?
-        let htmlHeight = editor.runJS("document.getElementById('editor').clientHeight;")
+        let htmlHeight = self.runJS("document.getElementById('editor').clientHeight;")
         if let n = NSNumberFormatter().numberFromString(htmlHeight) {
             let floatValue = CGFloat(n)
             contentHeight = floatValue
@@ -461,25 +461,15 @@ extension RichEditorView {
         }
         scrollView.contentSize = CGSizeMake(scrollView.frame.width, contentHeight!)
         
-        /* Caret above scrollView bounds */
+        let data = convertStringToDictionary(self.getCaretPosition())
         
-        // Usually getCaretPosition() returns the amount the caret is offset from the current contentOffset, so "-40" would
-        // indicate that the contentOffset would need to be decreased by 40.
-        // However, when the cursor is on a new line with no html content, getCaretPosition() returns the absolute position
-        // of the caret.  The resulting code differentiates between caret position values greater than 0 that could either mean
-        // the caret position is beyond the scrollView lower bounds, or above the scrollView upper bounds and on a new line.
-        // The code also checks if the caret position is within the scrollView bounds to avoid scrolling when caret is 
-        // not on the first line of the scrollView.
-        
-        let data = convertStringToDictionary(editor.getCaretPosition())
-        
-        // Checks if caret is on new line with no content
+        // Checks if caret is on new line with no content - `getCaretPosition()` acts differently when caret is on new line with no content
         let newLine = data!["newLine"] as! Bool
         if let caretPositionNumeric = data!["height"] as? NSNumber {
             
             let caretFloat = CGFloat(caretPositionNumeric) - scrollView.contentOffset.y
             
-            var CGFloatCaretPositionNumeric = CGFloat(caretPositionNumeric.floatValue)
+            let CGFloatCaretPositionNumeric = CGFloat(caretPositionNumeric.floatValue)
             if newLine {
                 if (caretFloat + 24.0) > (scrollView.bounds.size.height) {
                     let bottomOffset = CGPointMake(0, (CGFloat(caretPositionNumeric.floatValue) - (scrollView.bounds.size.height + scrollView.contentOffset.y)) + scrollView.contentOffset.y + 28.0)
@@ -588,7 +578,7 @@ extension RichEditorView {
             updateHeight()
         }
         else if method.hasPrefix("input") {
-            fixScrollView(self)
+            adjustContentOffsetFromCaretPosition()
             let content = runJS("RE.getHtml()")
             contentHTML = content
             updateHeight()
