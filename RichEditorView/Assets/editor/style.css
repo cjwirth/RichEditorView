@@ -22,11 +22,17 @@ html {
 
 body {
     min-height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 
 body, h1, p {
     margin: 0;
+}
+
+div {
+    display: block;
+    position: static;
+    min-height: 28px;
 }
 
 #editor {
@@ -47,8 +53,11 @@ body, h1, p {
 
 #editor {
     min-height: 100%;
-	font-family: 'HelveticaNeue';
-	color:#666666; 
-	line-height:28px; 
-	font-size: 12pt;
+    height: 100%;
+    overflow: auto;
+    display: block;
+    font-family: 'HelveticaNeue';
+    color:#666666;
+    line-height:28px;
+    font-size: 12pt;
 }

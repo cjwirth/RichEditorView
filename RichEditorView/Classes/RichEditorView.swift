@@ -346,6 +346,12 @@ extension RichEditorView {
         return runJS("RE.rangeOrCaretSelectionExists();") == "true" ? true : false
     }
 
+    /** Returns caret vertical position */
+    
+    public func getCaretPosition() -> String {
+        return runJS("RE.getCaretPosition();")
+    }
+    
     /**
     * If the current selection's parent is an anchor tag, get the href.
     * @returns nil if href is empty, otherwise a non-empty String
@@ -439,6 +445,65 @@ extension RichEditorView: UIGestureRecognizerDelegate {
 // MARK: - Utilities
 extension RichEditorView {
     
+    /** Sets content offset for scrollView based on caret location **/
+    
+    private func adjustContentOffsetFromCaretPosition() {
+        
+        let scrollView = self.webView.scrollView
+        
+        var contentHeight: CGFloat?
+        let htmlHeight = self.runJS("document.getElementById('editor').clientHeight;")
+        if let n = NSNumberFormatter().numberFromString(htmlHeight) {
+            let floatValue = CGFloat(n)
+            contentHeight = floatValue
+        } else {
+            contentHeight = scrollView.frame.height
+        }
+        scrollView.contentSize = CGSizeMake(scrollView.frame.width, contentHeight!)
+        
+        let data = convertStringToDictionary(self.getCaretPosition())
+        
+        // Checks if caret is on new line with no content - `getCaretPosition()` acts differently when caret is on new line with no content
+        let newLine = data!["newLine"] as! Bool
+        if let caretPositionNumeric = data!["height"] as? NSNumber {
+            
+            let caretFloat = CGFloat(caretPositionNumeric) - scrollView.contentOffset.y
+            
+            let CGFloatCaretPositionNumeric = CGFloat(caretPositionNumeric.floatValue)
+            if newLine {
+                if (caretFloat + 24.0) > (scrollView.bounds.size.height) {
+                    let bottomOffset = CGPointMake(0, (CGFloat(caretPositionNumeric.floatValue) - (scrollView.bounds.size.height + scrollView.contentOffset.y)) + scrollView.contentOffset.y + 28.0)
+                    scrollView.setContentOffset(bottomOffset, animated: true)
+                } else if (CGFloatCaretPositionNumeric < scrollView.contentOffset.y) && scrollView.contentOffset.y > 0 {
+                    let bottomOffset = CGPointMake(scrollView.contentOffset.x, CGFloatCaretPositionNumeric)
+                    scrollView.setContentOffset(bottomOffset, animated: true)
+                }
+            } else {
+                if CGFloatCaretPositionNumeric + 24.0 > scrollView.bounds.size.height {
+                    let bottomOffset = CGPointMake(0, ((CGFloatCaretPositionNumeric - scrollView.bounds.size.height) + scrollView.contentOffset.y + 28.0))
+                    scrollView.setContentOffset(bottomOffset, animated: true)
+                } else if (CGFloatCaretPositionNumeric < 0) {
+                    var amount = scrollView.contentOffset.y + CGFloatCaretPositionNumeric
+                    amount = amount < 0 ? 0 : amount
+                    let bottomOffset = CGPointMake(scrollView.contentOffset.x, amount)
+                    scrollView.setContentOffset(bottomOffset, animated: true)
+                }
+            }
+        }
+        
+    }
+    
+    private func convertStringToDictionary(text: String) -> [String:AnyObject]? {
+        if let data = text.dataUsingEncoding(NSUTF8StringEncoding) {
+            do {
+                return try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
+            } catch let error as NSError {
+                print(error)
+            }
+        }
+        return nil
+    }
+    
     /**
     Runs some JavaScript on the UIWebView and returns the result
     If there is no result, returns an empty string
@@ -513,6 +578,7 @@ extension RichEditorView {
             updateHeight()
         }
         else if method.hasPrefix("input") {
+            adjustContentOffsetFromCaretPosition()
             let content = runJS("RE.getHtml()")
             contentHTML = content
             updateHeight()

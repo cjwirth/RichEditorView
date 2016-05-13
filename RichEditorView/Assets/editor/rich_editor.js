@@ -50,6 +50,7 @@ RE.rangeOrCaretSelectionExists = function() {
 RE.editor.addEventListener("input", function() {
     RE.updatePlaceholder();
     RE.backuprange();
+    RE.wrapTextNodes();
     RE.callback("input");
 });
 
@@ -371,4 +372,66 @@ RE.getSelectedHref = function() {
     }
 
     return href ? href : null;
+};
+
+/* Make sure all text nodes are wrapped in divs! */
+
+RE.wrapTextNodes = function() {
+    var contents = RE.editor.childNodes;
+    for (var i = 0; i < contents.length; i++) {
+        if (contents[i].nodeType === Node.TEXT_NODE) {
+            var newNode = document.createElement('div');
+            RE.createWrapper(contents[i], newNode);
+            RE.focus();
+        }
+    }
+}
+
+
+RE.createWrapper = function(elms, node) {
+    var child = node.cloneNode(true);
+    var el    = elms;
+    
+    var parent  = el.parentNode;
+    var sibling = el.nextSibling;
+
+    child.appendChild(el);
+    
+    if (sibling) {
+        parent.insertBefore(child, sibling);
+    } else {
+        parent.appendChild(child);
+    }
+    
+};
+
+/* retrieve caret vertical position */
+
+RE.getCaretPosition = function() {
+    var x=0, y=0;
+    var newLine = false;
+    var result = [];
+    var sel=window.getSelection();
+    if (sel.rangeCount) {
+        var range = sel.getRangeAt(0);
+        var needsWorkAround = (range.startOffset == 0)
+        /* Removing fixes bug when node name other than 'div' */
+        // && range.startContainer.nodeName.toLowerCase() == 'div');
+        if (needsWorkAround) {
+            x=range.startContainer.offsetLeft;
+            y=range.startContainer.offsetTop; // add range.startContainer.clientHeight if want bottom of caret;
+            newLine = true; // position is on new line with no content
+        } else {
+            if (range.getClientRects) {
+                var rects=range.getClientRects();
+                if (rects.length > 0) {
+                    x = rects[0].left;
+                    y = rects[0].top;
+                    newLine = false;
+                }
+            }
+        }
+    }
+    var json = JSON.stringify({height: y, newLine: newLine});
+    return json;
 };
