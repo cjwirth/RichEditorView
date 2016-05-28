@@ -405,33 +405,27 @@ RE.createWrapper = function(elms, node) {
     
 };
 
-/* retrieve caret vertical position */
-
-RE.getCaretPosition = function() {
-    var x=0, y=0;
-    var newLine = false;
-    var result = [];
-    var sel=window.getSelection();
+// Returns the cursor position relative to its current position onscreen.
+// Can be negative if it is above what is visible
+RE.getRelativeCaretYPosition = function() {
+    var y = 0;
+    var sel = window.getSelection();
     if (sel.rangeCount) {
         var range = sel.getRangeAt(0);
         var needsWorkAround = (range.startOffset == 0)
         /* Removing fixes bug when node name other than 'div' */
         // && range.startContainer.nodeName.toLowerCase() == 'div');
         if (needsWorkAround) {
-            x=range.startContainer.offsetLeft;
-            y=range.startContainer.offsetTop; // add range.startContainer.clientHeight if want bottom of caret;
-            newLine = true; // position is on new line with no content
+            y = range.startContainer.offsetTop - window.pageYOffset;
         } else {
             if (range.getClientRects) {
                 var rects=range.getClientRects();
                 if (rects.length > 0) {
-                    x = rects[0].left;
                     y = rects[0].top;
-                    newLine = false;
                 }
             }
         }
     }
-    var json = JSON.stringify({height: y, newLine: newLine});
-    return json;
+
+    return y;
 };

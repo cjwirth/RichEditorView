@@ -81,7 +81,7 @@ public class RichEditorView: UIView {
     }
 
     /**
-    The internal UIWebView that is used to display the text.
+        The internal UIWebView that is used to display the text.
     */
     public private(set) var webView: UIWebView
     
@@ -120,6 +120,15 @@ public class RichEditorView: UIView {
         didSet {
             delegate?.richEditor?(self, contentDidChange: contentHTML)
         }
+    }
+
+    /**
+        The inner height of the editor div.
+        Fetches it from JS every time, so might be slow!
+    */
+    private var clientHeight: Int {
+        let heightStr = runJS("document.getElementById('editor').clientHeight;")
+        return (heightStr as NSString).integerValue
     }
 
     // MARK: - Initialization
@@ -172,31 +181,7 @@ public class RichEditorView: UIView {
 // MARK: - Rich Text Editing
 extension RichEditorView {
 
-    private func updateHeight() {
-        let heightStr = runJS("document.getElementById('editor').clientHeight;")
-        let height = (heightStr as NSString).integerValue
-        if editorHeight != height {
-            editorHeight = height
-        }
-    }
 
-    private func isContentEditable() -> Bool {
-        if editorLoaded {
-            let value = runJS("RE.editor.isContentEditable") as NSString
-            editingEnabledVar = value.boolValue
-            return editingEnabledVar
-        }
-        return editingEnabledVar
-    }
-    
-    private func setContentEditable(editable: Bool) {
-        editingEnabledVar = editable
-        if editorLoaded {
-            let value = editable ? "true" : "false"
-            runJS("RE.editor.contentEditable = \(value);")
-        }
-    }
-    
     public func setHTML(html: String) {
         contentHTML = html
         if editorLoaded {
@@ -333,28 +318,22 @@ extension RichEditorView {
     }
 
     /**
-    * Looks specifically for a selection of type "Range"
-    **/
+        Looks specifically for a selection of type "Range"
+    */
     public func rangeSelectionExists() -> Bool {
         return runJS("RE.rangeSelectionExists();") == "true" ? true : false
     }
 
     /**
-     * Looks specifically for a selection of type "Range" or "Caret"
-     **/
+        Looks specifically for a selection of type "Range" or "Caret"
+    */
     public func rangeOrCaretSelectionExists() -> Bool {
         return runJS("RE.rangeOrCaretSelectionExists();") == "true" ? true : false
     }
 
-    /** Returns caret vertical position */
-    
-    public func getCaretPosition() -> String {
-        return runJS("RE.getCaretPosition();")
-    }
-    
     /**
-    * If the current selection's parent is an anchor tag, get the href.
-    * @returns nil if href is empty, otherwise a non-empty String
+        If the current selection's parent is an anchor tag, get the href.
+        - returns: nil if href is empty, otherwise a non-empty String
     */
     public func getSelectedHref() -> String? {
         if !rangeSelectionExists() { return nil }
@@ -364,6 +343,18 @@ extension RichEditorView {
         } else {
             return href
         }
+    }
+
+    /**
+        Runs some JavaScript on the UIWebView and returns the result
+        If there is no result, returns an empty string
+        
+        - parameter js: The JavaScript string to be run
+        - returns: The result of the JavaScript that was run
+    */
+    public func runJS(js: String) -> String {
+        let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""
+        return string
     }
 }
 
@@ -442,80 +433,82 @@ extension RichEditorView: UIGestureRecognizerDelegate {
 }
 
 
-// MARK: - Utilities
+// MARK: - Private Implementation Details
 extension RichEditorView {
-    
-    /** Sets content offset for scrollView based on caret location **/
-    
-    private func adjustContentOffsetFromCaretPosition() {
-        
-        let scrollView = self.webView.scrollView
-        
-        var contentHeight: CGFloat?
-        let htmlHeight = self.runJS("document.getElementById('editor').clientHeight;")
-        if let n = NSNumberFormatter().numberFromString(htmlHeight) {
-            let floatValue = CGFloat(n)
-            contentHeight = floatValue
-        } else {
-            contentHeight = scrollView.frame.height
+
+    private func updateHeight() {
+        let heightStr = runJS("document.getElementById('editor').clientHeight;")
+        let height = (heightStr as NSString).integerValue
+        if editorHeight != height {
+            editorHeight = height
         }
-        scrollView.contentSize = CGSizeMake(scrollView.frame.width, contentHeight!)
-        
-        let data = convertStringToDictionary(self.getCaretPosition())
-        
-        // Checks if caret is on new line with no content - `getCaretPosition()` acts differently when caret is on new line with no content
-        let newLine = data!["newLine"] as! Bool
-        if let caretPositionNumeric = data!["height"] as? NSNumber {
-            
-            let caretFloat = CGFloat(caretPositionNumeric) - scrollView.contentOffset.y
-            
-            let CGFloatCaretPositionNumeric = CGFloat(caretPositionNumeric.floatValue)
-            if newLine {
-                if (caretFloat + 24.0) > (scrollView.bounds.size.height) {
-                    let bottomOffset = CGPointMake(0, (CGFloat(caretPositionNumeric.floatValue) - (scrollView.bounds.size.height + scrollView.contentOffset.y)) + scrollView.contentOffset.y + 28.0)
-                    scrollView.setContentOffset(bottomOffset, animated: true)
-                } else if (CGFloatCaretPositionNumeric < scrollView.contentOffset.y) && scrollView.contentOffset.y > 0 {
-                    let bottomOffset = CGPointMake(scrollView.contentOffset.x, CGFloatCaretPositionNumeric)
-                    scrollView.setContentOffset(bottomOffset, animated: true)
-                }
-            } else {
-                if CGFloatCaretPositionNumeric + 24.0 > scrollView.bounds.size.height {
-                    let bottomOffset = CGPointMake(0, ((CGFloatCaretPositionNumeric - scrollView.bounds.size.height) + scrollView.contentOffset.y + 28.0))
-                    scrollView.setContentOffset(bottomOffset, animated: true)
-                } else if (CGFloatCaretPositionNumeric < 0) {
-                    var amount = scrollView.contentOffset.y + CGFloatCaretPositionNumeric
-                    amount = amount < 0 ? 0 : amount
-                    let bottomOffset = CGPointMake(scrollView.contentOffset.x, amount)
-                    scrollView.setContentOffset(bottomOffset, animated: true)
-                }
-            }
+    }
+
+    private func isContentEditable() -> Bool {
+        if editorLoaded {
+            let value = runJS("RE.editor.isContentEditable") as NSString
+            editingEnabledVar = value.boolValue
+            return editingEnabledVar
         }
-        
+        return editingEnabledVar
     }
     
-    private func convertStringToDictionary(text: String) -> [String:AnyObject]? {
-        if let data = text.dataUsingEncoding(NSUTF8StringEncoding) {
-            do {
-                return try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String:AnyObject]
-            } catch let error as NSError {
-                print(error)
-            }
+    private func setContentEditable(editable: Bool) {
+        editingEnabledVar = editable
+        if editorLoaded {
+            let value = editable ? "true" : "false"
+            runJS("RE.editor.contentEditable = \(value);")
         }
-        return nil
     }
     
     /**
-    Runs some JavaScript on the UIWebView and returns the result
-    If there is no result, returns an empty string
-    
-    :param:   js The JavaScript string to be run
-    :returns: The result of the JavaScript that was run
-    */
-    public func runJS(js: String) -> String {
-        let string = webView.stringByEvaluatingJavaScriptFromString(js) ?? ""
-        return string
+        Returns the position of the caret relative to the currently shown content.
+
+        For example, if the cursor is directly at the top of what is visible, it will return 0.
+        This also means that it will be negative if it is above what is currently visible.
+        Can also return 0 if some sort of error occurs between JS and here.
+
+        - returns: Relative offset position of the caret
+     */
+    private func getRelativeCaretYPosition() -> Int {
+        let string = runJS("getRelativeCaretYPosition();")
+        return (string as NSString).integerValue
     }
 
+    /**
+        Scrolls the editor to a position where the caret is visible.
+        Called repeatedly to make sure the caret is always visible when inputting text.
+    */
+    private func scrollCaretToVisible() {
+        let scrollView = self.webView.scrollView
+        
+        let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.frame.height
+        scrollView.contentSize = CGSizeMake(scrollView.frame.width, contentHeight)
+        
+        // TODO: Make these either more dynamic or customizable!
+        let lineHeight: CGFloat = 28.0
+        let cursorHeight: CGFloat = 24.0
+        let caretPosition = getRelativeCaretYPosition()
+        let visiblePosition = CGFloat(caretPosition)
+        var offset: CGPoint?
+
+        if visiblePosition + cursorHeight > scrollView.bounds.size.height {
+            // Visible caret position goes further than our bounds
+            offset = CGPoint(x: 0, y: (visiblePosition + lineHeight) - scrollView.bounds.height + scrollView.contentOffset.y)
+
+        } else if visiblePosition < 0 {
+            // Visible caret position is above what is currently visible
+            var amount = scrollView.contentOffset.y + visiblePosition
+            amount = amount < 0 ? 0 : amount
+            offset = CGPoint(x: scrollView.contentOffset.x, y: amount)
+
+        }
+
+        if let offset = offset {
+            scrollView.setContentOffset(offset, animated: true)
+        }
+    }
+    
     /**
         Converts a UIColor to its representation in hexadecimal
         For example, UIColor.blackColor() becomes "#000000"
@@ -563,7 +556,7 @@ extension RichEditorView {
     /**
         Called when actions are received from JavaScript
         
-        :param: method String with the name of the method and optional parameters that were passed in
+        - parameter method: String with the name of the method and optional parameters that were passed in
     */
     private func performCommand(method: String) {
         if method.hasPrefix("ready") {
@@ -578,7 +571,7 @@ extension RichEditorView {
             updateHeight()
         }
         else if method.hasPrefix("input") {
-            adjustContentOffsetFromCaretPosition()
+            scrollCaretToVisible()
             let content = runJS("RE.getHtml()")
             contentHTML = content
             updateHeight()
