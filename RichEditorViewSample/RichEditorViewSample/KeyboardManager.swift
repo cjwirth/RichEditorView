@@ -36,8 +36,8 @@ class KeyboardManager: NSObject {
         Starts monitoring for keyboard notifications in order to show/hide the toolbar
     */
     func beginMonitoring() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("KeyboardManager.keyboardWillShowOrHide:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("KeyboardManager.keyboardWillShowOrHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(KeyboardManager.keyboardWillShowOrHide(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(KeyboardManager.keyboardWillShowOrHide(_:)), name: UIKeyboardWillShowNotification, object: nil)
     }
 
     /**
