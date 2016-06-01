@@ -471,7 +471,7 @@ extension RichEditorView {
         - returns: Relative offset position of the caret
      */
     private func getRelativeCaretYPosition() -> Int {
-        let string = runJS("getRelativeCaretYPosition();")
+        let string = runJS("RE.getRelativeCaretYPosition();")
         return (string as NSString).integerValue
     }
 
