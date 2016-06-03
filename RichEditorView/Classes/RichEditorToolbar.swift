@@ -84,6 +84,14 @@ public class RichEditorToolbar: UIView {
         }
     }
 
+    /**
+        The tint color to apply to the toolbar background.
+    */
+    public var barTintColor: UIColor? {
+        get { return backgroundToolbar.barTintColor }
+        set { backgroundToolbar.barTintColor = newValue }
+    }
+
     private var toolbarScroll: UIScrollView
     private var toolbar: UIToolbar
     private var backgroundToolbar: UIToolbar
@@ -105,20 +113,22 @@ public class RichEditorToolbar: UIView {
     }
     
     private func setup() {
-        self.autoresizingMask = .FlexibleWidth
+        autoresizingMask = .FlexibleWidth
+        backgroundColor = .clearColor()
 
-        backgroundToolbar.frame = self.bounds
+        backgroundToolbar.frame = bounds
         backgroundToolbar.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
 
         toolbar.autoresizingMask = .FlexibleWidth
+        toolbar.backgroundColor = .clearColor()
         toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
         toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
 
-        toolbarScroll.frame = self.bounds
+        toolbarScroll.frame = bounds
         toolbarScroll.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
         toolbarScroll.showsHorizontalScrollIndicator = false
         toolbarScroll.showsVerticalScrollIndicator = false
-        toolbarScroll.backgroundColor = UIColor.clearColor()
+        toolbarScroll.backgroundColor = .clearColor()
 
         toolbarScroll.addSubview(toolbar)
 
@@ -152,8 +162,8 @@ public class RichEditorToolbar: UIView {
             }
         }
         
-        if width < self.frame.size.width {
-            toolbar.frame.size.width = self.frame.size.width
+        if width < frame.size.width {
+            toolbar.frame.size.width = frame.size.width
         } else {
             toolbar.frame.size.width = width
         }
