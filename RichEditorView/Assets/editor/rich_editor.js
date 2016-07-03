@@ -309,6 +309,14 @@ RE.focus = function() {
     RE.editor.focus();
 };
 
+RE.focusAtPoint = function(x, y) {
+    var range = document.caretRangeFromPoint(x, y);
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    RE.editor.focus();
+};
+
 RE.blurFocus = function() {
     RE.editor.blur();
 };

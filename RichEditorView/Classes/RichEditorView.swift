@@ -84,6 +84,11 @@ public class RichEditorView: UIView {
         The internal UIWebView that is used to display the text.
     */
     public private(set) var webView: UIWebView
+
+    /**
+        The private internal tap gesture recognizer used to detect taps and focus the editor
+    */
+    private let tapRecognizer = UITapGestureRecognizer()
     
     /**
         Whether or not to allow user input in the view.
@@ -171,9 +176,9 @@ public class RichEditorView: UIView {
             webView.loadRequest(request)
         }
 
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "viewWasTapped")
-        tapGestureRecognizer.delegate = self
-        addGestureRecognizer(tapGestureRecognizer)
+        tapRecognizer.addTarget(self, action: "viewWasTapped")
+        tapRecognizer.delegate = self
+        addGestureRecognizer(tapRecognizer)
     }
 }
 
@@ -311,6 +316,10 @@ extension RichEditorView {
     
     public func focus() {
         runJS("RE.focus();")
+    }
+
+    public func focus(at at: CGPoint) {
+        runJS("RE.focusAtPoint(\(at.x), \(at.y));")
     }
     
     public func blur() {
@@ -604,7 +613,8 @@ extension RichEditorView {
     */
     internal func viewWasTapped() {
         if !webView.containsFirstResponder {
-            focus()
+            let point = tapRecognizer.locationInView(webView)
+            focus(at: point)
         }
     }
     
