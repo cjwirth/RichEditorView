@@ -40,7 +40,8 @@ static Class hackishFixClass = Nil;
     
     UIView *browserView = nil;
     for (UIView *subview in scrollView.subviews) {
-        if ([NSStringFromClass([subview class]) hasPrefix:@"UIWebBrowserView"]) {
+        NSString *className = NSStringFromClass([subview class]);
+        if ([className containsString:@"UI"] && [className containsString:@"Web"] && [className containsString:@"Browser"] && [className containsString:@"View"]) {
             browserView = subview;
             break;
         }
