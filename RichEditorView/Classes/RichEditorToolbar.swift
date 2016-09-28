@@ -16,42 +16,42 @@ import UIKit
     /**
         Called when the Text Color toolbar item is pressed.
     */
-    optional func richEditorToolbarChangeTextColor(toolbar: RichEditorToolbar)
+    @objc optional func richEditorToolbarChangeTextColor(_ toolbar: RichEditorToolbar)
 
     /**
         Called when the Background Color toolbar item is pressed.
     */
-    optional func richEditorToolbarChangeBackgroundColor(toolbar: RichEditorToolbar)
+    @objc optional func richEditorToolbarChangeBackgroundColor(_ toolbar: RichEditorToolbar)
 
     /**
         Called when the Insert Image toolbar item is pressed.
     */
-    optional func richEditorToolbarInsertImage(toolbar: RichEditorToolbar)
+    @objc optional func richEditorToolbarInsertImage(_ toolbar: RichEditorToolbar)
 
     /**
         Called when the Insert Link toolbar item is pressed.
     */
-    optional func richEditorToolbarInsertLink(toolbar: RichEditorToolbar)
+    @objc optional func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar)
 }
 
 
 /**
     RichBarButtonItem is a subclass of UIBarButtonItem that takes a callback as opposed to the target-action pattern
 */
-public class RichBarButtonItem: UIBarButtonItem {
-    public var actionHandler: (Void -> Void)?
+open class RichBarButtonItem: UIBarButtonItem {
+    open var actionHandler: ((Void) -> Void)?
     
-    public convenience init(image: UIImage? = nil, handler: (Void -> Void)? = nil) {
-        self.init(image: image, style: .Plain, target: nil, action: nil)
+    public convenience init(image: UIImage? = nil, handler: ((Void) -> Void)? = nil) {
+        self.init(image: image, style: .plain, target: nil, action: nil)
         target = self
-        action = Selector("buttonWasTapped")
+        action = #selector(RichBarButtonItem.buttonWasTapped)
         actionHandler = handler
     }
     
-    public convenience init(title: String = "", handler: (Void -> Void)? = nil) {
-        self.init(title: title, style: .Plain, target: nil, action: nil)
+    public convenience init(title: String = "", handler: ((Void) -> Void)? = nil) {
+        self.init(title: title, style: .plain, target: nil, action: nil)
         target = self
-        action = Selector("buttonWasTapped")
+        action = #selector(RichBarButtonItem.buttonWasTapped)
         actionHandler = handler
     }
     
@@ -63,30 +63,30 @@ public class RichBarButtonItem: UIBarButtonItem {
 /**
     RichEditorToolbar is UIView that contains the toolbar for actions that can be performed on a RichEditorView
 */
-public class RichEditorToolbar: UIView {
+open class RichEditorToolbar: UIView {
 
     /**
         The delegate to receive events that cannot be automatically completed
     */
-    public weak var delegate: RichEditorToolbarDelegate?
+    open weak var delegate: RichEditorToolbarDelegate?
 
     /**
         A reference to the RichEditorView that it should be performing actions on
     */
-    public weak var editor: RichEditorView?
+    open weak var editor: RichEditorView?
 
     /**
         The list of options to be displayed on the toolbar
     */
-    public var options: [RichEditorOption] = [] {
+    open var options: [RichEditorOption] = [] {
         didSet {
             updateToolbar()
         }
     }
 
-    private var toolbarScroll: UIScrollView
-    private var toolbar: UIToolbar
-    private var backgroundToolbar: UIToolbar
+    fileprivate var toolbarScroll: UIScrollView
+    fileprivate var toolbar: UIToolbar
+    fileprivate var backgroundToolbar: UIToolbar
     
     public override init(frame: CGRect) {
         toolbarScroll = UIScrollView()
@@ -104,21 +104,21 @@ public class RichEditorToolbar: UIView {
         setup()
     }
     
-    private func setup() {
-        self.autoresizingMask = .FlexibleWidth
+    fileprivate func setup() {
+        self.autoresizingMask = .flexibleWidth
 
         backgroundToolbar.frame = self.bounds
-        backgroundToolbar.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+        backgroundToolbar.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
-        toolbar.autoresizingMask = .FlexibleWidth
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
+        toolbar.autoresizingMask = .flexibleWidth
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
 
         toolbarScroll.frame = self.bounds
-        toolbarScroll.autoresizingMask = [.FlexibleHeight, .FlexibleWidth]
+        toolbarScroll.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         toolbarScroll.showsHorizontalScrollIndicator = false
         toolbarScroll.showsVerticalScrollIndicator = false
-        toolbarScroll.backgroundColor = UIColor.clearColor()
+        toolbarScroll.backgroundColor = UIColor.clear
 
         toolbarScroll.addSubview(toolbar)
 
@@ -127,7 +127,7 @@ public class RichEditorToolbar: UIView {
         updateToolbar()
     }
     
-    private func updateToolbar() {
+    fileprivate func updateToolbar() {
         var buttons = [UIBarButtonItem]()
         for option in options {
             if let image = option.image() {
@@ -145,7 +145,7 @@ public class RichEditorToolbar: UIView {
         let defaultIconWidth: CGFloat = 22
         let barButtonItemMargin: CGFloat = 11
         let width: CGFloat = buttons.reduce(0) {sofar, new in
-            if let view = new.valueForKey("view") as? UIView {
+            if let view = new.value(forKey: "view") as? UIView {
                 return sofar + view.frame.size.width + barButtonItemMargin
             } else {
                 return sofar + (defaultIconWidth + barButtonItemMargin)
