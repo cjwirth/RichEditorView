@@ -176,7 +176,7 @@ public class RichEditorView: UIView {
             webView.loadRequest(request)
         }
 
-        tapRecognizer.addTarget(self, action: "viewWasTapped")
+        tapRecognizer.addTarget(self, action: #selector(RichEditorView.viewWasTapped))
         tapRecognizer.delegate = self
         addGestureRecognizer(tapRecognizer)
     }
@@ -387,7 +387,7 @@ extension RichEditorView: UIWebViewDelegate {
 
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
-        if request.URL?.absoluteString.hasPrefix(callbackPrefix) == true {
+        if request.URL?.absoluteString?.hasPrefix(callbackPrefix) == true {
             
             // When we get a callback, we need to fetch the command queue to run the commands
             // It comes in as a JSON array of commands that we need to parse
@@ -549,7 +549,7 @@ extension RichEditorView {
     private func escape(string: String) -> String {
         let unicode = string.unicodeScalars
         var newString = ""
-        for var i = unicode.startIndex; i < unicode.endIndex; i++ {
+        for i in unicode.startIndex ..< unicode.endIndex {
             let char = unicode[i]
             if char.value < 9 || (char.value > 9 && char.value < 32) // < 32 == special characters in ASCII, 9 == horizontal tab in ASCII
                 || char.value == 39 { // 39 == ' in ASCII
@@ -601,7 +601,7 @@ extension RichEditorView {
             // If there are any custom actions being called
             // We need to tell the delegate about it
             let actionPrefix = "action/"
-            let range = Range(start: actionPrefix.startIndex, end: actionPrefix.endIndex)
+            let range = actionPrefix.startIndex ..< actionPrefix.endIndex
             let action = method.stringByReplacingCharactersInRange(range, withString: "")
             delegate?.richEditor?(self, handleCustomAction: action)
         }
