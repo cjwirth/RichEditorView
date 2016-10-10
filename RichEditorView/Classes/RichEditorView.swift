@@ -195,7 +195,7 @@ extension RichEditorView {
     }
     
     public func getText() -> String {
-        return (js: "RE.getText()")
+        return run(js: "RE.getText()")
     }
     
     public func setPlaceholder(text: String) {
