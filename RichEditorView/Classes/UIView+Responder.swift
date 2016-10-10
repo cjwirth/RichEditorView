@@ -14,7 +14,7 @@ extension UIView {
         Performs a depth-first search on the subviews, so it can potentially be a heavy operation.
     */
     internal var containsFirstResponder: Bool {
-        if isFirstResponder() { return true }
+        if isFirstResponder { return true }
         for view in subviews {
             if view.containsFirstResponder { return true }
         }
