@@ -44,14 +44,4 @@
     }
 }
 
-- (BOOL)richEditor:(RichEditorView * __nonnull)editor shouldInteractWithURL:(NSURL * __nonnull)url {
-    return true;
-}
-
-- (void)richEditor:(RichEditorView * __nonnull)editor heightDidChange:(NSInteger)height {}
-- (void)richEditorTookFocus:(RichEditorView * __nonnull)editor {}
-- (void)richEditorLostFocus:(RichEditorView * __nonnull)editor {}
-- (void)richEditorDidLoad:(RichEditorView * __nonnull)editor {}
-- (void)richEditor:(RichEditorView * __nonnull)editor handleCustomAction:(NSString * __nonnull)action {}
-
 @end

@@ -31,7 +31,7 @@ class ViewController: UIViewController {
 
         // We will create a custom action that clears all the input text when it is pressed
         let item = RichEditorOptionItem(image: nil, title: "Clear") { toolbar in
-            toolbar?.editor?.setHTML("")
+            toolbar?.editor?.html = ""
         }
 
         var options = toolbar.options
@@ -43,8 +43,6 @@ class ViewController: UIViewController {
 
 extension ViewController: RichEditorDelegate {
 
-    func richEditor(_ editor: RichEditorView, heightDidChange height: Int) { }
-
     func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
         if content.isEmpty {
             htmlTextView.text = "HTML Preview"
@@ -52,16 +50,6 @@ extension ViewController: RichEditorDelegate {
             htmlTextView.text = content
         }
     }
-
-    func richEditorTookFocus(_ editor: RichEditorView) { }
-    
-    func richEditorLostFocus(_ editor: RichEditorView) { }
-    
-    func richEditorDidLoad(_ editor: RichEditorView) { }
-    
-    func richEditor(_ editor: RichEditorView, shouldInteractWithURL url: URL) -> Bool { return true }
-
-    func richEditor(_ editor: RichEditorView, handleCustomAction content: String) { }
     
 }
 
@@ -76,7 +64,7 @@ extension ViewController: RichEditorToolbarDelegate {
             .blue,
             .purple
         ]
-
+        
         let color = colors[Int(arc4random_uniform(UInt32(colors.count)))]
         return color
     }
@@ -97,7 +85,7 @@ extension ViewController: RichEditorToolbarDelegate {
 
     func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
         // Can only add links to selected text, so make sure there is a range selection first
-        if let hasSelection = toolbar.editor?.rangeSelectionExists() , hasSelection {
+        if toolbar.editor?.hasRangeSelection == true {
             toolbar.editor?.insertLink("http://github.com/cjwirth/RichEditorView", title: "Github Link")
         }
     }

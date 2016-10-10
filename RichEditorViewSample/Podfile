@@ -1,2 +1,5 @@
-pod "RichEditorView", :path => "../"
 use_frameworks!
+
+target 'RichEditorViewSample' do
+    pod "RichEditorView", :path => "../"
+end

@@ -7,71 +7,48 @@
 
 import UIKit
 
-/**
-    A RichEditorOption object is an object that can be displayed in a RichEditorToolbar.
-    This protocol is proviced to allow for custom actions not provided in the RichEditorOptions enum
-*/
+/// A RichEditorOption object is an object that can be displayed in a RichEditorToolbar.
+/// This protocol is proviced to allow for custom actions not provided in the RichEditorOptions enum.
 public protocol RichEditorOption {
 
-    /**
-        Returns the image to be displayed in the RichEditorToolbar
-    */
-    func image() -> UIImage?
+    /// The image to be displayed in the RichEditorToolbar.
+    var image: UIImage? { get }
 
-    /**
-        Returns the title of the item.
-        If `image()` returns nil, this method will be used for display in the RichEditorToolbar
-    */
-    func title() -> String
+    /// The title of the item.
+    /// If `image` is nil, this will be used for display in the RichEditorToolbar.
+    var title: String { get }
 
-    /**
-        The action to be evoked when the action is tapped
-    
-        - parameter editor: The RichEditorToolbar that the RichEditorOption was being displayed in when tapped.
-                       Contains a reference to the `editor` RichEditorView to perform actions on
-    */
+    /// The action to be evoked when the action is tapped
+    /// - parameter editor: The RichEditorToolbar that the RichEditorOption was being displayed in when tapped.
+    ///                     Contains a reference to the `editor` RichEditorView to perform actions on.
     func action(_ editor: RichEditorToolbar?)
 }
 
-/**
-    RichEditorOptionItem is a concrete implementation of RichEditorOption
-    It can be used as a configuration object for custom objects to be shown on a RichEditorToolbar
-*/
+/// RichEditorOptionItem is a concrete implementation of RichEditorOption.
+/// It can be used as a configuration object for custom objects to be shown on a RichEditorToolbar.
 public struct RichEditorOptionItem: RichEditorOption {
 
-    /**
-        The image that should be shown when displayed in the RichEditorToolbar
-    */
-    public var itemImage: UIImage?
+    /// The image that should be shown when displayed in the RichEditorToolbar.
+    public var image: UIImage?
 
-    /**
-        If an `itemImage` is not specified, this is used in display
-    */
-    public var itemTitle: String
+    /// If an `itemImage` is not specified, this is used in display
+    public var title: String
 
     /**
         The action to be performed when tapped
     */
-    public var itemAction: ((RichEditorToolbar?) -> Void)
+    public var handler: ((RichEditorToolbar?) -> Void)
 
     public init(image: UIImage?, title: String, action: @escaping ((RichEditorToolbar?) -> Void)) {
-        itemImage = image
-        itemTitle = title
-        itemAction = action
+        self.image = image
+        self.title = title
+        self.handler = action
     }
     
     // MARK: RichEditorOption
     
-    public func image() -> UIImage? {
-        return itemImage
-    }
-    
-    public func title() -> String {
-        return itemTitle
-    }
-    
     public func action(_ toolbar: RichEditorToolbar?) {
-        itemAction(toolbar)
+        handler(toolbar)
     }
 }
 
@@ -116,7 +93,7 @@ public enum RichEditorOptions: RichEditorOption {
     
     // MARK: RichEditorOption
     
-    public func image() -> UIImage? {
+    public var image: UIImage? {
         var name = ""
         switch self {
         case .clear: name = "clear"
@@ -146,7 +123,7 @@ public enum RichEditorOptions: RichEditorOption {
         return UIImage(named: name, in: bundle, compatibleWith: nil)
     }
     
-    public func title() -> String {
+    public var title: String {
         switch self {
         case .clear: return NSLocalizedString("Clear", comment: "")
         case .undo: return NSLocalizedString("Undo", comment: "")
