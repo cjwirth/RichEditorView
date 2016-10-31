@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		39FC98FB1DC788A1008FE5DD /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FC98F91DC788A1008FE5DD /* String+Extensions.swift */; };
+		39FC98FC1DC788A1008FE5DD /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FC98FA1DC788A1008FE5DD /* UIColor+Extensions.swift */; };
 		947A71A11C0F9DED00BDF9FC /* UIView+Responder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */; };
 		FBA6AAFF1AD3EC9F00721644 /* RichEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = FBA6AAFE1AD3EC9F00721644 /* RichEditorView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FBA6AB051AD3EC9F00721644 /* RichEditorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBA6AAF91AD3EC9F00721644 /* RichEditorView.framework */; };
@@ -82,6 +84,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		39FC98F91DC788A1008FE5DD /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Extensions.swift"; path = "Classes/String+Extensions.swift"; sourceTree = "<group>"; };
+		39FC98FA1DC788A1008FE5DD /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Extensions.swift"; path = "Classes/UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Responder.swift"; path = "Classes/UIView+Responder.swift"; sourceTree = "<group>"; };
 		FBA6AAF91AD3EC9F00721644 /* RichEditorView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RichEditorView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBA6AAFD1AD3EC9F00721644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -235,6 +239,8 @@
 				FBA6AB851AD3ED3C00721644 /* RichEditorOptionItem.swift */,
 				FBA6AB861AD3ED3C00721644 /* RichEditorToolbar.swift */,
 				FBA6AB871AD3ED3C00721644 /* RichEditorView.swift */,
+				39FC98F91DC788A1008FE5DD /* String+Extensions.swift */,
+				39FC98FA1DC788A1008FE5DD /* UIColor+Extensions.swift */,
 				947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */,
 			);
 			name = Classes;
@@ -485,6 +491,8 @@
 				FBA6AB8B1AD3ED3C00721644 /* RichEditorToolbar.swift in Sources */,
 				FBA6AB891AD3ED3C00721644 /* CJWWebView+HackishAccessoryHiding.m in Sources */,
 				FBA6AB8C1AD3ED3C00721644 /* RichEditorView.swift in Sources */,
+				39FC98FC1DC788A1008FE5DD /* UIColor+Extensions.swift in Sources */,
+				39FC98FB1DC788A1008FE5DD /* String+Extensions.swift in Sources */,
 				947A71A11C0F9DED00BDF9FC /* UIView+Responder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
