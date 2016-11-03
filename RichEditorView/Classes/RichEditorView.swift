@@ -72,6 +72,11 @@ public class RichEditorView: UIView {
     }
 
     /**
+        Default line height of the editor.
+    */
+    public let defaultLineHeight: Int = 28
+
+    /**
         Input accessory view to display over they keyboard.
         Defaults to nil
     */
@@ -318,6 +323,31 @@ extension RichEditorView {
     }
 
     /**
+        Sets a new line height of the editor. Pass `nil` if you want to reset it.
+    */
+    public func setLineHeight(lineHeight: Int?) {
+        if let lineHeight = lineHeight {
+            runJS("RE.setLineHeight('\(lineHeight)px');")
+        } else {
+            runJS("RE.setLineHeight('');")
+        }
+    }
+
+    /**
+        Returns the line height of the editor. Returns `nil` if the line height isn't set.
+        Default is `defaultLineHeight`.
+        This property only available if `editorLoaded` is `true`.
+    */
+    public func lineHeight() -> Int? {
+        let result = runJS("RE.lineHeight();")
+        if result.isEmpty {
+            return nil
+        } else {
+            return (result as NSString).integerValue
+        }
+    }
+
+    /**
         Looks specifically for a selection of type "Range"
     */
     public func rangeSelectionExists() -> Bool {
@@ -478,34 +508,34 @@ extension RichEditorView {
     /**
         Scrolls the editor to a position where the caret is visible.
         Called repeatedly to make sure the caret is always visible when inputting text.
+        Works only if the `lineHeight` of the editor is available.
     */
     private func scrollCaretToVisible() {
-        let scrollView = self.webView.scrollView
-        
-        let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.frame.height
-        scrollView.contentSize = CGSizeMake(scrollView.frame.width, contentHeight)
-        
-        // TODO: Make these either more dynamic or customizable!
-        let lineHeight: CGFloat = 28.0
-        let cursorHeight: CGFloat = 24.0
-        let caretPosition = getRelativeCaretYPosition()
-        let visiblePosition = CGFloat(caretPosition)
-        var offset: CGPoint?
+        if let lineHeight = self.lineHeight() {
+            let cursorHeight = CGFloat(lineHeight) - 4.0 // Maybe should be `CGFloat(lineHeight) * 0.85`
 
-        if visiblePosition + cursorHeight > scrollView.bounds.size.height {
-            // Visible caret position goes further than our bounds
-            offset = CGPoint(x: 0, y: (visiblePosition + lineHeight) - scrollView.bounds.height + scrollView.contentOffset.y)
+            let scrollView = self.webView.scrollView
 
-        } else if visiblePosition < 0 {
-            // Visible caret position is above what is currently visible
-            var amount = scrollView.contentOffset.y + visiblePosition
-            amount = amount < 0 ? 0 : amount
-            offset = CGPoint(x: scrollView.contentOffset.x, y: amount)
+            let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.frame.height
+            scrollView.contentSize = CGSizeMake(scrollView.frame.width, contentHeight)
 
-        }
+            let visiblePosition = CGFloat(getRelativeCaretYPosition())
+            var offset: CGPoint?
 
-        if let offset = offset {
-            scrollView.setContentOffset(offset, animated: true)
+            if visiblePosition + cursorHeight > scrollView.bounds.size.height {
+                // Visible caret position goes further than our bounds
+                offset = CGPoint(x: 0, y: (visiblePosition + CGFloat(lineHeight)) - scrollView.bounds.height + scrollView.contentOffset.y)
+            } else if visiblePosition < 0 {
+                // Visible caret position is above what is currently visible
+                var amount = scrollView.contentOffset.y + visiblePosition
+                amount = amount < 0 ? 0 : amount
+                offset = CGPoint(x: scrollView.contentOffset.x, y: amount)
+
+            }
+
+            if let offset = offset {
+                scrollView.setContentOffset(offset, animated: true)
+            }
         }
     }
     
@@ -566,6 +596,7 @@ extension RichEditorView {
                 setHTML(contentHTML)
                 setContentEditable(editingEnabledVar)
                 setPlaceholderText(placeholder)
+                setLineHeight(defaultLineHeight)
                 delegate?.richEditorDidLoad?(self)
             }
             updateHeight()
