@@ -212,7 +212,7 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     }
     
     public func setFontSize(_ size: Int) {
-        runJS("RE.setFontSize('\(size))px');")
+        runJS("RE.setFontSize('\(size)px');")
     }
     
     public func setEditorBackgroundColor(_ color: UIColor) {
