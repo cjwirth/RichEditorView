@@ -171,7 +171,7 @@ public class RichEditorView: UIView {
             webView.loadRequest(request)
         }
 
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "viewWasTapped")
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(RichEditorView.viewWasTapped))
         tapGestureRecognizer.delegate = self
         addGestureRecognizer(tapGestureRecognizer)
     }
@@ -378,7 +378,7 @@ extension RichEditorView: UIWebViewDelegate {
 
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
-        if request.URL?.absoluteString.hasPrefix(callbackPrefix) == true {
+        if request.URL?.absoluteString!.hasPrefix(callbackPrefix) == true {
             
             // When we get a callback, we need to fetch the command queue to run the commands
             // It comes in as a JSON array of commands that we need to parse
@@ -407,7 +407,7 @@ extension RichEditorView: UIWebViewDelegate {
         if navigationType == .LinkClicked {
             if let
                 url = request.URL,
-                shouldInteract = delegate?.richEditor?(self, shouldInteractWithURL:url)
+               let shouldInteract = delegate?.richEditor?(self, shouldInteractWithURL:url)
             {
                 return shouldInteract
             }
@@ -540,7 +540,7 @@ extension RichEditorView {
     private func escape(string: String) -> String {
         let unicode = string.unicodeScalars
         var newString = ""
-        for var i = unicode.startIndex; i < unicode.endIndex; i++ {
+        for i in unicode.startIndex ..< unicode.endIndex {
             let char = unicode[i]
             if char.value < 9 || (char.value > 9 && char.value < 32) // < 32 == special characters in ASCII, 9 == horizontal tab in ASCII
                 || char.value == 39 { // 39 == ' in ASCII
