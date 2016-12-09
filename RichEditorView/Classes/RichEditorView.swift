@@ -60,6 +60,9 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
             webView.scrollView.isScrollEnabled = isScrollEnabled
         }
     }
+    
+    /// Default line height of the editor.
+    open let defaultLineHeight: Int = 28
 
     /// Whether or not to allow user input in the view.
     open var isEditingEnabled: Bool {
@@ -212,7 +215,7 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     }
     
     public func setFontSize(_ size: Int) {
-        runJS("RE.setFontSize('\(size))px');")
+        runJS("RE.setFontSize('\(size)px');")
     }
     
     public func setEditorBackgroundColor(_ color: UIColor) {
@@ -318,6 +321,30 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     
     public func blur() {
         runJS("RE.blurFocus()")
+    }
+    
+    /// Sets a new line height of the editor. Pass `nil` if you want to reset it.
+    
+    public func setLineHeight(lineHeight: Int?) {
+        if let lineHeight = lineHeight {
+            runJS("RE.setLineHeight('\(lineHeight)px');")
+        } else {
+            runJS("RE.setLineHeight('');")
+        }
+    }
+    
+    /**
+        Returns the line height of the editor. Returns `nil` if the line height isn't set.
+        Default is `defaultLineHeight`.
+        This property only available if `editorLoaded` is `true`.
+    */
+    public func lineHeight() -> Int? {
+        let result = runJS("RE.lineHeight();")
+        if result.isEmpty {
+            return nil
+        } else {
+            return (result as NSString).integerValue
+        }
     }
 
     /// Runs some JavaScript on the UIWebView and returns the result
@@ -437,33 +464,30 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
 
     /// Scrolls the editor to a position where the caret is visible.
     /// Called repeatedly to make sure the caret is always visible when inputting text.
+    /// Works only if the `lineHeight` of the editor is available.
     fileprivate func scrollCaretToVisible() {
-        let scrollView = self.webView.scrollView
-        
-        let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.frame.height
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight)
-        
-        // TODO: Make these either more dynamic or customizable!
-        let lineHeight: CGFloat = 28.0
-        let cursorHeight: CGFloat = 24.0
-        let caretPosition = relativeCaretYPosition
-        let visiblePosition = CGFloat(caretPosition)
-        var offset: CGPoint?
-
-        if visiblePosition + cursorHeight > scrollView.bounds.size.height {
-            // Visible caret position goes further than our bounds
-            offset = CGPoint(x: 0, y: (visiblePosition + lineHeight) - scrollView.bounds.height + scrollView.contentOffset.y)
-
-        } else if visiblePosition < 0 {
-            // Visible caret position is above what is currently visible
-            var amount = scrollView.contentOffset.y + visiblePosition
-            amount = amount < 0 ? 0 : amount
-            offset = CGPoint(x: scrollView.contentOffset.x, y: amount)
-
-        }
-
-        if let offset = offset {
-            scrollView.setContentOffset(offset, animated: true)
+        if let lineHeight = self.lineHeight() {
+            let cursorHeight = CGFloat(lineHeight) - 4.0 // Maybe should be `CGFloat(lineHeight) * 0.85`
+            let scrollView = self.webView.scrollView
+            let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.frame.height
+            scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight)
+            let visiblePosition = CGFloat(relativeCaretYPosition)
+            var offset: CGPoint?
+            
+            if visiblePosition + cursorHeight > scrollView.bounds.size.height {
+                // Visible caret position goes further than our bounds
+                offset = CGPoint(x: 0, y: (visiblePosition + CGFloat(lineHeight)) - scrollView.bounds.height + scrollView.contentOffset.y)
+            } else if visiblePosition < 0 {
+                // Visible caret position is above what is currently visible
+                var amount = scrollView.contentOffset.y + visiblePosition
+                amount = amount < 0 ? 0 : amount
+                offset = CGPoint(x: scrollView.contentOffset.x, y: amount)
+                
+            }
+            
+            if let offset = offset {
+                scrollView.setContentOffset(offset, animated: true)
+            }
         }
     }
     
@@ -477,6 +501,7 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
                 html = contentHTML
                 isContentEditable = editingEnabledVar
                 placeholder = placeholderText
+                setLineHeight(lineHeight: defaultLineHeight)
                 delegate?.richEditorDidLoad?(self)
             }
             updateHeight()
