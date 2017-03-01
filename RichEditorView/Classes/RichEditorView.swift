@@ -500,10 +500,12 @@ extension RichEditorView {
         let caretPosition = getRelativeCaretYPosition()
         let visiblePosition = CGFloat(caretPosition)
         var offset: CGPoint?
-
-        if visiblePosition + cursorHeight > scrollView.bounds.size.height {
+        
+        let scrollViewHeight = scrollView.bounds.size.height - scrollView.contentInset.bottom
+        
+        if visiblePosition + cursorHeight > scrollViewHeight {
             // Visible caret position goes further than our bounds
-            offset = CGPoint(x: 0, y: (visiblePosition + lineHeight) - scrollView.bounds.height + scrollView.contentOffset.y)
+            offset = CGPoint(x: 0, y: (visiblePosition + lineHeight) - scrollViewHeight + scrollView.contentOffset.y)
 
         } else if visiblePosition < 0 {
             // Visible caret position is above what is currently visible
