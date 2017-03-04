@@ -83,6 +83,24 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
         }
     }
 
+    /// The value we hold in order to be able to set the line height before the JS completely loads.
+    private var innerLineHeight: Int = 28
+
+    /// The line height of the editor. Defaults to 28.
+    open private(set) var lineHeight: Int {
+        get {
+            if isEditorLoaded, let lineHeight = Int(runJS("RE.getLineHeight();")) {
+                return lineHeight
+            } else {
+                return innerLineHeight
+            }
+        }
+        set {
+            innerLineHeight = newValue
+            runJS("RE.setLineHeight('\(innerLineHeight)px');")
+        }
+    }
+
     // MARK: Private Properties
 
     /// Whether or not the editor has finished loading or not yet.
@@ -434,17 +452,17 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
 
     /// Scrolls the editor to a position where the caret is visible.
     /// Called repeatedly to make sure the caret is always visible when inputting text.
+    /// Works only if the `lineHeight` of the editor is available.
     private func scrollCaretToVisible() {
         let scrollView = self.webView.scrollView
         
         let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.frame.height
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight)
         
-        // TODO: Make these either more dynamic or customizable!
-        let lineHeight: CGFloat = 28.0
-        let cursorHeight: CGFloat = 24.0
-        let caretPosition = relativeCaretYPosition
-        let visiblePosition = CGFloat(caretPosition)
+        // XXX: Maybe find a better way to get the cursor height
+        let lineHeight = CGFloat(self.lineHeight)
+        let cursorHeight = lineHeight - 4
+        let visiblePosition = CGFloat(relativeCaretYPosition)
         var offset: CGPoint?
 
         if visiblePosition + cursorHeight > scrollView.bounds.size.height {
@@ -474,6 +492,7 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
                 html = contentHTML
                 isContentEditable = editingEnabledVar
                 placeholder = placeholderText
+                lineHeight = innerLineHeight
                 delegate?.richEditorDidLoad?(self)
             }
             updateHeight()
