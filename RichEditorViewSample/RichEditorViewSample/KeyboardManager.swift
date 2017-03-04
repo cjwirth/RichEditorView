@@ -29,7 +29,7 @@ class KeyboardManager: NSObject {
     init(view: UIView) {
         self.view = view
         toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: 44))
-        toolbar.options = RichEditorOptions.all()
+        toolbar.options = RichEditorDefaultOption.all
     }
 
     /**

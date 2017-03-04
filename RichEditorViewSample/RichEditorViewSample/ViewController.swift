@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 
     lazy var toolbar: RichEditorToolbar = {
         let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
-        toolbar.options = RichEditorOptions.all()
+        toolbar.options = RichEditorDefaultOption.all
         return toolbar
     }()
 
@@ -31,7 +31,7 @@ class ViewController: UIViewController {
 
         // We will create a custom action that clears all the input text when it is pressed
         let item = RichEditorOptionItem(image: nil, title: "Clear") { toolbar in
-            toolbar?.editor?.html = ""
+            toolbar.editor?.html = ""
         }
 
         var options = toolbar.options
