@@ -32,7 +32,6 @@ body, h1, p {
 div {
     display: block;
     position: static;
-    min-height: 28px;
 }
 
 #editor {
@@ -58,6 +57,5 @@ div {
     display: block;
     font-family: 'HelveticaNeue';
     color:#666666;
-    line-height:28px;
     font-size: 12pt;
 }

@@ -50,7 +50,6 @@ RE.rangeOrCaretSelectionExists = function() {
 RE.editor.addEventListener("input", function() {
     RE.updatePlaceholder();
     RE.backuprange();
-    RE.wrapTextNodes();
     RE.callback("input");
 });
 
@@ -220,6 +219,14 @@ RE.setJustifyRight = function() {
     document.execCommand('justifyRight', false, null);
 };
 
+RE.getLineHeight = function() {
+    return RE.editor.style.lineHeight;
+};
+
+RE.setLineHeight = function(height) {
+    RE.editor.style.lineHeight = height;
+};
+
 RE.insertImage = function(url, alt) {
     var img = document.createElement('img');
     img.setAttribute("src", url);
@@ -310,6 +317,14 @@ RE.focus = function() {
     RE.editor.focus();
 };
 
+RE.focusAtPoint = function(x, y) {
+    var range = document.caretRangeFromPoint(x, y);
+    var selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    RE.editor.focus();
+};
+
 RE.blurFocus = function() {
     RE.editor.blur();
 };
@@ -372,37 +387,6 @@ RE.getSelectedHref = function() {
     }
 
     return href ? href : null;
-};
-
-/* Make sure all text nodes are wrapped in divs! */
-
-RE.wrapTextNodes = function() {
-    var contents = RE.editor.childNodes;
-    for (var i = 0; i < contents.length; i++) {
-        if (contents[i].nodeType === Node.TEXT_NODE) {
-            var newNode = document.createElement('div');
-            RE.createWrapper(contents[i], newNode);
-            RE.focus();
-        }
-    }
-}
-
-
-RE.createWrapper = function(elms, node) {
-    var child = node.cloneNode(true);
-    var el    = elms;
-    
-    var parent  = el.parentNode;
-    var sibling = el.nextSibling;
-
-    child.appendChild(el);
-    
-    if (sibling) {
-        parent.insertBefore(child, sibling);
-    } else {
-        parent.appendChild(child);
-    }
-    
 };
 
 // Returns the cursor position relative to its current position onscreen.
