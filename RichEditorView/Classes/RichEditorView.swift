@@ -529,6 +529,7 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     /// If we are not already the first responder, focus the editor.
     @objc private func viewWasTapped() {
         if !webView.containsFirstResponder {
+            focus()
             let point = tapRecognizer.location(in: webView)
             focus(at: point)
         }
