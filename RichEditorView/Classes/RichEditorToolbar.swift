@@ -69,9 +69,9 @@ open class RichEditorToolbar: UIView {
         set { backgroundToolbar.barTintColor = newValue }
     }
 
-    fileprivate var toolbarScroll: UIScrollView
-    fileprivate var toolbar: UIToolbar
-    fileprivate var backgroundToolbar: UIToolbar
+    private var toolbarScroll: UIScrollView
+    private var toolbar: UIToolbar
+    private var backgroundToolbar: UIToolbar
     
     public override init(frame: CGRect) {
         toolbarScroll = UIScrollView()
@@ -89,7 +89,7 @@ open class RichEditorToolbar: UIView {
         setup()
     }
     
-    fileprivate func setup() {
+    private func setup() {
         autoresizingMask = .flexibleWidth
         backgroundColor = .clear
 
@@ -114,18 +114,23 @@ open class RichEditorToolbar: UIView {
         updateToolbar()
     }
     
-    fileprivate func updateToolbar() {
+    private func updateToolbar() {
         var buttons = [UIBarButtonItem]()
         for option in options {
+            let handler = { [weak self] in
+                if let strongSelf = self {
+                    option.action(strongSelf)
+                }
+            }
+
             if let image = option.image {
-                let button = RichBarButtonItem(image: image) { [weak self] in  option.action(self) }
+                let button = RichBarButtonItem(image: image, handler: handler)
                 buttons.append(button)
             } else {
                 let title = option.title
-                let button = RichBarButtonItem(title: title) { [weak self] in option.action(self) }
+                let button = RichBarButtonItem(title: title, handler: handler)
                 buttons.append(button)
             }
-
         }
         toolbar.items = buttons
 
