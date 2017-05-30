@@ -318,7 +318,7 @@ RE.focus = function() {
 };
 
 RE.focusAtPoint = function(x, y) {
-    var range = document.caretRangeFromPoint(x, y);
+    var range = document.caretRangeFromPoint(x, y) || document.createRange();
     var selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
