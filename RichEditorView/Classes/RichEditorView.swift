@@ -456,7 +456,7 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     private func scrollCaretToVisible() {
         let scrollView = self.webView.scrollView
         
-        let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.frame.height
+        let contentHeight = clientHeight > 0 ? CGFloat(clientHeight) : scrollView.contentSize.height
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: contentHeight)
         
         // XXX: Maybe find a better way to get the cursor height
@@ -465,9 +465,9 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
         let visiblePosition = CGFloat(relativeCaretYPosition)
         var offset: CGPoint?
 
-        if visiblePosition + cursorHeight > scrollView.bounds.size.height {
+        if visiblePosition + cursorHeight > scrollView.bounds.height - scrollView.contentInset.bottom {
             // Visible caret position goes further than our bounds
-            offset = CGPoint(x: 0, y: (visiblePosition + lineHeight) - scrollView.bounds.height + scrollView.contentOffset.y)
+            offset = CGPoint(x: 0, y: (visiblePosition + cursorHeight) - (scrollView.bounds.height - scrollView.contentInset.bottom) + scrollView.contentOffset.y)
 
         } else if visiblePosition < 0 {
             // Visible caret position is above what is currently visible
@@ -529,9 +529,12 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     /// If we are not already the first responder, focus the editor.
     @objc private func viewWasTapped() {
         if !webView.containsFirstResponder {
+            focus()
             let point = tapRecognizer.location(in: webView)
             focus(at: point)
         }
+        
+        self.scrollCaretToVisible()
     }
     
 }
