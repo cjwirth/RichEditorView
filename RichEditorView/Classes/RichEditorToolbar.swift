@@ -28,18 +28,39 @@ import UIKit
 open class RichBarButtonItem: UIBarButtonItem {
     open var actionHandler: ((Void) -> Void)?
     
-    public convenience init(image: UIImage? = nil, handler: ((Void) -> Void)? = nil) {
-        self.init(image: image, style: .plain, target: nil, action: nil)
-        target = self
-        action = #selector(RichBarButtonItem.buttonWasTapped)
+//    public convenience init(image: UIImage? = nil, handler: ((Void) -> Void)? = nil) {
+//        self.init(image: image, style: .plain, target: nil, action: nil)
+//        target = self
+//        action = #selector(RichBarButtonItem.buttonWasTapped)
+//        actionHandler = handler
+//    }
+//    
+//    public convenience init(title: String = "", handler: ((Void) -> Void)? = nil) {
+//        self.init(title: title, style: .plain, target: nil, action: nil)
+//        target = self
+//        action = #selector(RichBarButtonItem.buttonWasTapped)
+//        actionHandler = handler
+//    }
+
+    public convenience init(title: String = "",image: UIImage? = nil, handler: ((Void) -> Void)? = nil) {
+        let containView = UIView(frame: CGRect(x:0, y:0, width: 50, height: 40))
+
+        let label = UILabel(frame: CGRect(x:0, y:30, width: 50, height: 10))
+        label.text = title
+        label.font = UIFont.systemFont(ofSize: 10.0)
+        label.textAlignment = NSTextAlignment.center
+        containView.addSubview(label)
+
+        let imageview = UIImageView(frame: CGRect(x:12.5, y:5, width: 25, height: 25))
+        imageview.image = image
+        imageview.contentMode = UIViewContentMode.scaleAspectFill
+        containView.addSubview(imageview)
+        self.init(customView: containView)
+        
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector (RichBarButtonItem.buttonWasTapped))
+        containView.addGestureRecognizer(gesture)
         actionHandler = handler
-    }
-    
-    public convenience init(title: String = "", handler: ((Void) -> Void)? = nil) {
-        self.init(title: title, style: .plain, target: nil, action: nil)
-        target = self
-        action = #selector(RichBarButtonItem.buttonWasTapped)
-        actionHandler = handler
+
     }
     
     func buttonWasTapped() {
@@ -122,8 +143,12 @@ open class RichEditorToolbar: UIView {
                     option.action(strongSelf)
                 }
             }
-
-            if let image = option.image {
+            let image = option.image
+            let title = option.title
+            if (image != nil) && (title != "") {
+                let button = RichBarButtonItem(title: title, image: image, handler: handler)
+                buttons.append(button)
+            } else if let image = option.image {
                 let button = RichBarButtonItem(image: image, handler: handler)
                 buttons.append(button)
             } else {
