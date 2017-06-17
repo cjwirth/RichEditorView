@@ -25,30 +25,30 @@ import UIKit
 }
 
 /// RichBarButtonItem is a subclass of UIBarButtonItem that takes a callback as opposed to the target-action pattern
-open class RichBarButtonItem: UIBarButtonItem {
-    open var actionHandler: ((Void) -> Void)?
+@objcMembers open class RichBarButtonItem: UIBarButtonItem {
+    open var actionHandler: (() -> Void)?
     
-    public convenience init(image: UIImage? = nil, handler: ((Void) -> Void)? = nil) {
+    public convenience init(image: UIImage? = nil, handler: (() -> Void)? = nil) {
         self.init(image: image, style: .plain, target: nil, action: nil)
         target = self
         action = #selector(RichBarButtonItem.buttonWasTapped)
         actionHandler = handler
     }
     
-    public convenience init(title: String = "", handler: ((Void) -> Void)? = nil) {
+    public convenience init(title: String = "", handler: (() -> Void)? = nil) {
         self.init(title: title, style: .plain, target: nil, action: nil)
         target = self
         action = #selector(RichBarButtonItem.buttonWasTapped)
         actionHandler = handler
     }
     
-    func buttonWasTapped() {
+    @objc func buttonWasTapped() {
         actionHandler?()
     }
 }
 
 /// RichEditorToolbar is UIView that contains the toolbar for actions that can be performed on a RichEditorView
-open class RichEditorToolbar: UIView {
+@objcMembers open class RichEditorToolbar: UIView {
 
     /// The delegate to receive events that cannot be automatically completed
     open weak var delegate: RichEditorToolbarDelegate?
