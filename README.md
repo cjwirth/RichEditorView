@@ -6,9 +6,9 @@ RichEditorView
 
 RichEditorView is a simple, modular, drop-in UIView subclass for Rich Text Editing.
 
-Written in Swift 2.0 (Xcode 7.0)
+Written in Swift 3.0
 
-Supports iOS 8 and 9 through Cocoapods or Carthage.
+Supports iOS 8+ through Cocoapods or Carthage.
 
 - _Looking for Android? Check out_ [wasabeef/richeditor-android](https://github.com/wasabeef/richeditor-android)
 
@@ -54,7 +54,7 @@ Installation
 
 #### Cocoapods
 
-If you have Cocoapods 0.36+ installed, you can use Cocoapods to include `RichEditorView` into your project.
+If you have Cocoapods installed, you can use Cocoapods to include `RichEditorView` into your project.
 Add the following to your `Podfile`:
 
 ```
@@ -81,7 +81,7 @@ Most basic use:
 
 ```
 editor = RichEditorView(frame: self.view.bounds)
-editor.setHTML("<h1>My Awesome Editor</h1>Now I am editing in <em>style.</em>")
+editor.html = "<h1>My Awesome Editor</h1>Now I am editing in <em>style.</em>"
 self.view.addSubview(editor)
 ```
 
@@ -91,14 +91,14 @@ To change the styles of the currently selected text, you just call methods direc
 ```Swift
 editor.bold()
 editor.italic()
-editor.setTextColor(UIColor.redColor())
+editor.setTextColor(.red)
 ```
 
 If you want to show the editing toolbar `RichEditorToolbar`, you will need to handle displaying it (`KeyboardManager.swift` in the sample project is a good start). But configuring it is as easy as telling it which options you want to enable, and telling it which `RichEditorView` to work on.
 
 ```Swift
-let toolbar = RichEditorToolbar(frame: CGRectMake(0, 0, 320, 44))
-toolbar.options = RichEditorOptions.all()
+let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
+toolbar.options = RichEditorOptions.all
 toolbar.editor = editor // Previously instantiated RichEditorView
 ```
 
@@ -106,13 +106,9 @@ Some actions require user feedback (such as select an image, choose a color, etc
 
 ```Swift
 private func randomColor() -> UIColor {
-    let colors = [
-        UIColor.redColor(),
-        UIColor.orangeColor(),
-        UIColor.yellowColor(),
-        UIColor.greenColor(),
-        UIColor.blueColor(),
-        UIColor.purpleColor()
+    let colors: [UIColor] = [
+        .red, .orange, .yellow,
+        .green, .blue, .purple
     ]
 
     let color = colors[Int(arc4random_uniform(UInt32(colors.count)))]
@@ -131,7 +127,7 @@ If you need even more flexibility with your options, you can add completely cust
 
 ```Swift
 let clearAllItem = RichEditorOptionItem(image: UIImage(named: "clear"), title: "Clear") { toolbar in
-    toolbar?.editor?.setHTML("")
+    toolbar?.editor?.html = ""
     return
 }
 toolbar.options = [clearAllItem]
