@@ -275,6 +275,10 @@ import UIKit
         runJS("RE.setTextColor('\(color.hex)');")
     }
     
+    public func setEditorFontColor(_ color: UIColor) {
+        runJS("RE.setBaseTextColor('\(color.hex)');")
+    }
+    
     public func setTextBackgroundColor(_ color: UIColor) {
         runJS("RE.prepareInsert();")
         runJS("RE.setTextBackgroundColor('\(color.hex)');")
