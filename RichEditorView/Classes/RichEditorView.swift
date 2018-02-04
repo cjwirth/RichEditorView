@@ -529,6 +529,8 @@ import UIKit
         }
     }
 
+    // MARK: - Responder Handling
+
     /// Called by the UITapGestureRecognizer when the user taps the view.
     /// If we are not already the first responder, focus the editor.
     @objc private func viewWasTapped() {
@@ -537,5 +539,19 @@ import UIKit
             focus(at: point)
         }
     }
-    
+
+    override open func becomeFirstResponder() -> Bool {
+        if !webView.containsFirstResponder {
+            focus()
+            return true
+        } else {
+            return false
+        }
+    }
+
+    open override func resignFirstResponder() -> Bool {
+        blur()
+        return true
+    }
+
 }
