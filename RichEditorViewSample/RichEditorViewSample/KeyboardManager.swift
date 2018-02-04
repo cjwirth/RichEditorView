@@ -24,9 +24,9 @@ class KeyboardManager: NSObject {
     /**
         The toolbar that will be shown and hidden.
     */
-    var toolbar: RichEditorToolbar
+    @objc var toolbar: RichEditorToolbar
 
-    init(view: UIView) {
+    @objc init(view: UIView) {
         self.view = view
         toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: view.bounds.height, width: view.bounds.width, height: 44))
         toolbar.options = RichEditorDefaultOption.all
@@ -35,7 +35,7 @@ class KeyboardManager: NSObject {
     /**
         Starts monitoring for keyboard notifications in order to show/hide the toolbar
     */
-    func beginMonitoring() {
+    @objc func beginMonitoring() {
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardManager.keyboardWillShowOrHide(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(KeyboardManager.keyboardWillShowOrHide(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
     }
@@ -43,7 +43,7 @@ class KeyboardManager: NSObject {
     /**
         Stops monitoring for keyboard notifications
     */
-    func stopMonitoring() {
+    @objc func stopMonitoring() {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
@@ -51,7 +51,7 @@ class KeyboardManager: NSObject {
     /**
         Called when a keyboard notification is recieved. Takes are of handling the showing or hiding of the toolbar
     */
-    func keyboardWillShowOrHide(_ notification: Notification) {
+    @objc func keyboardWillShowOrHide(_ notification: Notification) {
 
         let info = (notification as NSNotification).userInfo ?? [:]
         let duration = TimeInterval((info[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.floatValue ?? 0.25)

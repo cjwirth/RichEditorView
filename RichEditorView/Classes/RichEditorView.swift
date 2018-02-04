@@ -42,7 +42,7 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     // MARK: Public Properties
 
     /// The delegate that will receive callbacks when certain actions are completed.
-    open weak var delegate: RichEditorDelegate?
+    @objc open weak var delegate: RichEditorDelegate?
 
     /// Input accessory view to display over they keyboard.
     /// Defaults to nil
