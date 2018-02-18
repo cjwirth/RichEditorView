@@ -134,7 +134,17 @@ RE.removeFormat = function() {
 };
 
 RE.setFontSize = function(size) {
-    RE.editor.style.fontSize = size;
+    RE.restorerange();
+    document.execCommand("styleWithCSS", null, true);
+    document.execCommand('fontSize', false, size);
+    document.execCommand("styleWithCSS", null, false);
+};
+
+RE.setFontFamily = function(font) {
+    RE.restorerange();
+    document.execCommand("styleWithCSS", null, true);
+    document.execCommand('fontName', false, font);
+    document.execCommand("styleWithCSS", null, false);
 };
 
 RE.setBackgroundColor = function(color) {
