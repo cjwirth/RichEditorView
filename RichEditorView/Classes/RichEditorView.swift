@@ -334,7 +334,6 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     }
 
     public func focus(at: CGPoint) {
-        delegate?.richEditorTookFocusAt?(self, at: at)
         runJS("RE.focusAtPoint(\(at.x), \(at.y));")
     }
     
@@ -532,8 +531,9 @@ open class RichEditorView: UIView, UIScrollViewDelegate, UIWebViewDelegate, UIGe
     /// Called by the UITapGestureRecognizer when the user taps the view.
     /// If we are not already the first responder, focus the editor.
     @objc private func viewWasTapped() {
+        let point = tapRecognizer.location(in: webView)
+        delegate?.richEditorTookFocusAt?(self, at: point)
         if !webView.containsFirstResponder {
-            let point = tapRecognizer.location(in: webView)
             focus(at: point)
         }
     }
