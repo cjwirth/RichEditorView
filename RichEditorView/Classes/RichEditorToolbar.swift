@@ -25,7 +25,9 @@ import UIKit
 }
 
 /// RichBarButtonItem is a subclass of UIBarButtonItem that takes a callback as opposed to the target-action pattern
+
 open class RichBarButtonItem: UIBarButtonItem {
+
     open var actionHandler: (() -> Void)?
     
     public convenience init(image: UIImage? = nil, handler: (() -> Void)? = nil) {
@@ -48,7 +50,7 @@ open class RichBarButtonItem: UIBarButtonItem {
 }
 
 /// RichEditorToolbar is UIView that contains the toolbar for actions that can be performed on a RichEditorView
-open class RichEditorToolbar: UIView {
+@objcMembers open class RichEditorToolbar: UIView {
 
     /// The delegate to receive events that cannot be automatically completed
     open weak var delegate: RichEditorToolbarDelegate?
@@ -134,7 +136,7 @@ open class RichEditorToolbar: UIView {
         }
         toolbar.items = buttons
 
-        let defaultIconWidth: CGFloat = 22
+        let defaultIconWidth: CGFloat = 28
         let barButtonItemMargin: CGFloat = 11
         let width: CGFloat = buttons.reduce(0) {sofar, new in
             if let view = new.value(forKey: "view") as? UIView {

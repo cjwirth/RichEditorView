@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.editorView.delegate = self;
+    self.editorView.placeholder = @"Type some text...";
 
     self.keyboardManager = [[KeyboardManager alloc] initWithView:self.view];
     self.keyboardManager.toolbar.editor = self.editorView;
