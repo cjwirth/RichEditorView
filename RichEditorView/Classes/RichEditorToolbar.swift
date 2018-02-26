@@ -25,7 +25,9 @@ import UIKit
 }
 
 /// RichBarButtonItem is a subclass of UIBarButtonItem that takes a callback as opposed to the target-action pattern
-@objcMembers open class RichBarButtonItem: UIBarButtonItem {
+
+open class RichBarButtonItem: UIBarButtonItem {
+
     open var actionHandler: (() -> Void)?
     
     public convenience init(image: UIImage? = nil, handler: (() -> Void)? = nil) {
@@ -54,7 +56,7 @@ import UIKit
     open weak var delegate: RichEditorToolbarDelegate?
 
     /// A reference to the RichEditorView that it should be performing actions on
-    open weak var editor: RichEditorView?
+    @objc open weak var editor: RichEditorView?
 
     /// The list of options to be displayed on the toolbar
     open var options: [RichEditorOption] = [] {

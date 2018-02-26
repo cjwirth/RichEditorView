@@ -43,6 +43,10 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: RichEditorDelegate {
+  
+  func richEditorTookFocusAt(_ editor: RichEditorView, at: CGPoint) {
+      print("at \(at)")
+  }
 
     func richEditor(_ editor: RichEditorView, contentDidChange content: String) {
         if content.isEmpty {

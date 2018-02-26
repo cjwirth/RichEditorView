@@ -18,6 +18,9 @@ import UIKit
     @objc optional func richEditor(_ editor: RichEditorView, contentDidChange content: String)
 
     /// Called when the rich editor starts editing
+    @objc optional func richEditorTookFocusAt(_ editor: RichEditorView, at: CGPoint)
+
+    /// Called when the rich editor starts editing
     @objc optional func richEditorTookFocus(_ editor: RichEditorView)
     
     /// Called when the rich editor stops editing or loses focus
@@ -42,7 +45,7 @@ import UIKit
     // MARK: Public Properties
 
     /// The delegate that will receive callbacks when certain actions are completed.
-    open weak var delegate: RichEditorDelegate?
+    @objc open weak var delegate: RichEditorDelegate?
 
     /// Input accessory view to display over they keyboard.
     /// Defaults to nil
@@ -534,8 +537,9 @@ import UIKit
     /// Called by the UITapGestureRecognizer when the user taps the view.
     /// If we are not already the first responder, focus the editor.
     @objc private func viewWasTapped() {
+        let point = tapRecognizer.location(in: webView)
+        delegate?.richEditorTookFocusAt?(self, at: point)
         if !webView.containsFirstResponder {
-            let point = tapRecognizer.location(in: webView)
             focus(at: point)
         }
     }
