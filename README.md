@@ -98,7 +98,7 @@ If you want to show the editing toolbar `RichEditorToolbar`, you will need to ha
 
 ```Swift
 let toolbar = RichEditorToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
-toolbar.options = RichEditorOptions.all
+toolbar.options = RichEditorDefaultOption.all
 toolbar.editor = editor // Previously instantiated RichEditorView
 ```
 
