@@ -132,6 +132,7 @@ RE.updatePlaceholder = function() {
 RE.removeFormat = function() {
     // https://stackoverflow.com/a/52137754/4514671
     // https://stackoverflow.com/questions/14028773/javascript-execcommandremoveformat-doesnt-strip-h2-tag
+    // fix for body button not formatting headers
     // formatting to 'p' because removeFormat cannot deal with headers (h1, h2, ...)
     document.execCommand('formatBlock', false, 'p');
     document.execCommand('removeFormat', false, null);
