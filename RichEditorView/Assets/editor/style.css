@@ -23,6 +23,7 @@ html {
 body {
     min-height: 100%;
     overflow: auto;
+    padding: 10px;
 }
 
 body, h1, p {
