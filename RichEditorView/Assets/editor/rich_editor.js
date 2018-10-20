@@ -231,6 +231,12 @@ RE.setLineHeight = function(height) {
     RE.editor.style.lineHeight = height;
 };
 
+RE.insertHr = function(url, alt) {
+    var hr = document.createElement('hr');
+    RE.insertHTML(hr.outerHTML);
+    RE.callback("input");
+};
+
 RE.insertImage = function(url, alt) {
     var img = document.createElement('img');
     img.setAttribute("src", url);

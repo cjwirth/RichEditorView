@@ -72,6 +72,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
     case alignLeft
     case alignCenter
     case alignRight
+    case hr
     case image
     case link
     
@@ -82,7 +83,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
         .textColor, .textBackgroundColor,
         .header(1), .header(2), .header(3), .header(4), .header(5), .header(6),
         .indent, outdent, orderedList, unorderedList,
-        .alignLeft, .alignCenter, .alignRight, .image, .link
+        .alignLeft, .alignCenter, .alignRight, .hr, .image, .link
     ]
 
     // MARK: RichEditorOption
@@ -109,11 +110,12 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .alignLeft: name = "justify_left"
         case .alignCenter: name = "justify_center"
         case .alignRight: name = "justify_right"
+        case .hr: name = "horizontal_line"
         case .image: name = "insert_image"
         case .link: name = "insert_link"
         }
         
-        let bundle = Bundle(for: RichEditorToolbar.self)
+        let bundle =  Bundle.main
         return UIImage(named: name, in: bundle, compatibleWith: nil)
     }
     
@@ -138,6 +140,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .alignLeft: return NSLocalizedString("Left", comment: "")
         case .alignCenter: return NSLocalizedString("Center", comment: "")
         case .alignRight: return NSLocalizedString("Right", comment: "")
+        case .hr: return NSLocalizedString("Horizontal Line", comment: "")
         case .image: return NSLocalizedString("Image", comment: "")
         case .link: return NSLocalizedString("Link", comment: "")
         }
@@ -163,7 +166,8 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .unorderedList: toolbar.editor?.unorderedList()
         case .alignLeft: toolbar.editor?.alignLeft()
         case .alignCenter: toolbar.editor?.alignCenter()
-        case .alignRight: toolbar.editor?.alignRight()
+        case .alignRight: toolbar.editor?.insertHr()
+        case .hr: toolbar.editor?.orderedList()
         case .image: toolbar.delegate?.richEditorToolbarInsertImage?(toolbar)
         case .link: toolbar.delegate?.richEditorToolbarInsertLink?(toolbar)
         }

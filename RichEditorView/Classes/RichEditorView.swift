@@ -320,6 +320,10 @@ import UIKit
         runJS("RE.setJustifyRight();")
     }
     
+    public func insertHr() {
+        runJS("RE.insertHr();")
+    }
+    
     public func insertImage(_ url: String, alt: String) {
         runJS("RE.prepareInsert();")
         runJS("RE.insertImage('\(url.escaped)', '\(alt.escaped)');")
