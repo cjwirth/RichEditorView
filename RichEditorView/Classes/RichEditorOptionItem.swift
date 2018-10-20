@@ -166,8 +166,8 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .unorderedList: toolbar.editor?.unorderedList()
         case .alignLeft: toolbar.editor?.alignLeft()
         case .alignCenter: toolbar.editor?.alignCenter()
-        case .alignRight: toolbar.editor?.alignRight()()
-        case .hr: toolbar.editor?.insertHr()()
+        case .alignRight: toolbar.editor?.alignRight()
+        case .hr: toolbar.editor?.insertHr()
         case .image: toolbar.delegate?.richEditorToolbarInsertImage?(toolbar)
         case .link: toolbar.delegate?.richEditorToolbarInsertLink?(toolbar)
         }
