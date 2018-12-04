@@ -137,6 +137,9 @@ import UIKit
                 buttons.append(flex)
             }
         }
+        if buttons.count > 1 {
+            buttons.removeLast()
+        }
         toolbar.items = buttons
 
         let defaultIconWidth: CGFloat = 28
