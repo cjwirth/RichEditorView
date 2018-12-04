@@ -117,7 +117,6 @@ import UIKit
     private func updateToolbar() {
         var buttons = [UIBarButtonItem]()
         let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        buttons.append(flex)
         for option in options {
             let handler = { [weak self] in
                 if let strongSelf = self {
@@ -129,14 +128,15 @@ import UIKit
                 let button = RichBarButtonItem(image: image, handler: handler)
                 button.tag = option.tag
                 buttons.append(button)
+                buttons.append(flex)
             } else {
                 let title = option.title
                 let button = RichBarButtonItem(title: title, handler: handler)
                 button.tag = option.tag
                 buttons.append(button)
+                buttons.append(flex)
             }
         }
-        buttons.append(flex)
         toolbar.items = buttons
 
         let defaultIconWidth: CGFloat = 28
