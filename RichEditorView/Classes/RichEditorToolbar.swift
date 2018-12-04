@@ -128,18 +128,14 @@ import UIKit
                 let button = RichBarButtonItem(image: image, handler: handler)
                 button.tag = option.tag
                 buttons.append(button)
-                buttons.append(flex)
             } else {
                 let title = option.title
                 let button = RichBarButtonItem(title: title, handler: handler)
                 button.tag = option.tag
                 buttons.append(button)
-                buttons.append(flex)
             }
         }
-        if buttons.count > 1 {
-            buttons.removeLast()
-        }
+        buttons.insert(flex, at: buttons.count-1)
         toolbar.items = buttons
 
         let defaultIconWidth: CGFloat = 28
