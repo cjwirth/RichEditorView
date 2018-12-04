@@ -155,7 +155,7 @@ import UIKit
         toolbarScroll.contentSize.width = width
     }
     
-    func setTintColor(color: UIColor, toTag tag: Int) {
+    public func setTintColor(color: UIColor, toTag tag: Int) {
         guard let items = toolbar.items else {
             return
         }
