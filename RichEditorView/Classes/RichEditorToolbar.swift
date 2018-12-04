@@ -125,10 +125,12 @@ import UIKit
 
             if let image = option.image {
                 let button = RichBarButtonItem(image: image, handler: handler)
+                button.tag = option.tag
                 buttons.append(button)
             } else {
                 let title = option.title
                 let button = RichBarButtonItem(title: title, handler: handler)
+                button.tag = option.tag
                 buttons.append(button)
             }
         }
@@ -153,4 +155,14 @@ import UIKit
         toolbarScroll.contentSize.width = width
     }
     
+    func setTintColor(color: UIColor, toTag tag: Int) {
+        guard let items = toolbar.items else {
+            return
+        }
+        
+        for item in items where item.tag == tag {
+            item.tintColor = color
+            return
+        }
+    }
 }

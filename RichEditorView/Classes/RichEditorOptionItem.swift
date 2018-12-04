@@ -17,6 +17,8 @@ public protocol RichEditorOption {
     /// The title of the item.
     /// If `image` is nil, this will be used for display in the RichEditorToolbar.
     var title: String { get }
+    
+    var tag: Int { get }
 
     /// The action to be evoked when the action is tapped
     /// - parameter editor: The RichEditorToolbar that the RichEditorOption was being displayed in when tapped.
@@ -33,13 +35,16 @@ public struct RichEditorOptionItem: RichEditorOption {
 
     /// If an `itemImage` is not specified, this is used in display
     public var title: String
+    
+    public var tag: Int
 
     /// The action to be performed when tapped
     public var handler: ((RichEditorToolbar) -> Void)
 
-    public init(image: UIImage?, title: String, action: @escaping ((RichEditorToolbar) -> Void)) {
+    public init(image: UIImage?, title: String, tag: Int, action: @escaping ((RichEditorToolbar) -> Void)) {
         self.image = image
         self.title = title
+        self.tag = tag
         self.handler = action
     }
     
@@ -140,6 +145,32 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .alignRight: return NSLocalizedString("Right", comment: "")
         case .image: return NSLocalizedString("Image", comment: "")
         case .link: return NSLocalizedString("Link", comment: "")
+        }
+    }
+    
+    public var tag: Int {
+        switch self {
+        case .clear: return 1
+        case .undo: return 2
+        case .redo: return 3
+        case .bold: return 4
+        case .italic: return 5
+        case .subscript: return 6
+        case .superscript: return 7
+        case .strike: return 8
+        case .underline: return 9
+        case .textColor: return 10
+        case .textBackgroundColor: return 11
+        case .header(let h): return (20 + h)
+        case .indent: return 12
+        case .outdent: return 13
+        case .orderedList: return 14
+        case .unorderedList: return 15
+        case .alignLeft: return 16
+        case .alignCenter: return 17
+        case .alignRight: return 18
+        case .image: return 19
+        case .link: return 20
         }
     }
     
