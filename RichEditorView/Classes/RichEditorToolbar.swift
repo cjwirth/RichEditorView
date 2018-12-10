@@ -116,7 +116,6 @@ import UIKit
     
     private func updateToolbar() {
         var buttons = [UIBarButtonItem]()
-        let flex = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         for option in options {
             let handler = { [weak self] in
                 if let strongSelf = self {
@@ -124,7 +123,9 @@ import UIKit
                 }
             }
 
-            if let image = option.image {
+            if option is RichEditorOptionFlexibleSpace {
+                buttons.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
+            } else if let image = option.image {
                 let button = RichBarButtonItem(image: image, handler: handler)
                 button.tag = option.tag
                 buttons.append(button)
@@ -134,9 +135,6 @@ import UIKit
                 button.tag = option.tag
                 buttons.append(button)
             }
-        }
-        if buttons.count > 0 {
-            buttons.insert(flex, at: buttons.count-1)
         }
         toolbar.items = buttons
 
@@ -166,6 +164,17 @@ import UIKit
         
         for item in items where item.tag == tag {
             item.tintColor = color
+            return
+        }
+    }
+
+    public func setImage(image: UIImage, toTag tag: Int) {
+        guard let items = toolbar.items else {
+            return
+        }
+
+        for item in items where item.tag == tag {
+            item.image = image
             return
         }
     }

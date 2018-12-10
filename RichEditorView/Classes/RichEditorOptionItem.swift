@@ -55,6 +55,19 @@ public struct RichEditorOptionItem: RichEditorOption {
     }
 }
 
+/// Flexible Space RichEditorOption
+public struct RichEditorOptionFlexibleSpace: RichEditorOption {
+    public var tag: Int
+
+    public var image: UIImage? = nil
+
+    public var title: String = ""
+
+    public func action(_ editor: RichEditorToolbar) {}
+
+    public init(tag: Int) { self.tag = tag }
+}
+
 /// RichEditorOptions is an enum of standard editor actions
 public enum RichEditorDefaultOption: RichEditorOption {
 
