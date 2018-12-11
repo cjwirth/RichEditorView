@@ -124,7 +124,9 @@ import UIKit
             }
 
             if option is RichEditorOptionFlexibleSpace {
-                buttons.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil))
+                let flexibleSpaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+                flexibleSpaceBarButtonItem.tag = -1
+                buttons.append(flexibleSpaceBarButtonItem)
             } else if let image = option.image {
                 let button = RichBarButtonItem(image: image, handler: handler)
                 button.tag = option.tag
@@ -141,7 +143,9 @@ import UIKit
         let defaultIconWidth: CGFloat = 28
         let barButtonItemMargin: CGFloat = 11
         let width: CGFloat = buttons.reduce(0) {sofar, new in
-            if let view = new.value(forKey: "view") as? UIView {
+            if new.tag == -1 {
+                return sofar
+            } else if let view = new.value(forKey: "view") as? UIView {
                 return sofar + view.frame.size.width + barButtonItemMargin
             } else {
                 return sofar + (defaultIconWidth + barButtonItemMargin)
