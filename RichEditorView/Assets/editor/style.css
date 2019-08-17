@@ -23,6 +23,13 @@ html {
 body {
     min-height: 100%;
     overflow: auto;
+    background-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+    }
 }
 
 body, h1, p {
@@ -58,4 +65,10 @@ div {
     font-family: 'HelveticaNeue';
     color:#666666;
     font-size: 12pt;
+}
+
+@media (prefers-color-scheme: dark) {
+    #editor {
+        color: white;
+    }
 }
