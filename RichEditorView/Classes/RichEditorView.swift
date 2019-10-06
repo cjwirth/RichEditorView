@@ -142,13 +142,11 @@ import UIKit
         webView.scalesPageToFit = false
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webView.dataDetectorTypes = UIDataDetectorTypes()
-        webView.backgroundColor = UIColor.red
         
         webView.scrollView.isScrollEnabled = isScrollEnabled
         webView.scrollView.bounces = false
         webView.scrollView.delegate = self
         webView.scrollView.clipsToBounds = false
-        webView.scrollView.backgroundColor = UIColor.green
 
         webView.cjw_inputAccessoryView = nil
         
@@ -234,6 +232,9 @@ import UIKit
     }
     
     public func setEditorBackgroundColor(_ color: UIColor) {
+        webView.backgroundColor = color
+        webView.scrollView.backgroundColor = color
+
         runJS("RE.setBackgroundColor('\(color.hex)');")
     }
     
