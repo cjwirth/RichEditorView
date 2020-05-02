@@ -5,13 +5,13 @@
 //  Copyright (c) 2015 Caesar Wirth. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 // Inspiration for this extension comes from:
 //   - bjhomes: https://gist.github.com/bjhomer/2048571
 //   - diegoreymendez: http://stackoverflow.com/a/25415378/1403046
 // Bundled inside to add a vendored prefix so as to hopefully not cause naming conflicts
-@interface UIWebView (CJWHackishAccessoryHiding)
+@interface WKWebView (CJWHackishAccessoryHiding)
 
 // Overrides the standard inputAccessoryView
 // Set to a custom view to override. Setting to nil will remove it.

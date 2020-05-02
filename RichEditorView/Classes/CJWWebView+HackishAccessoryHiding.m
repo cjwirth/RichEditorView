@@ -8,7 +8,7 @@
 #import <objc/runtime.h>
 #import "CJWWebView+HackishAccessoryHiding.h"
 
-@implementation UIWebView (HackishAccessoryHiding)
+@implementation WKWebView (HackishAccessoryHiding)
 
 static const char * const hackishFixClassName = "UIWebBrowserViewMinusAccessoryView";
 static Class hackishFixClass = Nil;
@@ -57,8 +57,8 @@ static Class hackishFixClass = Nil;
         view = view.superview;
     }
 
-    if ([view isKindOfClass:[UIWebView class]]) {
-        UIWebView *webView = (UIWebView*)view;
+    if ([view isKindOfClass:[WKWebView class]]) {
+        WKWebView *webView = (WKWebView*)view;
         customInputAccessoryView = [webView cjw_inputAccessoryView];
     }
 
