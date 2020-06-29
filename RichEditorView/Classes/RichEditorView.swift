@@ -136,7 +136,11 @@ var ToolbarHandle: UInt8 = 0
         webView.frame = bounds
         webView.navigationDelegate = self
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        webView.configuration.dataDetectorTypes = WKDataDetectorTypes()
+        if #available(iOS 10.0, *) {
+            webView.configuration.dataDetectorTypes = WKDataDetectorTypes()
+        } else {
+            // Fallback on earlier versions
+        }
         webView.scrollView.isScrollEnabled = isScrollEnabled
         webView.scrollView.bounces = true
         webView.scrollView.delegate = self
@@ -145,7 +149,11 @@ var ToolbarHandle: UInt8 = 0
 
         if let filePath = Bundle(for: RichEditorView.self).path(forResource: "rich_editor", ofType: "html") {
             let url = URL(fileURLWithPath: filePath, isDirectory: false)
-            webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
+            if #available(iOS 9.0, *) {
+                webView.loadFileURL(url, allowingReadAccessTo: url.deletingLastPathComponent())
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 
@@ -644,3 +652,4 @@ var ToolbarHandle: UInt8 = 0
             return customInputAccessory as? UIView
         }
     }
+
