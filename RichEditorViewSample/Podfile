@@ -1,6 +1,6 @@
 use_frameworks!
-platform :ios, '8.0'
+platform :ios, '11.0'
 
 target 'RichEditorViewSample' do
-    pod "RichEditorView", :path => "../"
+    pod 'RichEditorView', :git => 'https://github.com/Smarp/RichEditorView.git', :branch => 'webkit'
 end

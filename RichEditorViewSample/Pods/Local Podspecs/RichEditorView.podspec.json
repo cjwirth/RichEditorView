@@ -15,10 +15,12 @@
   "platforms": {
     "ios": "8.0"
   },
+  "swift_versions": "4.0",
   "requires_arc": true,
   "source_files": "RichEditorView/Classes/*",
   "resources": [
     "RichEditorView/Assets/icons/*",
     "RichEditorView/Assets/editor/*"
-  ]
+  ],
+  "swift_version": "4.0"
 }

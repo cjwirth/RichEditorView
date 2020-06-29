@@ -2,15 +2,21 @@ PODS:
   - RichEditorView (5.0.0)
 
 DEPENDENCIES:
-  - RichEditorView (from `../`)
+  - RichEditorView (from `https://github.com/Smarp/RichEditorView.git`, branch `webkit`)
 
 EXTERNAL SOURCES:
   RichEditorView:
-    :path: ../
+    :branch: webkit
+    :git: https://github.com/Smarp/RichEditorView.git
+
+CHECKOUT OPTIONS:
+  RichEditorView:
+    :commit: a257484f3acda99cb0320e4c581462548c738eec
+    :git: https://github.com/Smarp/RichEditorView.git
 
 SPEC CHECKSUMS:
-  RichEditorView: 2b536e648162702950a152786223f5a55794504f
+  RichEditorView: cebe82c09dd84779c2a7d80df101e4e97bc02764
 
-PODFILE CHECKSUM: 7a4df9933ce0390c2a1aa64e14fa39cd32734a0d
+PODFILE CHECKSUM: e210b5733e358574fa62904c00a59f3cf9b8e3fc
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.9.0.beta.2
