@@ -134,7 +134,39 @@ RE.removeFormat = function() {
 };
 
 RE.setFontSize = function(size) {
-    RE.editor.style.fontSize = size;
+    RE.restorerange();
+    var sel = document.getSelection();
+    if (sel.toString().length !== 0) {
+        if (sel.rangeCount) {
+
+            var el = document.createElement("span");
+            el.setAttribute("style", 'font-size:' + size);
+
+            var range = sel.getRangeAt(0).cloneRange();
+            range.surroundContents(el);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+    RE.callback("input");
+};
+
+RE.setFontFamily = function(fontFamily) {
+    RE.restorerange();
+    var sel = document.getSelection();
+    if (sel.toString().length !== 0) {
+        if (sel.rangeCount) {
+
+            var el = document.createElement("span");
+            el.setAttribute("style", 'font-family:' + fontFamily);
+
+            var range = sel.getRangeAt(0).cloneRange();
+            range.surroundContents(el);
+            sel.removeAllRanges();
+            sel.addRange(range);
+        }
+    }
+    RE.callback("input");
 };
 
 RE.setBackgroundColor = function(color) {

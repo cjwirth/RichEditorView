@@ -232,6 +232,10 @@ import UIKit
     public func setFontSize(_ size: Int) {
         runJS("RE.setFontSize('\(size)px');")
     }
+
+    public func setFontFamily(_ fontFamily: String) {
+        runJS("RE.setFontFamily('\(fontFamily)');")
+    }
     
     public func setEditorBackgroundColor(_ color: UIColor) {
         runJS("RE.setBackgroundColor('\(color.hex)');")
