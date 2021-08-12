@@ -245,6 +245,10 @@ import UIKit
         runJS("RE.redo();")
     }
     
+    public func setCode() {
+        runJS("RE.setCode();")
+    }
+    
     public func bold() {
         runJS("RE.setBold();")
     }

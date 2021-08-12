@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		284EE05E26C56851003E3F96 /* code.png in Resources */ = {isa = PBXBuildFile; fileRef = 284EE05D26C56851003E3F96 /* code.png */; };
 		39FC98FB1DC788A1008FE5DD /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FC98F91DC788A1008FE5DD /* String+Extensions.swift */; };
 		39FC98FC1DC788A1008FE5DD /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FC98FA1DC788A1008FE5DD /* UIColor+Extensions.swift */; };
 		947A71A11C0F9DED00BDF9FC /* UIView+Responder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */; };
@@ -84,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		284EE05D26C56851003E3F96 /* code.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = code.png; sourceTree = "<group>"; };
 		39FC98F91DC788A1008FE5DD /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Extensions.swift"; path = "Classes/String+Extensions.swift"; sourceTree = "<group>"; };
 		39FC98FA1DC788A1008FE5DD /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Extensions.swift"; path = "Classes/UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Responder.swift"; path = "Classes/UIView+Responder.swift"; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 				FBA6AB1F1AD3ED2D00721644 /* bg_color@2x.png */,
 				FBA6AB201AD3ED2D00721644 /* bold.png */,
 				FBA6AB211AD3ED2D00721644 /* bold@2x.png */,
+				284EE05D26C56851003E3F96 /* code.png */,
 				FBA6AB221AD3ED2D00721644 /* clear.png */,
 				FBA6AB231AD3ED2D00721644 /* clear@2x.png */,
 				FBA6AB241AD3ED2D00721644 /* h1.png */,
@@ -400,6 +403,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = FBA6AAEF1AD3EC9F00721644;
@@ -437,6 +441,7 @@
 				FBA6AB561AD3ED2D00721644 /* bold@2x.png in Resources */,
 				FBA6AB6E1AD3ED2D00721644 /* justify_center@2x.png in Resources */,
 				FBA6AB5A1AD3ED2D00721644 /* h1@2x.png in Resources */,
+				284EE05E26C56851003E3F96 /* code.png in Resources */,
 				FBA6AB721AD3ED2D00721644 /* justify_right@2x.png in Resources */,
 				FBA6AB7D1AD3ED2D00721644 /* text_color.png in Resources */,
 				FBA6AB621AD3ED2D00721644 /* h5@2x.png in Resources */,

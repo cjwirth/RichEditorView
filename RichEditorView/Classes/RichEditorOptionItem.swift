@@ -54,6 +54,7 @@ public struct RichEditorOptionItem: RichEditorOption {
 public enum RichEditorDefaultOption: RichEditorOption {
 
     case clear
+    case code
     case undo
     case redo
     case bold
@@ -76,7 +77,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
     case link
     
     public static let all: [RichEditorDefaultOption] = [
-        .clear,
+        .clear,.code,
         .undo, .redo, .bold, .italic,
         .subscript, .superscript, .strike, .underline,
         .textColor, .textBackgroundColor,
@@ -91,6 +92,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
         var name = ""
         switch self {
         case .clear: name = "clear"
+        case .code: name = "code"
         case .undo: name = "undo"
         case .redo: name = "redo"
         case .bold: name = "bold"
@@ -122,6 +124,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .clear: return NSLocalizedString("Clear", comment: "")
         case .undo: return NSLocalizedString("Undo", comment: "")
         case .redo: return NSLocalizedString("Redo", comment: "")
+        case .code: return NSLocalizedString("Code Block", comment: "")
         case .bold: return NSLocalizedString("Bold", comment: "")
         case .italic: return NSLocalizedString("Italic", comment: "")
         case .subscript: return NSLocalizedString("Sub", comment: "")
@@ -148,6 +151,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .clear: toolbar.editor?.removeFormat()
         case .undo: toolbar.editor?.undo()
         case .redo: toolbar.editor?.redo()
+        case .code: toolbar.editor?.setCode()
         case .bold: toolbar.editor?.bold()
         case .italic: toolbar.editor?.italic()
         case .subscript: toolbar.editor?.subscriptText()
