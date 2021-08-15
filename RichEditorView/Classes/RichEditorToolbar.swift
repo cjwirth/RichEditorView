@@ -73,6 +73,44 @@ import UIKit
     private var toolbar: UIToolbar
     private var backgroundToolbar: UIToolbar
     
+    lazy var fontToolbar: UIToolbar = {
+        let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: 800, height: 44))
+       bar.isHidden = true
+       bar.autoresizingMask = .flexibleWidth
+       bar.alpha = 0
+        
+       var buttons = [UIBarButtonItem]()
+       let options = RichEditorFontOption.all
+        for option in options {
+            let handler = { [weak self] in
+                if let strongSelf = self {
+                    option.action(strongSelf)
+                }
+            }
+                let title = option.title
+                let button = RichBarButtonItem(title: title, handler: handler)
+                buttons.append(button)
+        }
+        bar.items = buttons
+        toolbarScroll.addSubview(bar)
+       return bar
+    }()
+    
+     
+     func toggleFontBar() {
+        UIView.animate(withDuration: 1) { [self] in
+            if fontToolbar.isHidden {
+                fontToolbar.alpha = 1
+                toolbarScroll.contentSize.width = fontToolbar.bounds.size.width
+            } else {
+                fontToolbar.alpha = 0
+                toolbarScroll.contentSize.width = toolbar.frame.size.width
+            }
+                fontToolbar.isHidden = !fontToolbar.isHidden
+                toolbar.isHidden = !fontToolbar.isHidden
+            }
+    }
+    
     public override init(frame: CGRect) {
         toolbarScroll = UIScrollView()
         toolbar = UIToolbar()

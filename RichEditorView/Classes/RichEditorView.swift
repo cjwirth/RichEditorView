@@ -48,7 +48,9 @@ import UIKit
     /// Defaults to nil
     open override var inputAccessoryView: UIView? {
         get { return webView.cjw_inputAccessoryView }
-        set { webView.cjw_inputAccessoryView = newValue }
+        set {
+            webView.cjw_inputAccessoryView = newValue
+        }
     }
 
     /// The internal UIWebView that is used to display the text.
@@ -245,8 +247,18 @@ import UIKit
         runJS("RE.redo();")
     }
     
+  
+    public func setFont(_ font: RichEditorFontOption) {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleFontBar()
+//        runJS
+    }
+    
+    
     public func setCode() {
-        runJS("RE.setCode();")
+//        runJS("RE.setCode();")
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleFontBar()
     }
     
     public func bold() {
