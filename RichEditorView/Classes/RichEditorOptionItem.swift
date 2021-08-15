@@ -50,6 +50,63 @@ public struct RichEditorOptionItem: RichEditorOption {
     }
 }
 
+
+public enum RichEditorTextSizeOption: RichEditorOption {
+    
+    public var image: UIImage? {
+        return nil
+    }
+    
+    public var title: String  {
+        return ""
+    }
+    
+    public func action(_ editor: RichEditorToolbar) {
+        
+    }
+    
+ 
+}
+
+
+public enum RichEditorFontOption: RichEditorOption {
+    
+    case Ariel
+    case CourierNew
+    case Georgia
+    case Impact
+    case LucidaConsole
+    case Tahoma
+    case TimesNewRoman
+    case Verdana
+    
+    public static let all: [RichEditorFontOption] = [
+        .Ariel, .CourierNew, .Georgia, .Impact, .LucidaConsole, .Tahoma, .TimesNewRoman, .Verdana,
+    ]
+    
+    public var image: UIImage? {
+        return nil
+    }
+    
+    public var title: String  {
+        switch self {
+        case .Ariel: return  "Ariel"
+        case .CourierNew: return  "Courier New"
+        case .Georgia: return  "Georgia"
+        case .Impact: return  "Impact"
+        case .LucidaConsole: return  "Lucida Console"
+        case .Tahoma: return  "Tahoma"
+        case .TimesNewRoman: return  "Times New Roman"
+        case .Verdana: return  "Verdana"
+        }
+    }
+    
+    public func action(_ toolbar: RichEditorToolbar) {
+        toolbar.editor?.setFont(self)
+    }
+     
+}
+
 /// RichEditorOptions is an enum of standard editor actions
 public enum RichEditorDefaultOption: RichEditorOption {
 
