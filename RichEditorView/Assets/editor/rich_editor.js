@@ -134,7 +134,30 @@ RE.removeFormat = function() {
 };
 
 RE.setFontSize = function(size) {
-    RE.editor.style.fontSize = size;
+    var sel = window.getSelection();
+    if (sel.rangeCount) {
+       // Creates a new element, and insert the selected text with the chosen font inside
+       var e = document.createElement('span');
+       e.style.fontSize = size;
+       e.innerHTML = sel.toString();
+       var range = sel.getRangeAt(0);
+       range.deleteContents(); // Deletes selected text…
+       range.insertNode(e); // … and inserts the new element at its place
+     }
+};
+
+
+RE.setFont = function(font) {
+    var sel = window.getSelection();
+    if (sel.rangeCount) {
+       // Creates a new element, and insert the selected text with the chosen font inside
+       var e = document.createElement('span');
+       e.style.fontFamily = font;
+       e.innerHTML = sel.toString();
+       var range = sel.getRangeAt(0);
+       range.deleteContents(); // Deletes selected text…
+       range.insertNode(e); // … and inserts the new element at its place
+     }
 };
 
 RE.setBackgroundColor = function(color) {
@@ -231,6 +254,10 @@ RE.setJustifyRight = function() {
     document.execCommand('justifyRight', false, null);
 };
 
+RE.setJustifyFull = function() {
+    document.execCommand('justifyFull', false, null);
+};
+ 
 RE.getLineHeight = function() {
     return RE.editor.style.lineHeight;
 };
@@ -249,8 +276,21 @@ RE.insertImage = function(url, alt) {
     RE.callback("input");
 };
 
+RE.setCode = function() {
+    if(window.getSelection().toString() != "") {
+        var code = window.getSelection().toString().replace(/</ig, '&lt;').replace(/>/ig, '&gt;');
+        var html ='<div style="background-color: lightgray; width: 100%; text-align:left; padding: 12px;"><p><code style="color: #001853; ">' + code +'</code></p></div>'
+    }
+    RE.insertHTML(html);
+}
+
 RE.setBlockquote = function() {
-    document.execCommand('formatBlock', false, '<blockquote>');
+    // for all use:
+//    document.execCommand('formatBlock', false, '<blockquote>');
+         if(window.getSelection().toString() != "") {
+            var html = '<p style="color: #000 !important;background-color: #f1f1f1 !important;border-left: 6px solid #ccc !important;padding:10px">' + window.getSelection().toString() + '</p></br>';
+               RE.insertHTML(html);
+        }
 };
 
 RE.insertHTML = function(html) {

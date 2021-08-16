@@ -73,41 +73,85 @@ import UIKit
     private var toolbar: UIToolbar
     private var backgroundToolbar: UIToolbar
     
-    lazy var fontToolbar: UIToolbar = {
-        let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: 800, height: 44))
-       bar.isHidden = true
-       bar.autoresizingMask = .flexibleWidth
-       bar.alpha = 0
-        
+   
+    lazy var headlineToolbar: UIToolbar = {
+       let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: bounds.width, height: 44))
        var buttons = [UIBarButtonItem]()
-       let options = RichEditorFontOption.all
+       let opt = RichEditorHeadingOption.all
+       let headLineBar = createToolBar(bar: bar,options: opt)
+       return headLineBar
+    }()
+    
+    lazy var fontToolbar: UIToolbar = {
+       let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: 820, height: 44))
+       var buttons = [UIBarButtonItem]()
+       let opt = RichEditorFontOption.all
+       let fontBar = createToolBar(bar: bar,options: opt)
+       return fontBar
+    }()
+    
+    
+    lazy var allignmentToolbar: UIToolbar = {
+       let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: bounds.width, height: 44))
+       var buttons = [UIBarButtonItem]()
+       let opt = RichEditorAllignmentOption.all
+       let alignBar = createToolBar(bar: bar,options: opt)
+       return alignBar
+    }()
+    
+    lazy var sizeToolbar: UIToolbar = {
+        
+        var width:CGFloat = 400
+        if bounds.width > 400 {
+            width = bounds.width
+        }
+
+       let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: width, height: 44))
+       var buttons = [UIBarButtonItem]()
+       let opt = RichEditorTextSizeOption.all
+       let fontBar = createToolBar(bar: bar,options: opt)
+       return fontBar
+    }()
+    
+    
+    func createToolBar(bar: UIToolbar,options: [RichEditorOption]) -> UIToolbar {
+        bar.isHidden = true
+        bar.autoresizingMask = .flexibleWidth
+        bar.alpha = 0
+        var buttons = [UIBarButtonItem]()
         for option in options {
             let handler = { [weak self] in
                 if let strongSelf = self {
                     option.action(strongSelf)
                 }
             }
+            if let image = option.image {
+                let button = RichBarButtonItem(image: image, handler: handler)
+                buttons.append(button)
+            } else {
                 let title = option.title
                 let button = RichBarButtonItem(title: title, handler: handler)
                 buttons.append(button)
+            }
         }
         bar.items = buttons
         toolbarScroll.addSubview(bar)
        return bar
-    }()
+    }
     
      
-     func toggleFontBar() {
-        UIView.animate(withDuration: 1) { [self] in
-            if fontToolbar.isHidden {
-                fontToolbar.alpha = 1
-                toolbarScroll.contentSize.width = fontToolbar.bounds.size.width
+    func toggleBars(bar: UIToolbar) {
+        UIView.animate(withDuration: 0.5) { [self] in
+            if bar.isHidden {
+                bar.alpha = 1
+                toolbarScroll.contentSize.width = bar.bounds.size.width
             } else {
-                fontToolbar.alpha = 0
+                bar.alpha = 0
                 toolbarScroll.contentSize.width = toolbar.frame.size.width
             }
-                fontToolbar.isHidden = !fontToolbar.isHidden
-                toolbar.isHidden = !fontToolbar.isHidden
+                bar.isHidden = !bar.isHidden
+                toolbar.isHidden = !bar.isHidden
+                toolbarScroll.setContentOffset(.zero, animated: true)
             }
     }
     
@@ -185,7 +229,7 @@ import UIKit
         if width < frame.size.width {
             toolbar.frame.size.width = frame.size.width
         } else {
-            toolbar.frame.size.width = width
+            toolbar.frame.size.width = width + 10 //padding
         }
         toolbar.frame.size.height = 44
         toolbarScroll.contentSize.width = width

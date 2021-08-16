@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		284EE05E26C56851003E3F96 /* code.png in Resources */ = {isa = PBXBuildFile; fileRef = 284EE05D26C56851003E3F96 /* code.png */; };
+		28D2F19326CAB26800292922 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D2F18C26CAB26700292922 /* back.png */; };
+		28D2F19426CAB26800292922 /* justify.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D2F18D26CAB26700292922 /* justify.png */; };
+		28D2F19526CAB26800292922 /* size.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D2F18E26CAB26700292922 /* size.png */; };
+		28D2F19626CAB26800292922 /* justify_full.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D2F18F26CAB26700292922 /* justify_full.png */; };
+		28D2F19726CAB26800292922 /* blockQuote.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D2F19026CAB26800292922 /* blockQuote.png */; };
+		28D2F19826CAB26800292922 /* h.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D2F19126CAB26800292922 /* h.png */; };
+		28D2F19926CAB26800292922 /* f.png in Resources */ = {isa = PBXBuildFile; fileRef = 28D2F19226CAB26800292922 /* f.png */; };
 		39FC98FB1DC788A1008FE5DD /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FC98F91DC788A1008FE5DD /* String+Extensions.swift */; };
 		39FC98FC1DC788A1008FE5DD /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FC98FA1DC788A1008FE5DD /* UIColor+Extensions.swift */; };
 		947A71A11C0F9DED00BDF9FC /* UIView+Responder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */; };
@@ -86,6 +93,13 @@
 
 /* Begin PBXFileReference section */
 		284EE05D26C56851003E3F96 /* code.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = code.png; sourceTree = "<group>"; };
+		28D2F18C26CAB26700292922 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		28D2F18D26CAB26700292922 /* justify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = justify.png; sourceTree = "<group>"; };
+		28D2F18E26CAB26700292922 /* size.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = size.png; sourceTree = "<group>"; };
+		28D2F18F26CAB26700292922 /* justify_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = justify_full.png; sourceTree = "<group>"; };
+		28D2F19026CAB26800292922 /* blockQuote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blockQuote.png; sourceTree = "<group>"; };
+		28D2F19126CAB26800292922 /* h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = h.png; sourceTree = "<group>"; };
+		28D2F19226CAB26800292922 /* f.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = f.png; sourceTree = "<group>"; };
 		39FC98F91DC788A1008FE5DD /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Extensions.swift"; path = "Classes/String+Extensions.swift"; sourceTree = "<group>"; };
 		39FC98FA1DC788A1008FE5DD /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Extensions.swift"; path = "Classes/UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		947A71A01C0F9DED00BDF9FC /* UIView+Responder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Responder.swift"; path = "Classes/UIView+Responder.swift"; sourceTree = "<group>"; };
@@ -273,6 +287,13 @@
 		FBA6AB1D1AD3ED2D00721644 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				28D2F18C26CAB26700292922 /* back.png */,
+				28D2F19026CAB26800292922 /* blockQuote.png */,
+				28D2F19226CAB26800292922 /* f.png */,
+				28D2F19126CAB26800292922 /* h.png */,
+				28D2F18F26CAB26700292922 /* justify_full.png */,
+				28D2F18D26CAB26700292922 /* justify.png */,
+				28D2F18E26CAB26700292922 /* size.png */,
 				FBA6AB1E1AD3ED2D00721644 /* bg_color.png */,
 				FBA6AB1F1AD3ED2D00721644 /* bg_color@2x.png */,
 				FBA6AB201AD3ED2D00721644 /* bold.png */,
@@ -424,6 +445,7 @@
 			files = (
 				FBA6AB641AD3ED2D00721644 /* h6@2x.png in Resources */,
 				FBA6AB541AD3ED2D00721644 /* bg_color@2x.png in Resources */,
+				28D2F19326CAB26800292922 /* back.png in Resources */,
 				FBA6AB731AD3ED2D00721644 /* outdent.png in Resources */,
 				FBA6AB591AD3ED2D00721644 /* h1.png in Resources */,
 				FBA6AB691AD3ED2D00721644 /* insert_link.png in Resources */,
@@ -435,15 +457,20 @@
 				FBA6AB7A1AD3ED2D00721644 /* subscript@2x.png in Resources */,
 				FBA6AB5F1AD3ED2D00721644 /* h4.png in Resources */,
 				FBA6AB681AD3ED2D00721644 /* insert_image@2x.png in Resources */,
+				28D2F19626CAB26800292922 /* justify_full.png in Resources */,
 				FBA6AB651AD3ED2D00721644 /* indent.png in Resources */,
 				FBA6AB5D1AD3ED2D00721644 /* h3.png in Resources */,
 				FBA6AB631AD3ED2D00721644 /* h6.png in Resources */,
+				28D2F19926CAB26800292922 /* f.png in Resources */,
 				FBA6AB561AD3ED2D00721644 /* bold@2x.png in Resources */,
+				28D2F19826CAB26800292922 /* h.png in Resources */,
 				FBA6AB6E1AD3ED2D00721644 /* justify_center@2x.png in Resources */,
+				28D2F19726CAB26800292922 /* blockQuote.png in Resources */,
 				FBA6AB5A1AD3ED2D00721644 /* h1@2x.png in Resources */,
 				284EE05E26C56851003E3F96 /* code.png in Resources */,
 				FBA6AB721AD3ED2D00721644 /* justify_right@2x.png in Resources */,
 				FBA6AB7D1AD3ED2D00721644 /* text_color.png in Resources */,
+				28D2F19426CAB26800292922 /* justify.png in Resources */,
 				FBA6AB621AD3ED2D00721644 /* h5@2x.png in Resources */,
 				FBA6AB5C1AD3ED2D00721644 /* h2@2x.png in Resources */,
 				FBA6AB6B1AD3ED2D00721644 /* italic.png in Resources */,
@@ -458,6 +485,7 @@
 				FBA6AB7E1AD3ED2D00721644 /* text_color@2x.png in Resources */,
 				FBA6AB811AD3ED2D00721644 /* undo.png in Resources */,
 				FBA6AB511AD3ED2D00721644 /* rich_editor.js in Resources */,
+				28D2F19526CAB26800292922 /* size.png in Resources */,
 				FBA6AB521AD3ED2D00721644 /* style.css in Resources */,
 				FBA6AB601AD3ED2D00721644 /* h4@2x.png in Resources */,
 				FBA6AB581AD3ED2D00721644 /* clear@2x.png in Resources */,

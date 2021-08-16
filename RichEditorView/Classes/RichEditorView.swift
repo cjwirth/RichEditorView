@@ -232,7 +232,11 @@ import UIKit
     }
     
     public func setFontSize(_ size: Int) {
-        runJS("RE.setFontSize('\(size)px');")
+        if size != 0 {
+            runJS("RE.setFontSize('\(size)px');")
+        }
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.sizeToolbar)
     }
     
     public func setEditorBackgroundColor(_ color: UIColor) {
@@ -246,21 +250,50 @@ import UIKit
     public func redo() {
         runJS("RE.redo();")
     }
+     
     
-  
-    public func setFont(_ font: RichEditorFontOption) {
+    public func goBackFromHeadlines() {
         guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
-        iav.toggleFontBar()
-//        runJS
+        iav.toggleBars(bar: iav.headlineToolbar)
     }
     
+    public func goBackFromAllignments() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.allignmentToolbar)
+    }
+    
+    public func setFont(_ font: String) {
+        if font != "back" {
+            runJS("RE.setFont('\(font)');")
+        }
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.fontToolbar)
+    }
+     
+    public func showTextSize() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.sizeToolbar)
+    }
+    
+    public func showHeader() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.headlineToolbar)
+    }
+    
+    public func showFonts() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.fontToolbar)
+    }
+    
+    public func showAllignments() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.allignmentToolbar)
+    }
     
     public func setCode() {
-//        runJS("RE.setCode();")
-        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
-        iav.toggleFontBar()
+      runJS("RE.setCode();")
     }
-    
+   
     public func bold() {
         runJS("RE.setBold();")
     }
@@ -302,6 +335,7 @@ import UIKit
     
     public func header(_ h: Int) {
         runJS("RE.setHeading('\(h)');")
+        
     }
 
     public func indent() {
@@ -336,6 +370,10 @@ import UIKit
         runJS("RE.setJustifyRight();")
     }
     
+    public func justifyFull() {
+        runJS("RE.setJustifyRight();")
+    }
+     
     public func insertImage(_ url: String, alt: String) {
         runJS("RE.prepareInsert();")
         runJS("RE.insertImage('\(url.escaped)', '\(alt.escaped)');")
