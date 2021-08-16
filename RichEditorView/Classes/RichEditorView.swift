@@ -252,12 +252,12 @@ import UIKit
     }
      
     
-    public func goBackFromHeadlines() {
+    public func toggleHeadlines() {
         guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
         iav.toggleBars(bar: iav.headlineToolbar)
     }
     
-    public func goBackFromAllignments() {
+    public func toggleAllignments() {
         guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
         iav.toggleBars(bar: iav.allignmentToolbar)
     }
@@ -276,8 +276,7 @@ import UIKit
     }
     
     public func showHeader() {
-        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
-        iav.toggleBars(bar: iav.headlineToolbar)
+        toggleHeadlines()
     }
     
     public func showFonts() {
@@ -335,7 +334,7 @@ import UIKit
     
     public func header(_ h: Int) {
         runJS("RE.setHeading('\(h)');")
-        
+        toggleHeadlines()
     }
 
     public func indent() {

@@ -79,7 +79,7 @@ public enum RichEditorHeadingOption: RichEditorOption {
     public func action(_ toolbar: RichEditorToolbar) {
         switch self  {
             case .header(let h): toolbar.editor?.header(h)
-            case .back: toolbar.editor?.goBackFromHeadlines()
+            case .back: toolbar.editor?.toggleHeadlines()
         }
     }
 }
@@ -206,7 +206,7 @@ public enum RichEditorAllignmentOption: RichEditorOption {
     
     public func action(_ toolbar: RichEditorToolbar) {
         switch  self  {
-        case .back: toolbar.editor?.goBackFromAllignments()
+        case .back: toolbar.editor?.toggleAllignments()
         case .indent: toolbar.editor?.indent()
         case .outdent: toolbar.editor?.outdent()
         case .orderedList: toolbar.editor?.orderedList()
