@@ -70,7 +70,7 @@ import UIKit
     }
 
     private var toolbarScroll: UIScrollView
-    private var toolbar: UIToolbar
+    private var defautToolbar: UIToolbar
     private var backgroundToolbar: UIToolbar
     
    
@@ -147,17 +147,18 @@ import UIKit
                 toolbarScroll.contentSize.width = bar.bounds.size.width
             } else {
                 bar.alpha = 0
-                toolbarScroll.contentSize.width = toolbar.frame.size.width
+                // this should be defautToolbar.frame.width, temp fix for bug:
+                toolbarScroll.contentSize.width = 750
             }
                 bar.isHidden = !bar.isHidden
-                toolbar.isHidden = !bar.isHidden
+                defautToolbar.isHidden = !bar.isHidden
                 toolbarScroll.setContentOffset(.zero, animated: true)
             }
     }
     
     public override init(frame: CGRect) {
         toolbarScroll = UIScrollView()
-        toolbar = UIToolbar()
+        defautToolbar = UIToolbar()
         backgroundToolbar = UIToolbar()
         super.init(frame: frame)
         setup()
@@ -165,7 +166,7 @@ import UIKit
     
     public required init?(coder aDecoder: NSCoder) {
         toolbarScroll = UIScrollView()
-        toolbar = UIToolbar()
+        defautToolbar = UIToolbar()
         backgroundToolbar = UIToolbar()
         super.init(coder: aDecoder)
         setup()
@@ -178,10 +179,10 @@ import UIKit
         backgroundToolbar.frame = bounds
         backgroundToolbar.autoresizingMask = [.flexibleHeight, .flexibleWidth]
 
-        toolbar.autoresizingMask = .flexibleWidth
-        toolbar.backgroundColor = .clear
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+        defautToolbar.autoresizingMask = .flexibleWidth
+        defautToolbar.backgroundColor = .clear
+        defautToolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+        defautToolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
 
         toolbarScroll.frame = bounds
         toolbarScroll.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -189,7 +190,7 @@ import UIKit
         toolbarScroll.showsVerticalScrollIndicator = false
         toolbarScroll.backgroundColor = .clear
 
-        toolbarScroll.addSubview(toolbar)
+        toolbarScroll.addSubview(defautToolbar)
 
         addSubview(backgroundToolbar)
         addSubview(toolbarScroll)
@@ -214,7 +215,7 @@ import UIKit
                 buttons.append(button)
             }
         }
-        toolbar.items = buttons
+        defautToolbar.items = buttons
 
         let defaultIconWidth: CGFloat = 28
         let barButtonItemMargin: CGFloat = 11
@@ -227,11 +228,11 @@ import UIKit
         }
         
         if width < frame.size.width {
-            toolbar.frame.size.width = frame.size.width
+            defautToolbar.frame.size.width = frame.size.width
         } else {
-            toolbar.frame.size.width = width + 10 //padding
+            defautToolbar.frame.size.width = width + 10 //padding
         }
-        toolbar.frame.size.height = 44
+        defautToolbar.frame.size.height = 44
         toolbarScroll.contentSize.width = width
     }
     
