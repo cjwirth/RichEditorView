@@ -29,15 +29,6 @@ class ViewController: UIViewController {
 
         toolbar.delegate = self
         toolbar.editor = editorView
-
-        // We will create a custom action that clears all the input text when it is pressed
-        let item = RichEditorOptionItem(image: nil, title: "Clear") { toolbar in
-            toolbar.editor?.html = ""
-        }
-
-        var options = toolbar.options
-        options.append(item)
-        toolbar.options = options
     }
 
 }
@@ -55,7 +46,7 @@ extension ViewController: RichEditorDelegate {
 }
 
 extension ViewController: RichEditorToolbarDelegate {
-
+    
     fileprivate func randomColor() -> UIColor {
         let colors: [UIColor] = [
             .red,
@@ -86,8 +77,18 @@ extension ViewController: RichEditorToolbarDelegate {
 
     func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
         // Can only add links to selected text, so make sure there is a range selection first
-        if toolbar.editor?.hasRangeSelection == true {
-            toolbar.editor?.insertLink("http://github.com/cjwirth/RichEditorView", title: "Github Link")
+        toolbar.editor?.backupElement()
+        if toolbar.editor?.hasRangeSelection == true, let link = toolbar.searchBar.text {
+            toolbar.editor?.insertLink(link, title: "")
         }
+        toolbar.resetBars()
     }
+    
+    func richEditorTookFocus(_ editor: RichEditorView) {
+        // reset
+        guard let iav = editor.inputAccessoryView as? RichEditorToolbar else { return }
+        iav.resetBars()
+    }
+
+    
 }

@@ -48,7 +48,7 @@ import UIKit
 }
 
 /// RichEditorToolbar is UIView that contains the toolbar for actions that can be performed on a RichEditorView
-@objcMembers open class RichEditorToolbar: UIView {
+@objcMembers open class RichEditorToolbar: UIView, UISearchBarDelegate {
 
     /// The delegate to receive events that cannot be automatically completed
     open weak var delegate: RichEditorToolbarDelegate?
@@ -72,16 +72,39 @@ import UIKit
     private var toolbarScroll: UIScrollView
     private var defautToolbar: UIToolbar
     private var backgroundToolbar: UIToolbar
-    
-   
+    public var searchBar = UISearchBar()
+     
     lazy var headlineToolbar: UIToolbar = {
-       let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: bounds.width, height: 44))
-       var buttons = [UIBarButtonItem]()
-       let opt = RichEditorHeadingOption.all
-       let headLineBar = createToolBar(bar: bar,options: opt)
-       return headLineBar
+    let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: bounds.width, height: 44))
+    var buttons = [UIBarButtonItem]()
+    let opt = RichEditorHeadingOption.all
+    let headLineBar = createToolBar(bar: bar,options: opt)
+    return headLineBar
     }()
     
+    lazy var linkToolbar: UIToolbar = {
+        let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: bounds.width, height: 44))
+        bar.isHidden = true
+        bar.alpha = 0
+        
+        // We will create a custom action that clears all the input text when it is pressed
+        let button = RichEditorOptionItem(image: nil, title: "Clear") { toolbar in
+            toolbar.editor?.html = ""
+        }
+   
+        let negativeSeperator = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        negativeSeperator.width = 12
+        searchBar.delegate = self
+        searchBar.frame = CGRect(x: 0, y:0, width: bounds.width - 70, height: 44)
+        searchBar.barTintColor = .lightGray
+        searchBar.setImage(UIImage(), for: .search, state: .normal)
+        searchBar.placeholder = "paste a link e.g., https://www.wikipedia.org"
+        let searchBarButton = UIBarButtonItem.init(customView: searchBar)
+        bar.items = [searchBarButton,negativeSeperator]
+        toolbarScroll.addSubview(bar)
+       return bar
+    }()
+  
     lazy var fontToolbar: UIToolbar = {
        let bar = UIToolbar(frame: CGRect(x: 0, y:0, width: 820, height: 44))
        var buttons = [UIBarButtonItem]()
@@ -139,6 +162,16 @@ import UIKit
        return bar
     }
     
+    public func resetBars() {
+        let bars = [sizeToolbar,allignmentToolbar,fontToolbar,headlineToolbar, linkToolbar]
+        bars.forEach({
+            $0.isHidden = true
+            $0.alpha = 0
+        })
+        defautToolbar.isHidden = false
+        toolbarScroll.contentSize.width = 750
+        toolbarScroll.setContentOffset(.zero, animated: true)
+    }
      
     func toggleBars(bar: UIToolbar) {
         UIView.animate(withDuration: 0.5) { [self] in

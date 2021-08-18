@@ -378,8 +378,20 @@ import UIKit
         runJS("RE.insertImage('\(url.escaped)', '\(alt.escaped)');")
     }
     
-    public func insertLink(_ href: String, title: String) {
+    public func showLink() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.linkToolbar)
+    }
+     
+    public func prepareForLink() {
+        runJS("RE.prepareForLink();")
+    }
+    
+    public func backupElement() {
         runJS("RE.prepareInsert();")
+    }
+    
+    public func insertLink(_ href: String, title: String) {
         runJS("RE.insertLink('\(href.escaped)', '\(title.escaped)');")
     }
     
@@ -421,7 +433,7 @@ import UIKit
 
     // MARK: UIWebViewDelegate
 
-    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
 
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
