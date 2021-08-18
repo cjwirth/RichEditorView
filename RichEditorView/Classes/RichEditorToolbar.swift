@@ -48,7 +48,7 @@ import UIKit
 }
 
 /// RichEditorToolbar is UIView that contains the toolbar for actions that can be performed on a RichEditorView
-@objcMembers open class RichEditorToolbar: UIView, UISearchBarDelegate {
+@objcMembers open class RichEditorToolbar: UIView {
 
     /// The delegate to receive events that cannot be automatically completed
     open weak var delegate: RichEditorToolbarDelegate?
@@ -87,20 +87,29 @@ import UIKit
         bar.isHidden = true
         bar.alpha = 0
         
-        // We will create a custom action that clears all the input text when it is pressed
-        let button = RichEditorOptionItem(image: nil, title: "Clear") { toolbar in
-            toolbar.editor?.html = ""
+        let option = RichEditorDefaultOption.pasteLink
+        let button: RichBarButtonItem
+        
+        let handler = { [weak self] in
+            if let strongSelf = self {
+                option.action(strongSelf)
+            }
         }
-   
+        if let image = option.image {
+            button = RichBarButtonItem(image: image, handler: handler)
+        } else {
+            let title = option.title
+            button = RichBarButtonItem(title: title, handler: handler)
+        }
+         
         let negativeSeperator = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         negativeSeperator.width = 12
-        searchBar.delegate = self
         searchBar.frame = CGRect(x: 0, y:0, width: bounds.width - 70, height: 44)
         searchBar.barTintColor = .lightGray
         searchBar.setImage(UIImage(), for: .search, state: .normal)
         searchBar.placeholder = "paste a link e.g., https://www.wikipedia.org"
         let searchBarButton = UIBarButtonItem.init(customView: searchBar)
-        bar.items = [searchBarButton,negativeSeperator]
+        bar.items = [searchBarButton,negativeSeperator,button]
         toolbarScroll.addSubview(bar)
        return bar
     }()

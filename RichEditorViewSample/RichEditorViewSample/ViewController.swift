@@ -76,19 +76,12 @@ extension ViewController: RichEditorToolbarDelegate {
     }
 
     func richEditorToolbarInsertLink(_ toolbar: RichEditorToolbar) {
-        // Can only add links to selected text, so make sure there is a range selection first
         toolbar.editor?.backupElement()
-        if toolbar.editor?.hasRangeSelection == true, let link = toolbar.searchBar.text {
+        if  let link = toolbar.searchBar.text {
             toolbar.editor?.insertLink(link, title: "")
         }
         toolbar.resetBars()
     }
     
-    func richEditorTookFocus(_ editor: RichEditorView) {
-        // reset
-        guard let iav = editor.inputAccessoryView as? RichEditorToolbar else { return }
-        iav.resetBars()
-    }
-
     
 }

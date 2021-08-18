@@ -241,6 +241,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
     case allignment
     case image
     case link
+    case pasteLink
     
     public static let all: [RichEditorDefaultOption] = [
         .clear, .undo, .redo, .bold, .italic, .header, .size, .font,
@@ -268,7 +269,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .textColor: name = "text_color"
         case .textBackgroundColor: name = "bg_color"
         case .header: name = "h"
-       
+        case .pasteLink: name = "done"
         case .image: name = "insert_image"
         case .link: name = "insert_link"
         case .size: name = "size"
@@ -299,6 +300,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .allignment: return NSLocalizedString("Allignment", comment: "")
         case .image: return NSLocalizedString("Image", comment: "")
         case .link: return NSLocalizedString("Link", comment: "")
+        case .pasteLink: return NSLocalizedString("Link", comment: "")
         case .size: return NSLocalizedString("Size", comment: "")
         case .font: return NSLocalizedString("Font", comment: "")
         }
@@ -321,7 +323,8 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .header: toolbar.editor?.showHeader()
         case .allignment: toolbar.editor?.showAllignments()
         case .image: toolbar.delegate?.richEditorToolbarInsertImage?(toolbar)
-        case .link: toolbar.delegate?.richEditorToolbarInsertLink?(toolbar)
+        case .link: toolbar.editor?.showLink()
+        case .pasteLink: toolbar.delegate?.richEditorToolbarInsertLink?(toolbar)
         case .size: toolbar.editor?.showTextSize()
         case .font: toolbar.editor?.showFonts()
         case .blockquote: toolbar.editor?.blockquote()
