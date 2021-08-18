@@ -183,8 +183,8 @@ import UIKit
     }
      
     func toggleBars(bar: UIToolbar) {
-        UIView.animate(withDuration: 0.5) { [self] in
-            if bar.isHidden {
+        toolbarScroll.setContentOffset(.zero, animated: true)
+             if bar.isHidden {
                 bar.alpha = 1
                 toolbarScroll.contentSize.width = bar.bounds.size.width
             } else {
@@ -194,8 +194,6 @@ import UIKit
             }
                 bar.isHidden = !bar.isHidden
                 defautToolbar.isHidden = !bar.isHidden
-                toolbarScroll.setContentOffset(.zero, animated: true)
-            }
     }
     
     public override init(frame: CGRect) {
