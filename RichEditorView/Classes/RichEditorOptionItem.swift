@@ -52,7 +52,7 @@ public struct RichEditorOptionItem: RichEditorOption {
 
 /// RichEditorOptions is an enum of standard editor actions
 public enum RichEditorDefaultOption: RichEditorOption {
-
+    case done
     case clear
     case undo
     case redo
@@ -76,15 +76,14 @@ public enum RichEditorDefaultOption: RichEditorOption {
     case link
     
     public static let all: [RichEditorDefaultOption] = [
-        .clear,
-        .undo, .redo, .bold, .italic,
+        //.clear,
+        .done,.undo, .redo, .bold, .italic,
         .subscript, .superscript, .strike, .underline,
         .textColor, .textBackgroundColor,
         .header(1), .header(2), .header(3), .header(4), .header(5), .header(6),
         .indent, outdent, orderedList, unorderedList,
-        .alignLeft, .alignCenter, .alignRight, .image, .link
+        .alignLeft, .alignCenter, .alignRight, .image, .link, .done
     ]
-
     // MARK: RichEditorOption
 
     public var image: UIImage? {
@@ -111,6 +110,8 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .alignRight: name = "justify_right"
         case .image: name = "insert_image"
         case .link: name = "insert_link"
+        case .done: name = "Done"
+
         }
         
         let bundle = Bundle(for: RichEditorToolbar.self)
@@ -140,6 +141,7 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .alignRight: return NSLocalizedString("Right", comment: "")
         case .image: return NSLocalizedString("Image", comment: "")
         case .link: return NSLocalizedString("Link", comment: "")
+        case .done : return NSLocalizedString("done", comment: "")
         }
     }
     
@@ -166,6 +168,8 @@ public enum RichEditorDefaultOption: RichEditorOption {
         case .alignRight: toolbar.editor?.alignRight()
         case .image: toolbar.delegate?.richEditorToolbarInsertImage?(toolbar)
         case .link: toolbar.delegate?.richEditorToolbarInsertLink?(toolbar)
+        case .done: toolbar.delegate?.richEditorToolbarDone?(toolbar)
+
         }
     }
 }
