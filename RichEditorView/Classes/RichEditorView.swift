@@ -6,9 +6,12 @@
 //
 
 import UIKit
+#if SWIFT_PACKAGE
+import RichEditorView_Objc
+#endif
 
 /// RichEditorDelegate defines callbacks for the delegate of the RichEditorView
-@objc public protocol RichEditorDelegate: class {
+@objc public protocol RichEditorDelegate: AnyObject {
 
     /// Called when the inner height of the text being displayed changes
     /// Can be used to update the UI
@@ -154,7 +157,14 @@ import UIKit
         
         self.addSubview(webView)
         
-        if let filePath = Bundle(for: RichEditorView.self).path(forResource: "rich_editor", ofType: "html") {
+        
+        #if SWIFT_PACKAGE
+        let bundle = Bundle.module
+        #else
+        let bundle = Bundle(for: RichEditorView.self)
+        #endif
+        
+        if let filePath = bundle.path(forResource: "rich_editor", ofType: "html") {
             let url = URL(fileURLWithPath: filePath, isDirectory: false)
             let request = URLRequest(url: url)
             webView.loadRequest(request)
@@ -368,7 +378,7 @@ import UIKit
 
     // MARK: UIWebViewDelegate
 
-    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
 
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
