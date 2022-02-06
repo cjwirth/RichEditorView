@@ -72,6 +72,16 @@ Add the following to your `Cartfile`:
 github 'cjwirth/RichEditorView'
 ```
 
+#### Swift Package Manager
+
+Add the following to your `Package.swift`:
+
+```
+dependencies: [
+    .package(url: "https://github.com/cjwirth/RichEditorView", .branch("master"))
+]
+```
+
 Using RichEditorView
 --------------------
 
