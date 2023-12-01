@@ -1,3 +1,11 @@
+**RichEditorView has been archived. I do not plan on making updates to it.**
+
+This project was needed for an app I was working on in the mid 2010's. I haven't needed it for a long time, and don't expect to need it in the future. You shouldn't either.
+
+This project depends on [UIWebView](https://developer.apple.com/documentation/uikit/uiwebview) which was [deprecated in iOS 12](https://developer.apple.com/documentation/webkit/replacing_uiwebview_in_your_app). While it's possible to change it to use [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview), it's not a straightforward find-and-replace. For example, some methods that used to be synchronous are now asynchronous.
+
+There are forks that have made the migration. I would encourage you to check those out and see if one suits your needs.
+
 RichEditorView
 --------------
 [![License: BSD 3](https://img.shields.io/badge/license-BSD3-blue.svg)](./LICENSE.md)
