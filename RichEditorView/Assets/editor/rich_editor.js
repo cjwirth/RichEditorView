@@ -21,6 +21,7 @@ window.onload = function() {
     RE.callback("ready");
 };
 
+RE.body = document.getElementsByTagName('body')[0];
 RE.editor = document.getElementById('editor');
 
 // Not universally supported, but seems to work in iOS 7 and 8
@@ -138,7 +139,7 @@ RE.setFontSize = function(size) {
 };
 
 RE.setBackgroundColor = function(color) {
-    RE.editor.style.backgroundColor = color;
+    RE.body.style.backgroundColor = color;
 };
 
 RE.setHeight = function(size) {

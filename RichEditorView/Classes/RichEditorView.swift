@@ -135,7 +135,6 @@ import UIKit
     }
     
     private func setup() {
-        backgroundColor = .red
         
         webView.frame = bounds
         webView.delegate = self
@@ -143,13 +142,12 @@ import UIKit
         webView.scalesPageToFit = false
         webView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         webView.dataDetectorTypes = UIDataDetectorTypes()
-        webView.backgroundColor = .white
         
         webView.scrollView.isScrollEnabled = isScrollEnabled
         webView.scrollView.bounces = false
         webView.scrollView.delegate = self
         webView.scrollView.clipsToBounds = false
-        
+
         webView.cjw_inputAccessoryView = nil
         
         self.addSubview(webView)
@@ -234,6 +232,9 @@ import UIKit
     }
     
     public func setEditorBackgroundColor(_ color: UIColor) {
+        webView.backgroundColor = color
+        webView.scrollView.backgroundColor = color
+
         runJS("RE.setBackgroundColor('\(color.hex)');")
     }
     
@@ -368,7 +369,7 @@ import UIKit
 
     // MARK: UIWebViewDelegate
 
-    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
 
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
