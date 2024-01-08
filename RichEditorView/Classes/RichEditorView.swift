@@ -48,7 +48,9 @@ import UIKit
     /// Defaults to nil
     open override var inputAccessoryView: UIView? {
         get { return webView.cjw_inputAccessoryView }
-        set { webView.cjw_inputAccessoryView = newValue }
+        set {
+            webView.cjw_inputAccessoryView = newValue
+        }
     }
 
     /// The internal UIWebView that is used to display the text.
@@ -230,7 +232,11 @@ import UIKit
     }
     
     public func setFontSize(_ size: Int) {
-        runJS("RE.setFontSize('\(size)px');")
+        if size != 0 {
+            runJS("RE.setFontSize('\(size)px');")
+        }
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.sizeToolbar)
     }
     
     public func setEditorBackgroundColor(_ color: UIColor) {
@@ -244,7 +250,49 @@ import UIKit
     public func redo() {
         runJS("RE.redo();")
     }
+     
     
+    public func toggleHeadlines() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.headlineToolbar)
+    }
+    
+    public func toggleAllignments() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.allignmentToolbar)
+    }
+    
+    public func setFont(_ font: String) {
+        if font != "back" {
+            runJS("RE.setFont('\(font)');")
+        }
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.fontToolbar)
+    }
+     
+    public func showTextSize() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.sizeToolbar)
+    }
+    
+    public func showHeader() {
+        toggleHeadlines()
+    }
+    
+    public func showFonts() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.fontToolbar)
+    }
+    
+    public func showAllignments() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.allignmentToolbar)
+    }
+    
+    public func setCode() {
+      runJS("RE.setCode();")
+    }
+   
     public func bold() {
         runJS("RE.setBold();")
     }
@@ -286,6 +334,7 @@ import UIKit
     
     public func header(_ h: Int) {
         runJS("RE.setHeading('\(h)');")
+        toggleHeadlines()
     }
 
     public func indent() {
@@ -320,13 +369,29 @@ import UIKit
         runJS("RE.setJustifyRight();")
     }
     
+    public func justifyFull() {
+        runJS("RE.setJustifyRight();")
+    }
+     
     public func insertImage(_ url: String, alt: String) {
         runJS("RE.prepareInsert();")
         runJS("RE.insertImage('\(url.escaped)', '\(alt.escaped)');")
     }
     
-    public func insertLink(_ href: String, title: String) {
+    public func showLink() {
+        guard let iav = inputAccessoryView as? RichEditorToolbar else { return }
+        iav.toggleBars(bar: iav.linkToolbar)
+    }
+     
+    public func prepareForLink() {
+        runJS("RE.prepareForLink();")
+    }
+    
+    public func backupElement() {
         runJS("RE.prepareInsert();")
+    }
+    
+    public func insertLink(_ href: String, title: String) {
         runJS("RE.insertLink('\(href.escaped)', '\(title.escaped)');")
     }
     
@@ -368,7 +433,7 @@ import UIKit
 
     // MARK: UIWebViewDelegate
 
-    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    public func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
 
         // Handle pre-defined editor actions
         let callbackPrefix = "re-callback://"
